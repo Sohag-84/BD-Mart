@@ -1,7 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/enums/payment_method.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
-import 'package:gym_swat/features/cart/widgets/order_summery_widgets.dart';
-import 'package:gym_swat/features/cart/widgets/select_payment_option_button.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/widgets/order_summery_widgets.dart';
+import 'package:gym_swat/features/cart/presentation/widgets/select_payment_option_button.dart';
 
 class ShippingDetailsView extends StatelessWidget {
   const ShippingDetailsView({super.key});
@@ -57,12 +60,26 @@ class ShippingDetailsView extends StatelessWidget {
               ),
             ),
             Gap(10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                paymentOptionButton("Online Payment"),
-                paymentOptionButton("Cash on Delivery"),
+                SelectPaymentOptionButton(method: PaymentMethod.cashOnDelivery),
+                SelectPaymentOptionButton(method: PaymentMethod.onlinePayment),
               ],
+            ),
+            BlocBuilder<PaymentMethodCubit, PaymentMethod>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  onPressed: () {
+                    String paymentText = state == PaymentMethod.cashOnDelivery
+                        ? "Cash on Delivery"
+                        : "Online Payment";
+
+                        print(paymentText);
+                  },
+                  child: Text("data"),
+                );
+              },
             ),
           ],
         ),

@@ -1,12 +1,39 @@
-// ignore_for_file: constant_identifier_names
-
 part of 'app_pages.dart';
 
 class AppRoutes {
-  static const INITIAL = "/";
-  static const BOTTOM_NAVIGATION = "/bottom-nav-view";
-  static const CATEGORY = "/category";
-  static const SUB_CATEGORY = "/sub-category";
-  static const CART = "/cart";
-  static const SHIPPING_DETAILS = "/shipping-details";
+  static Route splash = Route(name: "Splash", path: "/");
+  static Route bottomNavbar = Route(
+    name: "Bottom Navigation",
+    path: "/bottom-nav-view",
+  );
+
+  static Route category = Route(
+    name: "Category",
+    path: "/category",
+  );
+
+  static Route subCategory = Route(
+    name: "Sub Category",
+    path: "/sub-category",
+  );
+  static Route cart = Route(
+    name: "Cart",
+    path: "/cart",
+  );
+  static Route shippingDetails = Route(
+    name: "Shipping Details",
+    path: "/shipping-details",
+  );
+
+  static Route productDetails = Route(
+    name: "Product Details",
+    path: "/product-details",
+  );
+}
+
+class Route {
+  final String name;
+  final String path;
+
+  Route({required this.name, required this.path});
 }

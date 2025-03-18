@@ -59,9 +59,11 @@ Widget subcategoryRowSection() {
                     padding: EdgeInsets.only(top: 7.h, right: 8.w, bottom: 7.h),
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(
-                          () => const ProductView(),
-                          transition: Transition.downToUp,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProductView(),
+                          ),
                         );
                       },
                       child: Container(

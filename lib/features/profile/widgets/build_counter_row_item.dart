@@ -1,6 +1,7 @@
 import 'package:gym_swat/core/constants/exports.dart';
 
 Widget buildCountersRowItem({
+  required BuildContext context,
   required VoidCallback onTap,
   required String counter,
   required String title,
@@ -9,7 +10,7 @@ Widget buildCountersRowItem({
     onTap: onTap,
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
-      width: Get.width / 3.5,
+      width: MediaQuery.sizeOf(context).width / 3.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: AppColors.darkCharcoal,

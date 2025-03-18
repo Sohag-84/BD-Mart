@@ -1,7 +1,9 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_icon_button.dart';
-import 'package:gym_swat/features/cart/part/amount_and_shipping_button.dart';
+import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
 import 'package:gym_swat/features/product/views/product_details_view.dart';
 
 class CartView extends StatelessWidget {
@@ -14,7 +16,7 @@ class CartView extends StatelessWidget {
       bottomNavigationBar: amountAndShippingButton(
         totalAmount: "1290",
         onTap: () {
-          Get.toNamed(AppRoutes.SHIPPING_DETAILS);
+          context.pushNamed(AppRoutes.shippingDetails.name);
         },
       ),
       body: Padding(
@@ -24,8 +26,11 @@ class CartView extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  Get.to(
-                    () => const ProductDetailsView(),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProductDetailsView(),
+                    ),
                   );
                 },
                 child: Container(

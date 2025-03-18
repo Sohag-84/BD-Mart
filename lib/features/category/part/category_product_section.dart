@@ -19,8 +19,11 @@ Widget categoryProductsSection() {
         itemBuilder: (BuildContext context, int index) {
           return customProductContainer(
             onTap: () {
-              Get.to(
-                () => const ProductDetailsView(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductDetailsView(),
+                ),
               );
             },
             image: "assets/images/bottle.png",

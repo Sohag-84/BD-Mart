@@ -3,7 +3,9 @@ import 'package:gym_swat/core/widgets/custom_product_container.dart';
 import 'package:gym_swat/features/product/views/product_details_view.dart';
 import 'package:gym_swat/features/product/views/product_view.dart';
 
-Widget allProductsSection() {
+Widget allProductsSection({
+  required BuildContext context,
+}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -19,8 +21,11 @@ Widget allProductsSection() {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.to(
-                () => const ProductView(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductView(),
+                ),
               );
             },
             child: Text(
@@ -48,8 +53,11 @@ Widget allProductsSection() {
         itemBuilder: (BuildContext context, int index) {
           return customProductContainer(
             onTap: () {
-              Get.to(
-                () => const ProductDetailsView(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductDetailsView(),
+                ),
               );
             },
             image: "assets/images/bottle.png",

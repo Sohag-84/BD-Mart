@@ -3,13 +3,11 @@ import 'package:gym_swat/features/category/part/category_product_section.dart';
 import 'package:gym_swat/features/category/part/sub_category_animated_row_section.dart';
 
 class SubCategoryView extends StatelessWidget {
-  const SubCategoryView({super.key});
+  final String categoryName;
+  const SubCategoryView({super.key,required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic>? args = Get.arguments;
-    final String categoryName = args?["categoryName"] ?? "No Name";
-
     return Scaffold(
       appBar: customAppBar(title: categoryName),
       body: SingleChildScrollView(

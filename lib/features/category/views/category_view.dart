@@ -1,4 +1,6 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/features/category/widgets/custom_offer_container.dart';
 import 'package:gym_swat/features/product/views/product_view.dart';
 
@@ -33,9 +35,11 @@ class CategoryView extends StatelessWidget {
                   ///todays deal
                   customOfferContainer(
                     onTap: () {
-                      Get.to(
-                        () => const ProductView(),
-                        transition: Transition.downToUp,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductView(),
+                        ),
                       );
                     },
                     image: icToadyDeals,
@@ -75,9 +79,12 @@ class CategoryView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoutes.SUB_CATEGORY, arguments: {
-                        "categoryName": "Proten",
-                      });
+                      context.pushNamed(
+                        AppRoutes.subCategory.name,
+                        extra: {
+                          "categoryName": "Proten",
+                        },
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.all(5.w),

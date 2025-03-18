@@ -1,8 +1,6 @@
 export 'package:flutter/material.dart';
-export 'package:get/get.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:gym_swat/core/theme/app_colors.dart';
-export 'package:gym_swat/core/routes/app_pages.dart';
 export 'package:gap/gap.dart';
 export 'package:gym_swat/core/utils/app_images.dart';
 export 'package:gym_swat/core/constants/app_strings.dart';

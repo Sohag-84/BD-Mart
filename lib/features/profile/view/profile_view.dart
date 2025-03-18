@@ -30,6 +30,7 @@ class ProfileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(3, (index) {
                 return buildCountersRowItem(
+                  context: context,
                   onTap: () {},
                   counter: "10",
                   title: counterRowItemName[index],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_swat/features/profile/view/profile_view.dart';
-import 'package:gym_swat/features/cart/view/cart_view.dart';
+import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
 import 'package:gym_swat/features/category/views/category_view.dart';
 import 'package:gym_swat/features/home/view/home_view.dart';
 

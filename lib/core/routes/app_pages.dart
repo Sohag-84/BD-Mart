@@ -1,55 +1,68 @@
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/features/bottom_nav/view/bottom_nav_view.dart';
-import 'package:gym_swat/features/cart/view/cart_view.dart';
-import 'package:gym_swat/features/cart/view/shipping_details_view.dart';
+import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
+import 'package:gym_swat/features/cart/presentation/view/shipping_details_view.dart';
 import 'package:gym_swat/features/category/views/category_view.dart';
 import 'package:gym_swat/features/category/views/sub_category_view.dart';
+import 'package:gym_swat/features/product/views/product_details_view.dart';
 import 'package:gym_swat/features/splash/view/splash_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
-  static List<GetPage> routes = [
-    ///splash page
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.INITIAL,
-      page: () => const SplashView(),
-    ),
+  static final router = GoRouter(
+    initialLocation: AppRoutes.splash.path,
+    routes: [
+      ///Splash view
+      GoRoute(
+        path: AppRoutes.splash.path,
+        name: AppRoutes.splash.name,
+        builder: (context, state) => const SplashView(),
+      ),
 
-    ///bottom navbar page
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.BOTTOM_NAVIGATION,
-      page: () => const BottomNavView(),
-    ),
+      ///Bottom navbar view
+      GoRoute(
+        path: AppRoutes.bottomNavbar.path,
+        name: AppRoutes.bottomNavbar.name,
+        builder: (context, state) => const BottomNavView(),
+      ),
 
-    ///category page
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.CATEGORY,
-      page: () => const CategoryView(),
-    ),
+      ///Cart view
+      GoRoute(
+        path: AppRoutes.cart.path,
+        name: AppRoutes.cart.name,
+        builder: (context, state) => const CartView(),
+      ),
 
-    ///sub-category page
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.SUB_CATEGORY,
-      page: () => const SubCategoryView(),
-    ),
+      ///Category view
+      GoRoute(
+        path: AppRoutes.category.path,
+        name: AppRoutes.category.name,
+        builder: (context, state) => const CategoryView(),
+      ),
 
-    ///cart
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.CART,
-      page: () => const CartView(),
-    ),
+      ///subcategory view
+      GoRoute(
+        path: AppRoutes.subCategory.path,
+        name: AppRoutes.subCategory.name,
+        builder: (context, state) => SubCategoryView(
+          categoryName: (state.extra as Map)['categoryName'].toString(),
+        ),
+      ),
 
-    ///cart
-    GetPage(
-      transition: Transition.downToUp,
-      name: AppRoutes.SHIPPING_DETAILS,
-      page: () => const ShippingDetailsView(),
-    ),
-  ];
+      ///product details view
+      GoRoute(
+        path: AppRoutes.productDetails.path,
+        name: AppRoutes.productDetails.name,
+        builder: (context, state) => const ProductDetailsView(),
+      ),
+
+      ///Shipping details view
+      GoRoute(
+        path: AppRoutes.shippingDetails.path,
+        name: AppRoutes.shippingDetails.name,
+        builder: (context, state) => const ShippingDetailsView(),
+      ),
+    ],
+  );
 }

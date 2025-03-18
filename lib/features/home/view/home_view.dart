@@ -49,7 +49,7 @@ class HomeView extends StatelessWidget {
                   const CategorySection(),
                   Gap(15.h),
 
-                  allProductsSection(),
+                  allProductsSection(context: context),
                 ],
               ),
             ),
