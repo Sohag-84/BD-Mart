@@ -2,10 +2,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
+import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
+import 'package:gym_swat/service_locator.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await setupLocator();
+  LocalPreferenceService.instance.init();
+
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -28,9 +35,13 @@ class MyApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => PaymentMethodCubit(),
               ),
+              BlocProvider(
+                create: (context) =>
+                    sl<HomeBloc>()..add(HomeCategoryFetchedEvent()),
+              ),
             ],
             child: MaterialApp.router(
-              title: 'GYM SWAT',
+              title: 'BD MART',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 fontFamily: "Montserrat",
@@ -52,8 +63,6 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               routerConfig: AppPages.router,
-              // initialRoute: AppRoutes.INITIAL,
-              // getPages: AppPages.routes,
             ),
           );
         });

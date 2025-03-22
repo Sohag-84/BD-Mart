@@ -1,0 +1,15 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:gym_swat/core/error/failure.dart';
+import 'package:gym_swat/features/home/data/datasources/home_remote_data_source.dart';
+import 'package:gym_swat/features/home/domain/entity/category_entity.dart';
+import 'package:gym_swat/features/home/domain/repositories/home_repository.dart';
+
+class HomeRepositoryImpl implements HomeRepository {
+  final HomeRemoteDataSource remoteDataSource;
+  const HomeRepositoryImpl({required this.remoteDataSource});
+  @override
+  Future<Either<Failure, List<CategoryEntity>>> getCategories() async {
+    final result = await remoteDataSource.getCategories();
+    return right(result);
+  }
+}

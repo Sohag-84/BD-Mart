@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/features/home/domain/entity/category_entity.dart';
 
 class CategorySection extends StatefulWidget {
-  const CategorySection({super.key});
+  final List<CategoryEntity> categoryList;
+  const CategorySection({super.key, required this.categoryList});
 
   @override
   State<CategorySection> createState() => _CategorySectionState();
@@ -92,8 +94,9 @@ class _CategorySectionState extends State<CategorySection> {
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.zero,
-              itemCount: 10,
+              itemCount: widget.categoryList.length,
               itemBuilder: (context, index) {
+                final item = widget.categoryList[index];
                 return GestureDetector(
                   onTap: () {
                     stopAutoScroll();
@@ -110,14 +113,14 @@ class _CategorySectionState extends State<CategorySection> {
                     child: Row(
                       children: [
                         customImage(
-                          imagePath: "assets/images/bottle.png",
+                          imagePath: item.banner!,
                           width: 35.w,
                           height: 35.h,
                         ),
                         const Gap(5),
                         Expanded(
                           child: Text(
-                            "Protean",
+                            item.name??"",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
