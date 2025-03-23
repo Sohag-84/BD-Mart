@@ -1,4 +1,5 @@
 const String homeAppBarLogo = "assets/logo/app_bar_logo.png";
+const String refreshIcon = "assets/logo/refresh_icon.png";
 const String deafultLogo = "assets/logo/app_bar_logo.png";
 
 ///app icon

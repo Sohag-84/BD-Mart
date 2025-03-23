@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
+import 'package:gym_swat/core/utils/circular_indicator.dart';
 import 'package:gym_swat/features/category/widgets/custom_offer_container.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/product/views/product_view.dart';
@@ -25,9 +26,11 @@ class CategoryView extends StatelessWidget {
               child: Text('Failed to load data'),
             );
           } else if (state is HomeCategoryLoaded) {
-            return RefreshIndicator(
+            return refresh(
               onRefresh: () async {
-                context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
+                context.read<HomeBloc>().add(
+                      HomeCategoryFetchedEvent(),
+                    );
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
