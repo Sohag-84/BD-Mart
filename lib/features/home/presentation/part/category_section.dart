@@ -61,6 +61,10 @@ class _CategorySectionState extends State<CategorySection> {
     return SizedBox(
       height: 95.h,
       child: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) =>
+            current is HomeCategoryLoaded ||
+            current is HomeCategoryLoading ||
+            current is HomeCategoryLoadingFailure,
         builder: (context, state) {
           if (state is HomeCategoryLoading) {
             return const Center(child: CircularProgressIndicator());

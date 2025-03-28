@@ -36,8 +36,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => PaymentMethodCubit(),
               ),
               BlocProvider(
-                create: (context) =>
-                    sl<HomeBloc>()..add(HomeCategoryFetchedEvent()),
+                create: (context) => sl<HomeBloc>(),
               ),
             ],
             child: MaterialApp.router(

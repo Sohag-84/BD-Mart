@@ -1,5 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
+import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/home/presentation/part/all_product_section.dart';
 import 'package:gym_swat/features/home/presentation/part/category_section.dart';
 import 'package:gym_swat/features/home/presentation/part/home_seach_bar.dart';
@@ -13,11 +15,15 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
+  void initState() {
+    super.initState();
+
+    context.read<HomeBloc>().add(HomeSliderFetchedEvent());
+    context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List<String> imageList = [
-      "assets/images/slider_1.png",
-      "assets/images/slider_1.png",
-    ];
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -38,9 +44,33 @@ class _HomeViewState extends State<HomeView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            homeSlider(
-              imageList: imageList,
-              boxFit: BoxFit.fill,
+            BlocBuilder<HomeBloc, HomeState>(
+              buildWhen: (previous, current) =>
+                  current is HomeSliderLoaded ||
+                  current is HomeSliderLoading ||
+                  current is HomeSliderLoadingError,
+              builder: (context, state) {
+                if (state is HomeSliderLoading) {
+                  return SizedBox(
+                    height: 160.h,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else if (state is HomeSliderLoadingError) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                } else if (state is HomeSliderLoaded) {
+                  return homeSlider(
+                    imageList:
+                        state.sliderList.map((slider) => slider.photo).toList(),
+                    boxFit: BoxFit.fill,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             const Gap(10),
 

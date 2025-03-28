@@ -1,21 +1,21 @@
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/home/data/models/category_model.dart';
+import 'package:gym_swat/features/home/data/models/slider_model.dart';
 import 'package:gym_swat/service_locator.dart';
-import 'package:http/http.dart' as http;
 
 abstract interface class HomeRemoteDataSource {
   Future<List<CategoryModel>> getCategories();
+  Future<List<SliderModel>> getSliders();
 }
 
 final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
-  final http.Client client;
+  HomeRemoteDataSourceImpl();
+  final apiServices = sl<ApiServices>();
 
-  const HomeRemoteDataSourceImpl({required this.client});
-
+  ///get categories
   @override
   Future<List<CategoryModel>> getCategories() async {
-    final apiServices = sl<ApiServices>();
     try {
       final response = await apiServices.getApi(endPoint: AppConfig.category);
 
@@ -26,7 +26,24 @@ final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return [];
       }
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw Exception('Unexpected error from category api: $e');
+    }
+  }
+
+  ///get slider
+  @override
+  Future<List<SliderModel>> getSliders() async {
+    try {
+      final response = await apiServices.getApi(endPoint: AppConfig.slider);
+
+      if (response['data'] != null) {
+        final List<dynamic> sliders = response['data'];
+        return sliders.map((json) => SliderModel.fromJson(json)).toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Unexpected error from slider api: $e');
     }
   }
 }
