@@ -10,7 +10,6 @@ abstract interface class HomeRemoteDataSource {
 }
 
 final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
-  HomeRemoteDataSourceImpl();
   final apiServices = sl<ApiServices>();
 
   ///get categories

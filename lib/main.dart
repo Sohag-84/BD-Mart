@@ -5,6 +5,7 @@ import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
+import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 void main() async {
@@ -37,6 +38,10 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => sl<HomeBloc>(),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    sl<ProductBloc>()..add(ProductFetchedEvent()),
               ),
             ],
             child: MaterialApp.router(

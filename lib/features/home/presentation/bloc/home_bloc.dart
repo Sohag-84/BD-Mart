@@ -56,10 +56,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         (failure) => emit(
           HomeSliderLoadingError(message: failure.message),
         ),
-        (sliders)=>
-          emit(
-          HomeSliderLoaded(sliderList: sliders)
-        ),
+        (sliders) => emit(HomeSliderLoaded(sliderList: sliders)),
       );
     } on SocketException {
       emit(const HomeCategoryLoadingFailure(message: "No internet connection"));

@@ -1,6 +1,6 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
-import 'package:gym_swat/features/product/views/product_details_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 
 Widget categoryProductsSection() {
   return Column(

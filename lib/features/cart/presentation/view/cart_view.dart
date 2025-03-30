@@ -4,7 +4,7 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_icon_button.dart';
 import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
-import 'package:gym_swat/features/product/views/product_details_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});

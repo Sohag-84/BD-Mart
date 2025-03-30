@@ -4,7 +4,7 @@ import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
 import 'package:gym_swat/features/cart/presentation/view/shipping_details_view.dart';
 import 'package:gym_swat/features/category/views/category_view.dart';
 import 'package:gym_swat/features/category/views/sub_category_view.dart';
-import 'package:gym_swat/features/product/views/product_details_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 import 'package:gym_swat/features/splash/view/splash_view.dart';
 
 part 'app_routes.dart';

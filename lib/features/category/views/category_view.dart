@@ -5,7 +5,7 @@ import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/circular_indicator.dart';
 import 'package:gym_swat/features/category/widgets/custom_offer_container.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
-import 'package:gym_swat/features/product/views/product_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
 class CategoryView extends StatelessWidget {
   const CategoryView({super.key});

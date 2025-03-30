@@ -1,7 +1,8 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
-import 'package:gym_swat/features/product/views/product_details_view.dart';
-import 'package:gym_swat/features/product/views/product_view.dart';
+import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
+import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
 Widget allProductsSection({
   required BuildContext context,
@@ -40,48 +41,48 @@ Widget allProductsSection({
         ],
       ),
       Gap(5.h),
-      GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.h,
-          crossAxisSpacing: 15.w,
-          mainAxisExtent: 290.h,
-        ),
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return customProductContainer(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProductDetailsView(),
-                ),
-              );
-            },
-            image: "assets/images/bottle.png",
-            productName:
-                "Nitro Tech Protein Nitro Tech Protein Nitro Tech Protein Nitro Tech Protein",
-            discount: "10 %",
-            discountPrice: "78",
-            sellingPrice: "300",
-          );
+      BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoading) {
+            return loader();
+          } else if (state is ProductLoadingFailed) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else if (state is ProductLoaded) {
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.h,
+                crossAxisSpacing: 15.w,
+                mainAxisExtent: 290.h,
+              ),
+              itemCount: state.productList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final product = state.productList[index];
+                return customProductContainer(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProductDetailsView(),
+                      ),
+                    );
+                  },
+                  image: product.thumbnailImage!,
+                  productName: product.name ?? "",
+                  discount: "${product.discount}",
+                  discountPrice: null,
+                  sellingPrice: product.mainPrice ?? "",
+                );
+              },
+            );
+          } else {
+            return const SizedBox();
+          }
         },
-      ),
-      Gap(10.h),
-      Center(
-        child: GestureDetector(
-          onTap: () {},
-          child: Text(
-            shopMore,
-            style: TextStyle(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w400,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ),
       ),
     ],
   );

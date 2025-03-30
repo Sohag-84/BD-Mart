@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:gym_swat/core/constants/exports.dart';
-import 'package:gym_swat/features/product/views/product_view.dart';
+import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
 Widget subcategoryRowSection() {
   final ScrollController scrollController = ScrollController();
