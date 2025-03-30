@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
@@ -53,9 +52,7 @@ class _HomeViewState extends State<HomeView> {
                 if (state is HomeSliderLoading) {
                   return SizedBox(
                     height: 160.h,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: Center(child: loader()),
                   );
                 } else if (state is HomeSliderLoadingError) {
                   return Center(

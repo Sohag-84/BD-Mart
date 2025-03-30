@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 
@@ -67,7 +66,7 @@ class _CategorySectionState extends State<CategorySection> {
             current is HomeCategoryLoadingFailure,
         builder: (context, state) {
           if (state is HomeCategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return loader();
           } else if (state is HomeCategoryLoadingFailure) {
             return const Center(
               child: Text('Failed to load data'),
