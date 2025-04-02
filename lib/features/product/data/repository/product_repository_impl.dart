@@ -9,8 +9,14 @@ class ProductRepositoryImpl implements ProductRepository {
   const ProductRepositoryImpl({required this.productRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<Product>>> getProducts() async {
-    final result = await productRemoteDataSource.getProducts();
+  Future<Either<Failure, List<Product>>> getProducts({
+    required String url,
+    required int page,
+  }) async {
+    final result = await productRemoteDataSource.getProducts(
+      url: url,
+      page: page,
+    );
     return right(result);
   }
 }

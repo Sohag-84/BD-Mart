@@ -7,4 +7,12 @@ sealed class ProductEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class ProductFetchedEvent extends ProductEvent {}
+final class ProductFetchedEvent extends ProductEvent {
+  final String url;
+  final bool isRefresh;
+
+  const ProductFetchedEvent({required this.url, this.isRefresh = false});
+
+  @override
+  List<Object> get props => [url, isRefresh];
+}

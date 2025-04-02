@@ -13,9 +13,13 @@ final class ProductLoading extends ProductState {}
 
 final class ProductLoaded extends ProductState {
   final List<Product> productList;
-  const ProductLoaded({required this.productList});
+  final bool hasReachedMax;
+  const ProductLoaded({
+    required this.productList,
+    required this.hasReachedMax,
+  });
   @override
-  List<Object> get props => [productList];
+  List<Object> get props => [productList, hasReachedMax];
 }
 
 final class ProductLoadingFailed extends ProductState {

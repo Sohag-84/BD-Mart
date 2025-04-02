@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
@@ -39,10 +38,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => sl<HomeBloc>(),
               ),
-              BlocProvider(
-                create: (context) =>
-                    sl<ProductBloc>()..add(ProductFetchedEvent()),
-              ),
+              BlocProvider(create: (context) => sl<ProductBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

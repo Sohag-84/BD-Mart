@@ -1,3 +1,4 @@
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
@@ -20,6 +21,9 @@ class _HomeViewState extends State<HomeView> {
 
     context.read<HomeBloc>().add(HomeSliderFetchedEvent());
     context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
+    context.read<ProductBloc>().add(
+          const ProductFetchedEvent(url: AppConfig.products),
+        );
   }
 
   @override
@@ -45,7 +49,9 @@ class _HomeViewState extends State<HomeView> {
         onRefresh: () {
           context.read<HomeBloc>().add(HomeSliderFetchedEvent());
           context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
-          context.read<ProductBloc>().add(ProductFetchedEvent());
+          context.read<ProductBloc>().add(
+                const ProductFetchedEvent(url: AppConfig.products),
+              );
         },
         child: SingleChildScrollView(
           child: Column(

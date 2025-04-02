@@ -1,19 +1,25 @@
-import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
 import 'package:gym_swat/service_locator.dart';
 
 abstract interface class ProductRemoteDataSource {
-  Future<List<Product>> getProducts();
+  Future<List<Product>> getProducts({
+    required String url,
+    required int page,
+  });
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final apiServices = sl<ApiServices>();
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getProducts({
+    required String url,
+    required int page,
+  }) async {
     try {
-      final response = await apiServices.getApi(fullApiUrl: AppConfig.products);
-
+      final response = await apiServices.getApi(
+        fullApiUrl: "$url?page=$page",
+      );
       if (response['data'] != null) {
         final List<dynamic> product = response['data'];
         return product.map((json) => Product.fromJson(json)).toList();

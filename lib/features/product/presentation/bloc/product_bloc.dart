@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_usecase.dart';
 
@@ -12,24 +11,65 @@ part 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetProductUsecase getProductUsecase;
+  int currentPage = 1;
+  bool hasReachedMax = false;
+  bool isFetching = false;
+  List<Product> productList = [];
+
   ProductBloc({required this.getProductUsecase}) : super(ProductInitial()) {
-    on<ProductFetchedEvent>(_productFetchedEvent);
+    on<ProductFetchedEvent>(_onProductFetched);
   }
 
-  FutureOr<void> _productFetchedEvent(
-      ProductFetchedEvent event, Emitter<ProductState> emit) async {
-    try {
+  FutureOr<void> _onProductFetched(
+    ProductFetchedEvent event,
+    Emitter<ProductState> emit,
+  ) async {
+    if (isFetching || (hasReachedMax && !event.isRefresh)) return;
+
+    isFetching = true;
+
+    if (event.isRefresh) {
+      currentPage = 1;
+      hasReachedMax = false;
+      productList.clear();
+    }
+
+    if (currentPage == 1) {
       emit(ProductLoading());
-      final result = await getProductUsecase(NoParams());
+    }
+
+    try {
+      final result = await getProductUsecase(
+        ProductPaginationParams(url: event.url, page: currentPage),
+      );
+
       result.fold(
-        (failure) => emit(
-          ProductLoadingFailed(message: failure.message),
-        ),
-        (products) => emit(ProductLoaded(productList: products)),
+        (failure) {
+          isFetching = false;
+          emit(ProductLoadingFailed(message: failure.message));
+        },
+        (products) {
+          isFetching = false;
+          if (products.isEmpty) {
+            hasReachedMax = true;
+          } else {
+            currentPage++;
+            productList.addAll(products);
+          }
+
+          emit(
+            ProductLoaded(
+              productList: List.from(productList),
+              hasReachedMax: hasReachedMax,
+            ),
+          );
+        },
       );
     } on SocketException {
+      isFetching = false;
       emit(const ProductLoadingFailed(message: "No internet connection"));
     } catch (e) {
+      isFetching = false;
       emit(ProductLoadingFailed(message: e.toString()));
     }
   }
