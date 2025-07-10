@@ -1,14 +1,23 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
-import 'package:gym_swat/core/utils/circular_indicator.dart';
-import 'package:gym_swat/features/category/widgets/custom_offer_container.dart';
-import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/widgets/custom_offer_container.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends StatefulWidget {
   const CategoryView({super.key});
+
+  @override
+  State<CategoryView> createState() => _CategoryViewState();
+}
+
+class _CategoryViewState extends State<CategoryView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CategoryBloc>().add(CategoryFetched());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +26,20 @@ class CategoryView extends StatelessWidget {
       appBar: customAppBar(
         title: allCategories,
       ),
-      body: BlocBuilder<HomeBloc, HomeState>(
+      body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
-          if (state is HomeCategoryLoading) {
+          if (state is CategoryLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is HomeCategoryLoadingFailure) {
-            return const Center(
-              child: Text('Failed to load data'),
+          } else if (state is CategoryFailure) {
+            return Center(
+              child: Text(state.error),
             );
-          } else if (state is HomeCategoryLoaded) {
+          } else if (state is CategoryLoaded) {
             return refresh(
               onRefresh: () async {
-                context.read<HomeBloc>().add(
-                      HomeCategoryFetchedEvent(),
-                    );
+                // context.read<HomeBloc>().add(
+                //       HomeCategoryFetchedEvent(),
+                //     );
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

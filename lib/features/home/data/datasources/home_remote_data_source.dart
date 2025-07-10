@@ -1,11 +1,11 @@
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
-import 'package:gym_swat/features/home/data/models/category_model.dart';
+import 'package:gym_swat/features/home/data/models/home_category_model.dart';
 import 'package:gym_swat/features/home/data/models/slider_model.dart';
 import 'package:gym_swat/service_locator.dart';
 
 abstract interface class HomeRemoteDataSource {
-  Future<List<CategoryModel>> getCategories();
+  Future<List<HomeCategoryModel>> getCategories();
   Future<List<SliderModel>> getSliders();
 }
 
@@ -14,13 +14,15 @@ final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   ///get categories
   @override
-  Future<List<CategoryModel>> getCategories() async {
+  Future<List<HomeCategoryModel>> getCategories() async {
     try {
       final response = await apiServices.getApi(endPoint: AppConfig.category);
 
       if (response['data'] != null) {
         final List<dynamic> categories = response['data'];
-        return categories.map((json) => CategoryModel.fromJson(json)).toList();
+        return categories
+            .map((json) => HomeCategoryModel.fromJson(json))
+            .toList();
       } else {
         return [];
       }

@@ -13,7 +13,7 @@ final class HomeInitial extends HomeState {}
 final class HomeCategoryLoading extends HomeState {}
 
 final class HomeCategoryLoaded extends HomeState {
-  final List<CategoryEntity> categoryList;
+  final List<HomeCategoryEntity> categoryList;
   const HomeCategoryLoaded({required this.categoryList});
 
   @override

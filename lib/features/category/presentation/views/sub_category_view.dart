@@ -1,6 +1,6 @@
 import 'package:gym_swat/core/constants/exports.dart';
-import 'package:gym_swat/features/category/part/category_product_section.dart';
-import 'package:gym_swat/features/category/part/sub_category_animated_row_section.dart';
+import 'package:gym_swat/features/category/presentation/part/category_product_section.dart';
+import 'package:gym_swat/features/category/presentation/part/sub_category_animated_row_section.dart';
 
 class SubCategoryView extends StatelessWidget {
   final String categoryName;

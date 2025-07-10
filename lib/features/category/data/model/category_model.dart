@@ -1,4 +1,4 @@
-import 'package:gym_swat/features/home/domain/entity/category_entity.dart';
+import 'package:gym_swat/features/category/domain/entity/category_entity.dart';
 
 class CategoryModel extends CategoryEntity {
   CategoryModel({

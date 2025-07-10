@@ -1,0 +1,1 @@
+G:\Flutter\Clean Architecture\BD Mart\build\app\intermediates\cxx\Debug\6zc4s4aw\obj\arm64-v8a
