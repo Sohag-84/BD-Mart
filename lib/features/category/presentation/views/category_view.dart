@@ -16,7 +16,11 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   void initState() {
     super.initState();
-    context.read<CategoryBloc>().add(CategoryFetched());
+    // ✅ Fetch only if not already loaded
+    final bloc = context.read<CategoryBloc>();
+    if (bloc.state is! CategoryLoaded) {
+      bloc.add(const CategoryFetch());
+    }
   }
 
   @override
@@ -29,7 +33,7 @@ class _CategoryViewState extends State<CategoryView> {
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: loader());
           } else if (state is CategoryFailure) {
             return Center(
               child: Text(state.error),
@@ -37,9 +41,9 @@ class _CategoryViewState extends State<CategoryView> {
           } else if (state is CategoryLoaded) {
             return refresh(
               onRefresh: () async {
-                // context.read<HomeBloc>().add(
-                //       HomeCategoryFetchedEvent(),
-                //     );
+                context
+                    .read<CategoryBloc>()
+                    .add(const CategoryFetch(forceToLoadData: true));
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

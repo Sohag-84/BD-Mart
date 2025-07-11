@@ -7,7 +7,10 @@ sealed class CategoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CategoryFetched extends CategoryEvent {
+class CategoryFetch extends CategoryEvent {
+  final bool forceToLoadData;
+  const CategoryFetch({this.forceToLoadData = false});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [forceToLoadData];
 }

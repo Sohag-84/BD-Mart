@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,41 +26,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeCategoryFetchedEvent event,
     Emitter<HomeState> emit,
   ) async {
-    try {
-      emit(HomeCategoryLoading());
-      final result = await getCategoriesUsecase(NoParams());
-      result.fold(
-        (failure) => emit(
-          HomeCategoryLoadingFailure(message: failure.message),
-        ),
-        (categoryList) => emit(
-          HomeCategoryLoaded(categoryList: categoryList),
-        ),
-      );
-    } on SocketException {
-      emit(const HomeCategoryLoadingFailure(message: "No internet connection"));
-    } catch (e) {
-      emit(HomeCategoryLoadingFailure(message: e.toString()));
-    }
+    emit(HomeCategoryLoading());
+    final result = await getCategoriesUsecase(NoParams());
+    result.fold(
+      (failure) => emit(
+        HomeCategoryLoadingFailure(message: failure.message),
+      ),
+      (categoryList) => emit(
+        HomeCategoryLoaded(categoryList: categoryList),
+      ),
+    );
   }
 
   FutureOr<void> _homeSliderFetchedEvent(
     HomeSliderFetchedEvent event,
     Emitter<HomeState> emit,
   ) async {
-    try {
-      emit(HomeSliderLoading());
-      final result = await getSlidersUsecase(NoParams());
-      result.fold(
-        (failure) => emit(
-          HomeSliderLoadingError(message: failure.message),
-        ),
-        (sliders) => emit(HomeSliderLoaded(sliderList: sliders)),
-      );
-    } on SocketException {
-      emit(const HomeCategoryLoadingFailure(message: "No internet connection"));
-    } catch (e) {
-      emit(HomeCategoryLoadingFailure(message: e.toString()));
-    }
+    emit(HomeSliderLoading());
+    final result = await getSlidersUsecase(NoParams());
+    result.fold(
+      (failure) => emit(
+        HomeSliderLoadingError(message: failure.message),
+      ),
+      (sliders) => emit(HomeSliderLoaded(sliderList: sliders)),
+    );
   }
 }

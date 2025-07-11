@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/features/category/data/datasource/category_remote_datasource.dart';
@@ -10,7 +13,15 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<Either<Failure, List<CategoryEntity>>> getCategories() async {
-    final result =  await categoryRemoteDatasource.getCategories();
-    return right(result);
+    try {
+      final result = await categoryRemoteDatasource.getCategories();
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
   }
 }

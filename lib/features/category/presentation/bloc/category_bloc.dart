@@ -15,22 +15,19 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc({required this.categoryUsecase}) : super(CategoryInitial()) {
     on<CategoryEvent>((event, emit) {});
 
-    on<CategoryFetched>(_categoryFetched);
+    on<CategoryFetch>(_categoryFetched);
   }
 
   FutureOr<void> _categoryFetched(
-      CategoryFetched event, Emitter<CategoryState> emit) async {
-    try {
-      emit(CategoryLoading());
+      CategoryFetch event, Emitter<CategoryState> emit) async {
+    if (!event.forceToLoadData && state is CategoryLoaded) return;
 
-      final result = await categoryUsecase.call(NoParams());
-      result.fold(
-        (left) => emit(CategoryFailure(error: left.message)),
-        (right) => emit(CategoryLoaded(categoryList: right)),
-      );
-      
-    } catch (e) {
-      emit(CategoryFailure(error: e.toString()));
-    }
+    emit(CategoryLoading());
+
+    final result = await categoryUsecase.call(NoParams());
+    result.fold(
+      (left) => emit(CategoryFailure(error: left.message)),
+      (right) => emit(CategoryLoaded(categoryList: right)),
+    );
   }
 }

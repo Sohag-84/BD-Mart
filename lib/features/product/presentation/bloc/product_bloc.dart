@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,39 +37,31 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(ProductLoading());
     }
 
-    try {
-      final result = await getProductUsecase(
-        ProductPaginationParams(url: event.url, page: currentPage),
-      );
+    final result = await getProductUsecase(
+      ProductPaginationParams(url: event.url, page: currentPage),
+    );
 
-      result.fold(
-        (failure) {
-          isFetching = false;
-          emit(ProductLoadingFailed(message: failure.message));
-        },
-        (products) {
-          isFetching = false;
-          if (products.isEmpty) {
-            hasReachedMax = true;
-          } else {
-            currentPage++;
-            productList.addAll(products);
-          }
+    result.fold(
+      (failure) {
+        isFetching = false;
+        emit(ProductLoadingFailed(message: failure.message));
+      },
+      (products) {
+        isFetching = false;
+        if (products.isEmpty) {
+          hasReachedMax = true;
+        } else {
+          currentPage++;
+          productList.addAll(products);
+        }
 
-          emit(
-            ProductLoaded(
-              productList: List.from(productList),
-              hasReachedMax: hasReachedMax,
-            ),
-          );
-        },
-      );
-    } on SocketException {
-      isFetching = false;
-      emit(const ProductLoadingFailed(message: "No internet connection"));
-    } catch (e) {
-      isFetching = false;
-      emit(ProductLoadingFailed(message: e.toString()));
-    }
+        emit(
+          ProductLoaded(
+            productList: List.from(productList),
+            hasReachedMax: hasReachedMax,
+          ),
+        );
+      },
+    );
   }
 }

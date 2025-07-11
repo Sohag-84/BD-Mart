@@ -20,7 +20,7 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
         return [];
       }
     } catch (e) {
-      throw Exception('Unexpected error from category api: $e');
+      rethrow;
     }
   }
 }
