@@ -17,7 +17,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryFetch>(_categoryFetched);
   }
 
-  FutureOr<void> _categoryFetched(
+  Future<void> _categoryFetched(
       CategoryFetch event, Emitter<CategoryState> emit) async {
     if (!event.forceToLoadData && state is CategoryLoaded) return;
 
@@ -29,4 +29,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       (right) => emit(CategoryLoaded(categoryList: right)),
     );
   }
+
+ 
 }

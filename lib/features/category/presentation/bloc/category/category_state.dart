@@ -22,7 +22,7 @@ final class CategoryLoaded extends CategoryState {
 final class CategoryFailure extends CategoryState {
   final String error;
   const CategoryFailure({required this.error});
-  
+
   @override
   List<Object> get props => [error];
 }

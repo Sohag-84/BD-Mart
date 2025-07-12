@@ -1,6 +1,7 @@
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
+import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/home/presentation/part/all_product_section.dart';
 import 'package:gym_swat/features/home/presentation/part/category_section.dart';
@@ -15,12 +16,17 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final String url = AppConfig.featureudCategory;
   @override
   void initState() {
     super.initState();
 
     context.read<HomeBloc>().add(HomeSliderFetchedEvent());
-    context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
+    // Fetch only if not already loaded
+    final bloc = context.read<FeatureCategoryBloc>();
+    if (bloc.state is! FeatureCategoryLoaded) {
+      bloc.add(FeatureCategoryFetch(url: url));
+    }
     context.read<ProductBloc>().add(
           const ProductFetchedEvent(url: AppConfig.products),
         );
@@ -48,12 +54,15 @@ class _HomeViewState extends State<HomeView> {
       body: refresh(
         onRefresh: () {
           context.read<HomeBloc>().add(HomeSliderFetchedEvent());
-          context.read<HomeBloc>().add(HomeCategoryFetchedEvent());
+          context
+              .read<FeatureCategoryBloc>()
+              .add(FeatureCategoryFetch(url: url, forceToLoadData: true));
           context.read<ProductBloc>().add(
                 const ProductFetchedEvent(url: AppConfig.products),
               );
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               BlocBuilder<HomeBloc, HomeState>(

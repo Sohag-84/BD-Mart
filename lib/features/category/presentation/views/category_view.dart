@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
-import 'package:gym_swat/features/category/presentation/bloc/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/widgets/custom_offer_container.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
@@ -14,11 +14,11 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
-  final String url = AppConfig.featureudCategory;
+  final String url = AppConfig.category;
   @override
   void initState() {
     super.initState();
-    // ✅ Fetch only if not already loaded
+    // Fetch only if not already loaded
     final bloc = context.read<CategoryBloc>();
     if (bloc.state is! CategoryLoaded) {
       bloc.add(CategoryFetch(url: url));

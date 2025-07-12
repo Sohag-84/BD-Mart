@@ -3,13 +3,17 @@ import 'package:gym_swat/features/category/data/datasource/category_remote_datas
 import 'package:gym_swat/features/category/data/repository/category_repository_impl.dart';
 import 'package:gym_swat/features/category/domain/repository/category_repository.dart';
 import 'package:gym_swat/features/category/domain/usecase/category_usecase.dart';
-import 'package:gym_swat/features/category/presentation/bloc/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 Future<void> categoryInjectionContainer() async {
   //BLOC INJECTION
   sl.registerFactory<CategoryBloc>(
     () => CategoryBloc(categoryUsecase: sl.call()),
+  );
+  sl.registerFactory<FeatureCategoryBloc>(
+    () => FeatureCategoryBloc(categoryUsecase: sl.call()),
   );
 
   //USECASE INJECTION

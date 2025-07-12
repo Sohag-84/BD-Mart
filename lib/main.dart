@@ -3,7 +3,8 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
-import 'package:gym_swat/features/category/presentation/bloc/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => sl<HomeBloc>(),
               ),
               BlocProvider(create: (context) => sl<ProductBloc>()),
+              BlocProvider(create: (context) => sl<FeatureCategoryBloc>()),
               BlocProvider(create: (context) => sl<CategoryBloc>()),
             ],
             child: MaterialApp.router(

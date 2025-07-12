@@ -13,5 +13,6 @@ class CategoryFetch extends CategoryEvent {
   const CategoryFetch({required this.url, this.forceToLoadData = false});
 
   @override
-  List<Object> get props => [forceToLoadData];
+  List<Object> get props => [url, forceToLoadData];
 }
+

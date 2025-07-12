@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:gym_swat/core/constants/exports.dart';
-import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 
 class CategorySection extends StatefulWidget {
   const CategorySection({super.key});
@@ -59,20 +59,20 @@ class _CategorySectionState extends State<CategorySection> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 95.h,
-      child: BlocBuilder<HomeBloc, HomeState>(
+      child: BlocBuilder<FeatureCategoryBloc, FeatureCategoryState>(
         buildWhen: (previous, current) =>
-            current is HomeCategoryLoaded ||
-            current is HomeCategoryLoading ||
-            current is HomeCategoryLoadingFailure,
+            current is FeatureCategoryLoaded ||
+            current is FeatureCategoryLoading ||
+            current is FeatureCategoryFailure,
         builder: (context, state) {
-          if (state is HomeCategoryLoading) {
+          if (state is FeatureCategoryLoading) {
             return loader();
-          } else if (state is HomeCategoryLoadingFailure) {
-            return const Center(
-              child: Text('Failed to load data'),
+          } else if (state is FeatureCategoryFailure) {
+            return Center(
+              child: Text(state.error),
             );
-          } else if (state is HomeCategoryLoaded) {
-            final categories = state.categoryList;
+          } else if (state is FeatureCategoryLoaded) {
+            final categories = state.featureCategoryList;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
