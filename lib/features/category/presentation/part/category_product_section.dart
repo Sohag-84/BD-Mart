@@ -3,13 +3,14 @@ import 'package:gym_swat/core/widgets/custom_product_container.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 
-Widget categoryProductsSection() {
+Widget categoryProductsSection({required BuildContext context}) {
+  final productBloc = BlocProvider.of<ProductBloc>(context);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          if (state is ProductLoading) {
+          if (state is ProductLoading && productBloc.productList.isEmpty) {
             return loader();
           }
           if (state is ProductLoadingFailed) {
@@ -18,6 +19,9 @@ Widget categoryProductsSection() {
             );
           }
           if (state is ProductLoaded) {
+            if (state.productList.isEmpty) {
+              return dataNotFound();
+            }
             return GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

@@ -54,10 +54,10 @@ class _ProductViewState extends State<ProductView> {
               return Center(child: Text(state.message));
             } else if (state is ProductLoaded) {
               if (state.productList.isEmpty) {
-                return const Center(child: Text("No products found"));
+                return dataNotFound();
               }
 
-              return RefreshIndicator(
+              return refresh(
                 onRefresh: () async {
                   productBloc.add(
                     const ProductFetchedEvent(
@@ -77,11 +77,13 @@ class _ProductViewState extends State<ProductView> {
                     }
                     return false;
                   },
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: GridView.builder(
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        GridView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -110,8 +112,14 @@ class _ProductViewState extends State<ProductView> {
                             );
                           },
                         ),
-                      ),
-                    ],
+
+                        //for paingation loader
+                        Gap(5.h),
+                        if (state.isPaginating && state.productList.isNotEmpty)
+                          paginationLoader(),
+                        Gap(5.h),
+                      ],
+                    ),
                   ),
                 ),
               );

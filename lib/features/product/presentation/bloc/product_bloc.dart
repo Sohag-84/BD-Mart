@@ -56,18 +56,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductLoadingFailed(message: failure.message));
       },
       (products) {
-        isFetching = false;
         if (products.isEmpty) {
           hasReachedMax = true;
         } else {
           currentPage++;
           productList.addAll(products);
         }
-
+        isFetching = false;
         emit(
           ProductLoaded(
             productList: List.from(productList),
             hasReachedMax: hasReachedMax,
+            isPaginating: !event.isRefresh && currentPage > 1 && !hasReachedMax,
           ),
         );
       },
