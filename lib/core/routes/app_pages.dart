@@ -47,6 +47,7 @@ class AppPages {
         name: AppRoutes.subCategory.name,
         builder: (context, state) => SubCategoryView(
           categoryName: (state.extra as Map)['categoryName'].toString(),
+          url: (state.extra as Map)['url'].toString(),
         ),
       ),
 

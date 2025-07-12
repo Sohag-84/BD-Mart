@@ -13,6 +13,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   int currentPage = 1;
   bool hasReachedMax = false;
   bool isFetching = false;
+  String? lastUrl;
   List<Product> productList = [];
 
   ProductBloc({required this.getProductUsecase}) : super(ProductInitial()) {
@@ -23,6 +24,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductFetchedEvent event,
     Emitter<ProductState> emit,
   ) async {
+    if (lastUrl != event.url) {
+      // reset if a new URL
+      lastUrl = event.url;
+      currentPage = 1;
+      hasReachedMax = false;
+      productList.clear();
+    }
+
     if (isFetching || (hasReachedMax && !event.isRefresh)) return;
 
     isFetching = true;

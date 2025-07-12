@@ -118,6 +118,7 @@ class _CategoryViewState extends State<CategoryView> {
                                 AppRoutes.subCategory.name,
                                 extra: {
                                   "categoryName": category.name,
+                                  "url": category.links.products,
                                 },
                               );
                             },
