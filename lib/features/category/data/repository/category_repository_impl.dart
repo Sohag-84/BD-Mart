@@ -12,9 +12,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
   const CategoryRepositoryImpl({required this.categoryRemoteDatasource});
 
   @override
-  Future<Either<Failure, List<CategoryEntity>>> getCategories() async {
+  Future<Either<Failure, List<CategoryEntity>>> getCategories({required String url}) async {
     try {
-      final result = await categoryRemoteDatasource.getCategories();
+      final result = await categoryRemoteDatasource.getCategories(url: url);
       return right(result);
     } on SocketException {
       return left(const NetworkFailure("No internet connection"));

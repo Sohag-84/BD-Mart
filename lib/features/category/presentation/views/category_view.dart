@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category_bloc.dart';
@@ -13,13 +14,14 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
+  final String url = AppConfig.featureudCategory;
   @override
   void initState() {
     super.initState();
     // ✅ Fetch only if not already loaded
     final bloc = context.read<CategoryBloc>();
     if (bloc.state is! CategoryLoaded) {
-      bloc.add(const CategoryFetch());
+      bloc.add(CategoryFetch(url: url));
     }
   }
 
@@ -43,7 +45,7 @@ class _CategoryViewState extends State<CategoryView> {
               onRefresh: () async {
                 context
                     .read<CategoryBloc>()
-                    .add(const CategoryFetch(forceToLoadData: true));
+                    .add(CategoryFetch(url: url, forceToLoadData: true));
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

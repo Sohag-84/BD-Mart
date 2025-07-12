@@ -1,4 +1,3 @@
-import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/category/data/datasource/category_remote_datasource.dart';
 import 'package:gym_swat/features/category/data/model/category_model.dart';
@@ -9,9 +8,9 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
   const CategoryRemoteDatasourceImpl({required this.apiServices});
 
   @override
-  Future<List<CategoryEntity>> getCategories() async {
+  Future<List<CategoryEntity>> getCategories({required String url}) async {
     try {
-      final response = await apiServices.getApi(endPoint: AppConfig.featureudCategory);
+      final response = await apiServices.getApi(endPoint: url);
 
       if (response['data'] != null) {
         final List<dynamic> categories = response['data'];

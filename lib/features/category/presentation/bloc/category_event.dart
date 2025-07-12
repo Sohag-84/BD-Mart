@@ -8,8 +8,9 @@ sealed class CategoryEvent extends Equatable {
 }
 
 class CategoryFetch extends CategoryEvent {
+  final String url;
   final bool forceToLoadData;
-  const CategoryFetch({this.forceToLoadData = false});
+  const CategoryFetch({required this.url, this.forceToLoadData = false});
 
   @override
   List<Object> get props => [forceToLoadData];

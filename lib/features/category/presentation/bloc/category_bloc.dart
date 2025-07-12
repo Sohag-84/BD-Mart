@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/features/category/domain/entity/category_entity.dart';
 import 'package:gym_swat/features/category/domain/usecase/category_usecase.dart';
 
@@ -24,7 +23,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
     emit(CategoryLoading());
 
-    final result = await categoryUsecase.call(NoParams());
+    final result = await categoryUsecase.call(CategoryParam(url: event.url));
     result.fold(
       (left) => emit(CategoryFailure(error: left.message)),
       (right) => emit(CategoryLoaded(categoryList: right)),
