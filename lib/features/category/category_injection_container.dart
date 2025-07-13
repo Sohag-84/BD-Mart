@@ -5,6 +5,7 @@ import 'package:gym_swat/features/category/domain/repository/category_repository
 import 'package:gym_swat/features/category/domain/usecase/category_usecase.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 Future<void> categoryInjectionContainer() async {
@@ -14,6 +15,9 @@ Future<void> categoryInjectionContainer() async {
   );
   sl.registerFactory<FeatureCategoryBloc>(
     () => FeatureCategoryBloc(categoryUsecase: sl.call()),
+  );
+  sl.registerFactory<SubCategoryBloc>(
+    () => SubCategoryBloc(categoryUsecase: sl.call()),
   );
 
   //USECASE INJECTION

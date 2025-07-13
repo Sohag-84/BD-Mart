@@ -1,16 +1,20 @@
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
+import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/part/sub_category_animated_row_section.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 
 class SubCategoryView extends StatefulWidget {
   final String categoryName;
-  final String url;
+  final String productUrl;
+  final String categoryId;
   const SubCategoryView({
     super.key,
     required this.categoryName,
-    required this.url,
+    required this.productUrl,
+    required this.categoryId,
   });
 
   @override
@@ -23,7 +27,10 @@ class _SubCategoryViewState extends State<SubCategoryView> {
   void initState() {
     super.initState();
     productBloc = BlocProvider.of<ProductBloc>(context);
-    productBloc.add(ProductFetchedEvent(url: widget.url));
+    productBloc.add(ProductFetchedEvent(url: widget.productUrl));
+    context.read<SubCategoryBloc>().add(SubcategoryFetch(
+        url: "${AppConfig.subCategories}${widget.categoryId}",
+        forceToLoadData: true));
   }
 
   @override
@@ -48,10 +55,16 @@ class _SubCategoryViewState extends State<SubCategoryView> {
               onRefresh: () async {
                 productBloc.add(
                   ProductFetchedEvent(
-                    url: widget.url,
+                    url: widget.productUrl,
                     isRefresh: true,
                   ),
                 );
+                context.read<SubCategoryBloc>().add(
+                      SubcategoryFetch(
+                        url: "${AppConfig.subCategories}${widget.categoryId}",
+                        forceToLoadData: true,
+                      ),
+                    );
               },
               child: NotificationListener<ScrollNotification>(
                 onNotification: (scrollInfo) {
@@ -59,7 +72,7 @@ class _SubCategoryViewState extends State<SubCategoryView> {
                           scrollInfo.metrics.maxScrollExtent &&
                       !state.hasReachedMax) {
                     productBloc.add(
-                      ProductFetchedEvent(url: widget.url),
+                      ProductFetchedEvent(url: widget.productUrl),
                     );
                   }
                   return false;
