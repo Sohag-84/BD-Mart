@@ -1,27 +1,30 @@
 import 'package:go_router/go_router.dart';
-import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
-import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/widgets/custom_offer_container.dart';
 
-class CategoryView extends StatefulWidget {
-  const CategoryView({super.key});
+class AllCategoryView extends StatefulWidget {
+  final String title;
+  final String endPoint;
+  const AllCategoryView({
+    super.key,
+    this.endPoint = "",
+    this.title = "",
+  });
 
   @override
-  State<CategoryView> createState() => _CategoryViewState();
+  State<AllCategoryView> createState() => _AllCategoryViewState();
 }
 
-class _CategoryViewState extends State<CategoryView> {
-  final String url = AppConfig.category;
+class _AllCategoryViewState extends State<AllCategoryView> {
   @override
   void initState() {
     super.initState();
-    // Fetch only if not already loaded
-    final bloc = context.read<CategoryBloc>();
-    if (bloc.state is! CategoryLoaded) {
-      bloc.add(CategoryFetch(url: url));
-    }
+
+    context.read<AllCategoryBloc>().add(
+          AllCategoryFetch(url: widget.endPoint),
+        );
   }
 
   @override
@@ -31,20 +34,20 @@ class _CategoryViewState extends State<CategoryView> {
       appBar: customAppBar(
         title: allCategories,
       ),
-      body: BlocBuilder<CategoryBloc, CategoryState>(
+      body: BlocBuilder<AllCategoryBloc, AllCategoryState>(
         builder: (context, state) {
-          if (state is CategoryLoading) {
+          if (state is AllCategoryLoading) {
             return Center(child: loader());
-          } else if (state is CategoryFailure) {
+          } else if (state is AllCategoryFailure) {
             return Center(
               child: Text(state.error),
             );
-          } else if (state is CategoryLoaded) {
+          } else if (state is AllCategoryLoaded) {
             return refresh(
               onRefresh: () async {
                 context
-                    .read<CategoryBloc>()
-                    .add(CategoryFetch(url: url, forceToLoadData: true));
+                    .read<AllCategoryBloc>()
+                    .add(AllCategoryFetch(url: widget.endPoint));
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

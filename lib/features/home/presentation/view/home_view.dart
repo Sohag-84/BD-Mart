@@ -17,6 +17,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final String url = AppConfig.featureudCategory;
+  final productUrl = AppConfig.products;
   @override
   void initState() {
     super.initState();
@@ -27,9 +28,11 @@ class _HomeViewState extends State<HomeView> {
     if (bloc.state is! FeatureCategoryLoaded) {
       bloc.add(FeatureCategoryFetch(url: url));
     }
-    context.read<ProductBloc>().add(
-          const ProductFetchedEvent(url: AppConfig.products),
-        );
+        // productBloc = BlocProvider.of<ProductBloc>(context);
+    context.read<ProductBloc>().add(ProductFetchedEvent(url:productUrl));
+    // context.read<ProductBloc>().add(
+    //       const ProductFetchedEvent(url: AppConfig.products),
+    //     );
   }
 
   @override

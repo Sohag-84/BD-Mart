@@ -6,10 +6,12 @@ import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
 import 'product_details_view.dart';
 
 class ProductView extends StatefulWidget {
-  // final String title;
-  // final String url;
+  final String title;
+  final String url;
   const ProductView({
     super.key,
+    required this.title,
+    required this.url,
   });
 
   @override
@@ -23,14 +25,14 @@ class _ProductViewState extends State<ProductView> {
   void initState() {
     super.initState();
     productBloc = BlocProvider.of<ProductBloc>(context);
-    productBloc.add(const ProductFetchedEvent(url: AppConfig.products));
+    productBloc.add(ProductFetchedEvent(url: widget.url));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Products"),
+        title: Text(widget.title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -115,7 +117,7 @@ class _ProductViewState extends State<ProductView> {
 
                         //for paingation loader
                         Gap(5.h),
-                        if (state.isPaginating && state.productList.isNotEmpty)
+                        if (state.isFetching && state.productList.isNotEmpty)
                           paginationLoader(),
                         Gap(5.h),
                       ],

@@ -20,7 +20,7 @@ Widget customProductContainer({
         borderRadius: BorderRadius.circular(8.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(.1),
+            color: Colors.black.withValues(alpha: .1),
             blurRadius: 2,
             offset: const Offset(0.0, 0.10),
           ),

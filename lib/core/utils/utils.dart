@@ -4,12 +4,12 @@ import 'package:gym_swat/core/constants/exports.dart';
 
 //image container
 Widget customImage({
-  required String imagePath,
+  String? imagePath,
   double? width,
   double? height,
 }) {
   return AnyImageView(
-    imagePath: imagePath,
+    imagePath: imagePath ?? deafultLogo,
     height: height ?? height,
     width: width ?? width,
     boxFit: BoxFit.fill,
@@ -21,12 +21,12 @@ Widget customImage({
 ///set box shadow
 List<BoxShadow> boxShadow = [
   BoxShadow(
-    color: Colors.black.withOpacity(.1),
+    color: Colors.black.withValues(alpha: .1),
     blurRadius: 2,
     offset: const Offset(0.1, 5),
   ),
   BoxShadow(
-    color: Colors.black.withOpacity(.1),
+    color: Colors.black.withValues(alpha: .1),
     blurRadius: 2,
     offset: const Offset(-0.7, -0.7),
   ),

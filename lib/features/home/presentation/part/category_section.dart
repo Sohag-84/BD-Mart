@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/views/all_category_view.dart';
 
 class CategorySection extends StatefulWidget {
   const CategorySection({super.key});
@@ -87,7 +89,16 @@ class _CategorySectionState extends State<CategorySection> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AllCategoryView(
+                              endPoint: AppConfig.featureudCategory,
+                            ),
+                          ),
+                        );
+                      },
                       child: Text(
                         seeAll,
                         style: TextStyle(

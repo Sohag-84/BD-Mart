@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
+import 'package:gym_swat/features/category/presentation/views/all_category_view.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
-Widget subcategoryRowSection() {
+Widget subcategoryRowSection({required String categoryId}) {
   final ScrollController scrollController = ScrollController();
   bool isAutoScrolling = true;
   Timer? autoScrollTimer;
@@ -50,7 +52,7 @@ Widget subcategoryRowSection() {
           return Center(child: Text(state.error));
         } else if (state is SubCategoryLoaded) {
           if (state.subcategoryList.isEmpty) {
-            return dataNotFound();
+            return Container();
           }
           return Row(
             children: [
@@ -78,7 +80,10 @@ Widget subcategoryRowSection() {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ProductView(),
+                                  builder: (context) => ProductView(
+                                    title: category.name??"",
+                                    url: category.links.products,
+                                  ),
                                 ),
                               );
                             },
@@ -101,7 +106,7 @@ Widget subcategoryRowSection() {
                                   Gap(5.h),
                                   Expanded(
                                     child: Text(
-                                      category.name??"",
+                                      category.name ?? "",
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
@@ -128,7 +133,16 @@ Widget subcategoryRowSection() {
                   color: AppColors.darkCharcoal,
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AllCategoryView(
+                          endPoint: AppConfig.subCategories + categoryId,
+                        ),
+                      ),
+                    );
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

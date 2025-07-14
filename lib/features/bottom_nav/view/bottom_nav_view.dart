@@ -16,7 +16,7 @@ class _BottomNavViewState extends State<BottomNavView> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white.withOpacity(0.95),
+        backgroundColor: Colors.white.withValues(alpha: 0.95),
         unselectedItemColor: const Color.fromRGBO(168, 175, 179, 1),
         selectedItemColor: AppColors.primaryColor,
         currentIndex: currentIndex,

@@ -1,3 +1,4 @@
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
@@ -25,7 +26,10 @@ Widget allProductsSection({
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ProductView(),
+                  builder: (context) =>const ProductView(
+                    title: "Products",
+                    url: AppConfig.products,
+                  ),
                 ),
               );
             },

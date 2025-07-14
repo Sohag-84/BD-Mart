@@ -3,6 +3,7 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<FeatureCategoryBloc>()),
               BlocProvider(create: (context) => sl<CategoryBloc>()),
               BlocProvider(create: (context) => sl<SubCategoryBloc>()),
+              BlocProvider(create: (context) => sl<AllCategoryBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

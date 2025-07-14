@@ -25,7 +25,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     Emitter<ProductState> emit,
   ) async {
     if (lastUrl != event.url) {
-      // reset if a new URL
       lastUrl = event.url;
       currentPage = 1;
       hasReachedMax = false;
@@ -35,6 +34,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (isFetching || (hasReachedMax && !event.isRefresh)) return;
 
     isFetching = true;
+
+    //Emit fetching=true before making API call
+    emit(
+      ProductLoaded(
+        productList: List.from(productList),
+        hasReachedMax: hasReachedMax,
+        isFetching: true,
+      ),
+    );
 
     if (event.isRefresh) {
       currentPage = 1;
@@ -59,15 +67,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         if (products.isEmpty) {
           hasReachedMax = true;
         } else {
-          currentPage++;
           productList.addAll(products);
+          currentPage++;
         }
+
         isFetching = false;
+
         emit(
           ProductLoaded(
             productList: List.from(productList),
             hasReachedMax: hasReachedMax,
-            isPaginating: !event.isRefresh && currentPage > 1 && !hasReachedMax,
+            isFetching: isFetching,
           ),
         );
       },

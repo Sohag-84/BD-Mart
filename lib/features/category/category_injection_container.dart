@@ -3,6 +3,7 @@ import 'package:gym_swat/features/category/data/datasource/category_remote_datas
 import 'package:gym_swat/features/category/data/repository/category_repository_impl.dart';
 import 'package:gym_swat/features/category/domain/repository/category_repository.dart';
 import 'package:gym_swat/features/category/domain/usecase/category_usecase.dart';
+import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
@@ -18,6 +19,9 @@ Future<void> categoryInjectionContainer() async {
   );
   sl.registerFactory<SubCategoryBloc>(
     () => SubCategoryBloc(categoryUsecase: sl.call()),
+  );
+  sl.registerFactory<AllCategoryBloc>(
+    () => AllCategoryBloc(categoryUsecase: sl.call()),
   );
 
   //USECASE INJECTION

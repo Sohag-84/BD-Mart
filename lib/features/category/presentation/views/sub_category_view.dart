@@ -82,7 +82,7 @@ class _SubCategoryViewState extends State<SubCategoryView> {
                   child: Column(
                     children: [
                       //header
-                      subcategoryRowSection(),
+                      subcategoryRowSection(categoryId: widget.categoryId),
                       Gap(5.h),
 
                       //body
@@ -120,7 +120,7 @@ class _SubCategoryViewState extends State<SubCategoryView> {
 
                       //for pagination loader
                       Gap(5.h),
-                      if (state.isPaginating && state.productList.isNotEmpty)
+                      if (state.isFetching && state.productList.isNotEmpty)
                         paginationLoader(),
                       Gap(5.h),
                     ],

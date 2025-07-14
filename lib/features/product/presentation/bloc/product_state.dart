@@ -14,14 +14,14 @@ final class ProductLoading extends ProductState {}
 final class ProductLoaded extends ProductState {
   final List<Product> productList;
   final bool hasReachedMax;
-  final bool isPaginating;
+  final bool isFetching;
   const ProductLoaded({
     required this.productList,
     required this.hasReachedMax,
-    required this.isPaginating,
+    required this.isFetching,
   });
   @override
-  List<Object> get props => [productList, hasReachedMax, isPaginating];
+  List<Object> get props => [productList, hasReachedMax, isFetching];
 }
 
 final class ProductLoadingFailed extends ProductState {
