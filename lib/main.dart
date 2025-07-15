@@ -10,6 +10,7 @@ import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_ca
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_details/product_details_bloc.dart';
+import 'package:gym_swat/features/product/presentation/bloc/related_product/related_product_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 void main() async {
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<HomeBloc>()),
               BlocProvider(create: (context) => sl<ProductBloc>()),
               BlocProvider(create: (context) => sl<ProductDetailsBloc>()),
+              BlocProvider(create: (context) => sl<RelatedProductBloc>()),
               BlocProvider(create: (context) => sl<FeatureCategoryBloc>()),
               BlocProvider(create: (context) => sl<CategoryBloc>()),
               BlocProvider(create: (context) => sl<SubCategoryBloc>()),

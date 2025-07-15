@@ -49,4 +49,20 @@ class ProductRepositoryImpl implements ProductRepository {
       return left(ServerFailure("Server error: $e"));
     }
   }
+
+  @override
+  ResultFuture<List<ProductEntity>> getRelatedProducts(
+      {required String productId}) async {
+    try {
+      final result = await productRemoteDataSource.getRelatedProducts(
+          productId: productId);
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
 }

@@ -4,8 +4,10 @@ import 'package:gym_swat/features/product/data/repository/product_repository_imp
 import 'package:gym_swat/features/product/domain/repositories/product_repository.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_details_usecase.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_usecase.dart';
+import 'package:gym_swat/features/product/domain/usecases/get_related_product_usecase.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_details/product_details_bloc.dart';
+import 'package:gym_swat/features/product/presentation/bloc/related_product/related_product_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 Future<void> productInjectionContainer() async {
@@ -20,6 +22,11 @@ Future<void> productInjectionContainer() async {
       productDetailsUsecase: sl.call(),
     ),
   );
+  sl.registerLazySingleton(
+    () => RelatedProductBloc(
+      relatedProductUsecase: sl.call(),
+    ),
+  );
 
   //USECASE INJECTION
   sl.registerLazySingleton<GetProductUsecase>(
@@ -27,6 +34,9 @@ Future<void> productInjectionContainer() async {
   );
   sl.registerLazySingleton<GetProductDetailsUsecase>(
     () => GetProductDetailsUsecase(productRepository: sl.call()),
+  );
+  sl.registerLazySingleton<GetRelatedProductUsecase>(
+    () => GetRelatedProductUsecase(productRepository: sl.call()),
   );
 
   //REPOSITORY & DATA SOURCE INJECTION

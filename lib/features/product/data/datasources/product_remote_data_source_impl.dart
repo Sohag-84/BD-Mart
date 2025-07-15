@@ -48,4 +48,21 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<Product>> getRelatedProducts({required String productId}) async {
+    try {
+      final response = await apiServices.getApi(
+        endPoint: "${AppConfig.relatedProduct}$productId",
+      );
+      if (response['data'] != null) {
+        final List<dynamic> product = response['data'];
+        return product.map((json) => Product.fromJson(json)).toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

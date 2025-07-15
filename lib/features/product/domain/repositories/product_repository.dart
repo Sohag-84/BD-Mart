@@ -11,4 +11,7 @@ abstract interface class ProductRepository {
   ResultFuture<List<ProductDetailsEntity>> getProductDetails({
     required String productId,
   });
+
+  ResultFuture<List<ProductEntity>> getRelatedProducts(
+      {required String productId});
 }

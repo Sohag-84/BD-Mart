@@ -10,4 +10,6 @@ abstract interface class ProductRemoteDataSource {
   Future<List<ProductDetailsModel>> getProductDetails({
     required String productId,
   });
+
+  Future<List<Product>> getRelatedProducts({required String productId});
 }
