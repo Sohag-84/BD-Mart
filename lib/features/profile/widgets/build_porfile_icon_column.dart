@@ -49,7 +49,7 @@ Row customProfileRow1() {
       ///message
       buildProfileIconColumn(
         icon: Icons.credit_card_outlined,
-        title: paymentStatus,
+        title: paymentInfo,
         onTap: () {},
       ),
 

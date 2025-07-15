@@ -12,7 +12,7 @@ class ProfileView extends StatelessWidget {
     List<String> counterRowItemName = [
       cart,
       wishlist,
-      myOrders,
+      "myOrders",
     ];
     return Scaffold(
       appBar: customAppBar(

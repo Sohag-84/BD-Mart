@@ -18,7 +18,7 @@ Widget buildMyOrdersSection() {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildOrderStatusItem(
-                pending,
+                pendingOrders,
                 Icons.pending_actions,
                 () {},
                 badgeCount: 0,

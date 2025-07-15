@@ -15,7 +15,7 @@ Widget allProductsSection({
       Row(
         children: [
           Text(
-            justForYou,
+            forYou,
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
