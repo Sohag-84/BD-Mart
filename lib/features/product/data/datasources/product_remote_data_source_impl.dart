@@ -3,7 +3,6 @@ import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/product/data/datasources/product_remote_data_source.dart';
 import 'package:gym_swat/features/product/data/models/product_details_model.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
-import 'package:gym_swat/features/product/domain/entity/product_details_entity.dart';
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final ApiServices apiServices;
@@ -30,7 +29,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<List<ProductDetailsEntity>> getProductDetails({
+  Future<List<ProductDetailsModel>> getProductDetails({
     required String productId,
   }) async {
     try {

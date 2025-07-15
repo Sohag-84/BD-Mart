@@ -1,5 +1,5 @@
-import 'package:gym_swat/features/category/domain/entity/category_entity.dart';
+import 'package:gym_swat/features/category/data/model/category_model.dart';
 
 abstract interface class CategoryRemoteDatasource {
-  Future<List<CategoryEntity>> getCategories({required String url});
+  Future<List<CategoryModel>> getCategories({required String url});
 }

@@ -76,7 +76,7 @@ Widget allProductsSection({
                       },
                     );
                   },
-                  image: product.thumbnailImage!,
+                  image: product.thumbnailImage ?? defaultLogo,
                   productName: product.name ?? "",
                   discount: "${product.discount}",
                   discountPrice: null,

@@ -5,8 +5,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/product/data/datasources/product_remote_data_source.dart';
-import 'package:gym_swat/features/product/data/models/product_model.dart';
 import 'package:gym_swat/features/product/domain/entity/product_details_entity.dart';
+import 'package:gym_swat/features/product/domain/entity/product_entity.dart';
 import 'package:gym_swat/features/product/domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -14,7 +14,7 @@ class ProductRepositoryImpl implements ProductRepository {
   const ProductRepositoryImpl({required this.productRemoteDataSource});
 
   @override
-  ResultFuture<List<Product>> getProducts({
+  ResultFuture<List<ProductEntity>> getProducts({
     required String url,
     required int page,
   }) async {

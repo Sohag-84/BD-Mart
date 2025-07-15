@@ -12,7 +12,7 @@ final class ProductInitial extends ProductState {}
 final class ProductLoading extends ProductState {}
 
 final class ProductLoaded extends ProductState {
-  final List<Product> productList;
+  final List<ProductEntity> productList;
   final bool hasReachedMax;
   final bool isFetching;
   const ProductLoaded({

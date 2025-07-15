@@ -105,7 +105,7 @@ class _ProductViewState extends State<ProductView> {
                                   },
                                 );
                               },
-                              image: product.thumbnailImage!,
+                              image: product.thumbnailImage ?? defaultLogo,
                               productName: product.name ?? "",
                               discount: "${product.discount}",
                               discountPrice: "200",

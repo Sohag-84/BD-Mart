@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gym_swat/features/product/data/models/product_model.dart';
+import 'package:gym_swat/features/product/domain/entity/product_entity.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_usecase.dart';
 
 part 'product_event.dart';
@@ -14,7 +14,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   bool hasReachedMax = false;
   bool isFetching = false;
   String? lastUrl;
-  List<Product> productList = [];
+  List<ProductEntity> productList = [];
 
   ProductBloc({required this.getProductUsecase}) : super(ProductInitial()) {
     on<ProductFetchedEvent>(_onProductFetched);

@@ -127,7 +127,7 @@ class _CategoryViewState extends State<CategoryView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   customImage(
-                                    imagePath: category.banner.toString(),
+                                    imagePath: category.banner ?? defaultLogo,
                                     height: 70.h,
                                   ),
                                   Gap(5.h),

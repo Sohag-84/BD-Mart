@@ -1,57 +1,43 @@
-class ProductModel {
-  ProductModel({
-    required this.data,
-    required this.links,
-    required this.meta,
-    required this.success,
-    required this.status,
-  });
+import 'package:gym_swat/features/product/domain/entity/product_entity.dart';
 
-  final List<Product> data;
-  final ProductModelLinks? links;
-  final Meta? meta;
-  final bool? success;
-  final int? status;
+class ProductModel extends ProductEntity {
+  ProductModel({
+    required List<ProductEntity> data,
+    required ProductModelLinksEntity? links,
+    required MetaEntity? meta,
+    required bool? success,
+    required int? status,
+  });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       data: json["data"] == null
           ? []
-          : List<Product>.from(json["data"]!.map((x) => Product.fromJson(x))),
+          : List<ProductEntity>.from(
+              json["data"]!.map((x) => Product.fromJson(x))),
       links: json["links"] == null
           ? null
           : ProductModelLinks.fromJson(json["links"]),
-      meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+      meta: json["meta"] == null ? null : MetaModel.fromJson(json["meta"]),
       success: json["success"],
       status: json["status"],
     );
   }
 }
 
-class Product {
+class Product extends ProductEntity {
   Product({
-    required this.id,
-    required this.name,
-    required this.thumbnailImage,
-    required this.hasDiscount,
-    required this.discount,
-    required this.strokedPrice,
-    required this.mainPrice,
-    required this.rating,
-    required this.sales,
-    required this.links,
+    super.id,
+    super.name,
+    super.thumbnailImage,
+    super.hasDiscount,
+    super.discount,
+    super.strokedPrice,
+    super.mainPrice,
+    super.rating,
+    super.sales,
+    super.links,
   });
-
-  final int? id;
-  final String? name;
-  final String? thumbnailImage;
-  final bool? hasDiscount;
-  final String? discount;
-  final String? strokedPrice;
-  final String? mainPrice;
-  final dynamic rating;
-  final int? sales;
-  final ProductLinks? links;
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -70,32 +56,21 @@ class Product {
   }
 }
 
-class ProductLinks {
-  ProductLinks({
-    required this.details,
-  });
-
-  final String? details;
+class ProductLinks extends ProductLinksEntity {
+  ProductLinks({super.details});
 
   factory ProductLinks.fromJson(Map<String, dynamic> json) {
-    return ProductLinks(
-      details: json["details"],
-    );
+    return ProductLinks(details: json["details"]);
   }
 }
 
-class ProductModelLinks {
+class ProductModelLinks extends ProductModelLinksEntity {
   ProductModelLinks({
-    required this.first,
-    required this.last,
-    required this.prev,
-    required this.next,
+    super.first,
+    super.last,
+    super.prev,
+    super.next,
   });
-
-  final String? first;
-  final String? last;
-  final dynamic prev;
-  final String? next;
 
   factory ProductModelLinks.fromJson(Map<String, dynamic> json) {
     return ProductModelLinks(
@@ -107,35 +82,27 @@ class ProductModelLinks {
   }
 }
 
-class Meta {
-  Meta({
-    required this.currentPage,
-    required this.from,
-    required this.lastPage,
-    required this.links,
-    required this.path,
-    required this.perPage,
-    required this.to,
-    required this.total,
+class MetaModel extends MetaEntity {
+  MetaModel({
+    super.currentPage,
+    super.from,
+    super.lastPage,
+    required super.links,
+    super.path,
+    super.perPage,
+    super.to,
+    super.total,
   });
 
-  final int? currentPage;
-  final int? from;
-  final int? lastPage;
-  final List<Link> links;
-  final String? path;
-  final int? perPage;
-  final int? to;
-  final int? total;
-
-  factory Meta.fromJson(Map<String, dynamic> json) {
-    return Meta(
+  factory MetaModel.fromJson(Map<String, dynamic> json) {
+    return MetaModel(
       currentPage: json["current_page"],
       from: json["from"],
       lastPage: json["last_page"],
       links: json["links"] == null
           ? []
-          : List<Link>.from(json["links"]!.map((x) => Link.fromJson(x))),
+          : List<LinkEntity>.from(
+              json["links"]!.map((x) => LinkModel.fromJson(x))),
       path: json["path"],
       perPage: json["per_page"],
       to: json["to"],
@@ -144,19 +111,11 @@ class Meta {
   }
 }
 
-class Link {
-  Link({
-    required this.url,
-    required this.label,
-    required this.active,
-  });
+class LinkModel extends LinkEntity {
+  LinkModel({super.url, super.label, super.active});
 
-  final String? url;
-  final String? label;
-  final bool? active;
-
-  factory Link.fromJson(Map<String, dynamic> json) {
-    return Link(
+  factory LinkModel.fromJson(Map<String, dynamic> json) {
+    return LinkModel(
       url: json["url"],
       label: json["label"],
       active: json["active"],

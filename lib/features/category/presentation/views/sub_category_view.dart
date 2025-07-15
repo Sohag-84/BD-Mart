@@ -109,7 +109,7 @@ class _SubCategoryViewState extends State<SubCategoryView> {
                               );
                               ;
                             },
-                            image: product.thumbnailImage!,
+                            image: product.thumbnailImage ?? defaultLogo,
                             productName: product.name ?? "",
                             discount: "${product.discount}",
                             sellingPrice: product.mainPrice ?? "",
