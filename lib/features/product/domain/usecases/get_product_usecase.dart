@@ -1,6 +1,5 @@
-import 'package:fpdart/fpdart.dart';
-import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/core/usecase/usecase.dart';
+import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
 import 'package:gym_swat/features/product/domain/repositories/product_repository.dart';
 
@@ -10,8 +9,7 @@ class GetProductUsecase
   const GetProductUsecase({required this.productRepository});
 
   @override
-  Future<Either<Failure, List<Product>>> call(
-      ProductPaginationParams params) async {
+  ResultFuture<List<Product>> call(ProductPaginationParams params) async {
     return await productRepository.getProducts(
       url: params.url,
       page: params.page,
