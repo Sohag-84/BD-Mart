@@ -1,8 +1,10 @@
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/features/product/domain/entity/product_details_entity.dart';
 import 'package:share_plus/share_plus.dart';
 
 Widget productInfoContainer({
   required BuildContext context,
+  required ProductDetailsEntity product,
 }) {
   return Container(
     padding: EdgeInsets.all(5.w),
@@ -17,18 +19,24 @@ Widget productInfoContainer({
         Row(
           children: [
             //ratings
-            ratingBar(
-              ratings: 4.5,
-            ),
+            product.rating == 0
+                ? const SizedBox()
+                : ratingBar(
+                    ratings: double.parse(
+                      product.rating.toString(),
+                    ),
+                  ),
             Gap(5.w),
-            Text(
-              "(10)",
-              style: TextStyle(
-                color: AppColors.lightGreyColor,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            product.rating == 0
+                ? Container()
+                : Text(
+                    "(${product.ratingCount ?? "0"})",
+                    style: TextStyle(
+                      color: AppColors.lightGreyColor,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
             const Spacer(),
 
             //favorite
@@ -42,7 +50,7 @@ Widget productInfoContainer({
             //share icon
             InkWell(
               onTap: () async {
-                await Share.share("https://martkit.com/");
+                await Share.share(product.link ?? "https://martkit.com/");
               },
               child: Icon(
                 Icons.share_outlined,
@@ -54,7 +62,7 @@ Widget productInfoContainer({
         Gap(10.h),
         //name
         Text(
-          "Double Sided Magnetic Window Glass Cleaner Magnets Brush  (5-12mm/15-24mm/20-30mm) Home Wizard Wiper Surface Cleaning Tools",
+          product.name ?? "",
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
@@ -65,49 +73,62 @@ Widget productInfoContainer({
 
         Gap(10.w),
 
-        ///category and brand
-        Text(
-          "Category: Kids and Toys",
-          style: TextStyle(
-            fontSize: 13.sp,
-            color: AppColors.lightGreyColor,
-          ),
-        ),
-        Gap(2.w),
-
         ///brands
-        Text(
-          "Brand: SR Mart",
-          style: TextStyle(
-            color: AppColors.lightGreyColor,
-            fontSize: 13.sp,
-          ),
-        ),
-        Text(
-          'kg',
-          style: TextStyle(
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w700,
-            color: Colors.deepPurple,
-          ),
-        ),
+        product.brand!.name.toString().isEmpty
+            ? Container()
+            : Text(
+                "Brand: ${product.brand?.name ?? ""}",
+                style: TextStyle(
+                  color: AppColors.lightGreyColor,
+                  fontSize: 13.sp,
+                ),
+              ),
+        product.unit == null
+            ? const SizedBox()
+            : Text(
+                "Unit: ${product.unit ?? ''}",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.deepPurple,
+                ),
+              ),
         Gap(10.h),
 
         ///price & discount
         Row(
           children: [
+            product.discount == "-0%"
+                ? const SizedBox()
+                : Text.rich(
+                    TextSpan(
+                      text: takaSign,
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.lightGreyColor,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "${product.strokedPrice}",
+                        ),
+                      ],
+                    ),
+                  ),
+
+            Gap(5.w),
             //price
             Text.rich(
               TextSpan(
                 text: takaSign,
                 style: TextStyle(
-                  fontSize: 13.sp,
+                  fontSize: 18.sp,
                   color: AppColors.greenColor,
                   fontWeight: FontWeight.w600,
                 ),
                 children: [
                   TextSpan(
-                    text: "1245",
+                    text: "${product.mainPrice}",
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: AppColors.greenColor,
@@ -119,38 +140,24 @@ Widget productInfoContainer({
             ),
 
             Gap(5.w),
-            Text.rich(
-              TextSpan(
-                text: takaSign,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.lightGreyColor,
-                  decoration: TextDecoration.lineThrough,
-                ),
-                children: const [
-                  TextSpan(
-                    text: "20",
-                  ),
-                ],
-              ),
-            ),
 
-            Gap(5.w),
-            Container(
-              padding: EdgeInsets.all(1.w),
-              decoration: BoxDecoration(
-                color: Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(5.r),
-              ),
-              child: Text(
-                "Save 200",
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  color: AppColors.lightGreyColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            product.discount == "-0%"
+                ? const SizedBox()
+                : Container(
+                    padding: EdgeInsets.all(1.w),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    child: Text(
+                      "$takaSign${product.discount}",
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ],

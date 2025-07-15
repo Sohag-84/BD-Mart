@@ -10,12 +10,12 @@ Widget customImage({
   double? height,
 }) {
   return AnyImageView(
-    imagePath: imagePath ?? deafultLogo,
+    imagePath: imagePath ?? defaultLogo,
     height: height ?? height,
     width: width ?? width,
     boxFit: BoxFit.fill,
     borderRadius: BorderRadius.circular(8.r),
-    errorPlaceHolder: deafultLogo,
+    errorPlaceHolder: defaultLogo,
   );
 }
 

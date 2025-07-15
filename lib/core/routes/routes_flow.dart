@@ -14,3 +14,5 @@
  /// [BottomNavView ("/bottom-nav-view") → CartView ("/cart")]
 
 /// [CartView("/cart") -> ShippingDetails()]
+
+/// [home view(product list)+category product+ product view --> product details view with product id parameter]

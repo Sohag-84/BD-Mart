@@ -6,7 +6,7 @@ import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/home/presentation/part/all_product_section.dart';
 import 'package:gym_swat/features/home/presentation/part/category_section.dart';
 import 'package:gym_swat/features/home/presentation/part/home_seach_bar.dart';
-import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
+import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -28,11 +28,7 @@ class _HomeViewState extends State<HomeView> {
     if (bloc.state is! FeatureCategoryLoaded) {
       bloc.add(FeatureCategoryFetch(url: url));
     }
-        // productBloc = BlocProvider.of<ProductBloc>(context);
-    context.read<ProductBloc>().add(ProductFetchedEvent(url:productUrl));
-    // context.read<ProductBloc>().add(
-    //       const ProductFetchedEvent(url: AppConfig.products),
-    //     );
+    context.read<ProductBloc>().add(ProductFetchedEvent(url: productUrl));
   }
 
   @override

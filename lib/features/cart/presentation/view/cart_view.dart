@@ -4,7 +4,6 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_icon_button.dart';
 import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
-import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -26,12 +25,12 @@ class CartView extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProductDetailsView(),
-                    ),
-                  );
+                  // context.pushNamed(
+                  //   AppRoutes.productDetails.name,
+                  //   extra: {
+                  //     "productId": product.id.toString(),
+                  //   },
+                  // );
                 },
                 child: Container(
                   padding: EdgeInsets.all(5.w),

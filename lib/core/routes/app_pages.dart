@@ -56,7 +56,9 @@ class AppPages {
       GoRoute(
         path: AppRoutes.productDetails.path,
         name: AppRoutes.productDetails.name,
-        builder: (context, state) => const ProductDetailsView(),
+        builder: (context, state) => ProductDetailsView(
+          productId: (state.extra as Map)['productId'].toString(),
+        ),
       ),
 
       ///Shipping details view

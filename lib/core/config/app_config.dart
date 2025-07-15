@@ -2,13 +2,6 @@ class AppConfig {
   static const baseURL = "https://martkit.com/api/v2/";
   static const oneSignalAppId = "e96caa9f-76df-4a38-924a-f652248863da";
 
-  ///bkash credential
-  static const bkashUsername = "01605229868";
-  static const bkashPassword = ".0,{z]3O^Qn";
-  static const bkashAppKey = "kdqkgdT6FUlF77CSbnN38dxjtc";
-  static const bkashAppSecret =
-      "gRCNKK92OpLZTBoIRS7tufJZVm9q2vaKRAYgct5iaBxV07uiEk71";
-
   static const signUp = "auth/signup";
   static const confirmOtp = "auth/confirm_code";
   static const resendOtp = "${baseURL}auth/resend_code";

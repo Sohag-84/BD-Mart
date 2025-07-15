@@ -1,8 +1,9 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
-import 'package:gym_swat/features/product/presentation/bloc/product_bloc.dart';
-import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
+import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 
 Widget allProductsSection({
@@ -26,7 +27,7 @@ Widget allProductsSection({
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>const ProductView(
+                  builder: (context) => const ProductView(
                     title: "Products",
                     url: AppConfig.products,
                   ),
@@ -68,11 +69,11 @@ Widget allProductsSection({
                 final product = state.productList[index];
                 return customProductContainer(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ProductDetailsView(),
-                      ),
+                    context.pushNamed(
+                      AppRoutes.productDetails.name,
+                      extra: {
+                        "productId": product.id.toString(),
+                      },
                     );
                   },
                   image: product.thumbnailImage!,

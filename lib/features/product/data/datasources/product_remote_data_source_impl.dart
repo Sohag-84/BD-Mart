@@ -1,6 +1,9 @@
+import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/product/data/datasources/product_remote_data_source.dart';
+import 'package:gym_swat/features/product/data/models/product_details_model.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
+import 'package:gym_swat/features/product/domain/entity/product_details_entity.dart';
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final ApiServices apiServices;
@@ -18,6 +21,27 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       if (response['data'] != null) {
         final List<dynamic> product = response['data'];
         return product.map((json) => Product.fromJson(json)).toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ProductDetailsEntity>> getProductDetails({
+    required String productId,
+  }) async {
+    try {
+      final response = await apiServices.getApi(
+        endPoint: "${AppConfig.productDetails}$productId",
+      );
+      if (response['data'] != null) {
+        final List<dynamic> product = response['data'];
+        return product
+            .map((json) => ProductDetailsModel.fromJson(json))
+            .toList();
       } else {
         return [];
       }
