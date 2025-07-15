@@ -1,4 +1,5 @@
 import 'package:any_image_view/any_image_view.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 
@@ -40,5 +41,22 @@ Widget paginationLoader() {
   return const SpinKitThreeBounce(
     color: AppColors.primaryColor,
     size: 24.0,
+  );
+}
+
+///for rating bar
+RatingBarIndicator ratingBar({
+  required double ratings,
+  double starSize = 12.0,
+}) {
+  return RatingBarIndicator(
+    rating: ratings,
+    itemBuilder: (context, index) => const Icon(
+      Icons.star,
+      color: Colors.amber,
+    ),
+    itemCount: 5,
+    itemSize: starSize,
+    direction: Axis.horizontal,
   );
 }
