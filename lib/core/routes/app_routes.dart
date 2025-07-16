@@ -2,9 +2,15 @@ part of 'app_pages.dart';
 
 class AppRoutes {
   static Route splash = Route(name: "Splash", path: "/");
+
   static Route bottomNavbar = Route(
     name: "Bottom Navigation",
     path: "/bottom-nav-view",
+  );
+
+  static Route login = Route(
+    name: "Login",
+    path: "/login",
   );
 
   static Route category = Route(

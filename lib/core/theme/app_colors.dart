@@ -12,4 +12,6 @@ class AppColors {
   static const Color redColor = Color(0xFFB80606);
   static const Color lightGrey = Color(0xFFFDFFF2);
   static const Color lightGreyColor = Color.fromRGBO(132, 132, 132, 1);
+  static Color darkGrey = const Color.fromRGBO(107, 115, 119, 1);
+  static const Color textFieldGrey = Color.fromRGBO(209, 209, 209, 1);
 }

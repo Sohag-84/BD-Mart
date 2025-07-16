@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gym_swat/features/auth/presentation/views/login_view.dart';
 import 'package:gym_swat/features/bottom_nav/view/bottom_nav_view.dart';
 import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
 import 'package:gym_swat/features/cart/presentation/view/shipping_details_view.dart';
@@ -26,6 +27,13 @@ class AppPages {
         path: AppRoutes.bottomNavbar.path,
         name: AppRoutes.bottomNavbar.name,
         builder: (context, state) => const BottomNavView(),
+      ),
+
+      ///Login view
+      GoRoute(
+        path: AppRoutes.login.path,
+        name: AppRoutes.login.name,
+        builder: (context, state) => const LoginView(),
       ),
 
       ///Cart view
