@@ -1,6 +1,7 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/button.dart';
 import 'package:gym_swat/core/widgets/custom_input_decoration.dart';
+import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:gym_swat/features/auth/presentation/widgets/auth_ui.dart';
 
 class LoginView extends StatefulWidget {
@@ -96,29 +97,40 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: SizedBox(
-                        height: 46,
-                        child: TextField(
-                          controller: passwordController,
-                          autofocus: false,
-                          obscureText: false,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          decoration: InputDecorations.buildInputDecoration_1(
-                            hintText: passwordHintText,
-                            isPasswordField: true,
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.visibility_outlined,
-                                color: Colors.grey,
+                    BlocBuilder<PasswordVisibilityCubit, bool>(
+                      builder: (context, isObscure) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: SizedBox(
+                            height: 46,
+                            child: TextField(
+                              controller: passwordController,
+                              autofocus: false,
+                              obscureText: isObscure,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration:
+                                  InputDecorations.buildInputDecoration_1(
+                                hintText: passwordHintText,
+                                isPasswordField: true,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<PasswordVisibilityCubit>()
+                                        .toggleVisibility();
+                                  },
+                                  icon: Icon(
+                                    isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
 
                     ///login button
