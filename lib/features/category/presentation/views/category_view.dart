@@ -60,7 +60,16 @@ class _CategoryViewState extends State<CategoryView> {
                         children: [
                           ///flash sale
                           customOfferContainer(
-                            onTap: () {},
+                            onTap: () {
+                              context.pushNamed(
+                                AppRoutes.product.name,
+                                extra: {
+                                  "title": flashSale,
+                                  "url": AppConfig.flashDeals,
+                                  "isPagination": false,
+                                },
+                              );
+                            },
                             image: icFlash,
                             offerName: flashSale,
                           ),

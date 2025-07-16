@@ -16,7 +16,7 @@ class AppConfig {
   static const featureudCategory = "categories/featured";
   static const categoryProducts = "${baseURL}products/category/";
   static const subCategories = "sub-categories/";
-  static const flashDeals = "flash-deals";
+  static const flashDeals = "${baseURL}flash-deals";
   static const products = "${baseURL}products";
   static const homePageProducts = "${baseURL}products/all";
   static const underHundredProducts = "${baseURL}products/under_100";
