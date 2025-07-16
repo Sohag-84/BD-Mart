@@ -1,9 +1,6 @@
 // ignore_for_file: dangling_library_doc_comments
 
-
-
 /// [Routes flow]:
-
 
 /// [SplashView ("/") → BottomNavView ("/bottom-nav-view")]
 
@@ -15,4 +12,6 @@
 
 /// [CartView("/cart") -> ShippingDetails()]
 
-/// [home view(product list)+category product+ product view --> product details view with product id parameter]
+/// [home view(product list)+category product+ product view + related product section (product details view) --> product details view with product id parameter]
+
+///[ home view(category+see all)+category view(header section) + subcategory(product list + header category-->product view) ] 

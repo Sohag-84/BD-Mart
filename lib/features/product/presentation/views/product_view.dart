@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_product_container.dart';
@@ -8,10 +7,12 @@ import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc
 class ProductView extends StatefulWidget {
   final String title;
   final String url;
+  final bool isPagination;
   const ProductView({
     super.key,
     required this.title,
     required this.url,
+    this.isPagination = true,
   });
 
   @override
@@ -25,7 +26,7 @@ class _ProductViewState extends State<ProductView> {
   void initState() {
     super.initState();
     productBloc = BlocProvider.of<ProductBloc>(context);
-    productBloc.add(ProductFetchedEvent(url: widget.url));
+    productBloc.add(ProductFetchedEvent(url: widget.url, isRefresh: true));
   }
 
   @override
@@ -62,8 +63,8 @@ class _ProductViewState extends State<ProductView> {
               return refresh(
                 onRefresh: () async {
                   productBloc.add(
-                    const ProductFetchedEvent(
-                      url: AppConfig.products,
+                    ProductFetchedEvent(
+                      url: widget.url,
                       isRefresh: true,
                     ),
                   );
@@ -73,9 +74,9 @@ class _ProductViewState extends State<ProductView> {
                     if (scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
                         !state.hasReachedMax) {
-                      productBloc.add(
-                        const ProductFetchedEvent(url: AppConfig.products),
-                      );
+                      if (widget.isPagination) {
+                        productBloc.add(ProductFetchedEvent(url: widget.url));
+                      }
                     }
                     return false;
                   },

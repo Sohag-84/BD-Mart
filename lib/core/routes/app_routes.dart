@@ -25,6 +25,11 @@ class AppRoutes {
     path: "/shipping-details",
   );
 
+  static Route product = Route(
+    name: "Product",
+    path: "/product",
+  );
+
   static Route productDetails = Route(
     name: "Product Details",
     path: "/product-details",

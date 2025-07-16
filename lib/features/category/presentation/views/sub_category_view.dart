@@ -23,12 +23,15 @@ class SubCategoryView extends StatefulWidget {
 }
 
 class _SubCategoryViewState extends State<SubCategoryView> {
-  late ProductBloc productBloc;
   @override
   void initState() {
     super.initState();
-    productBloc = BlocProvider.of<ProductBloc>(context);
-    productBloc.add(ProductFetchedEvent(url: widget.productUrl));
+    context.read<ProductBloc>().add(
+          ProductFetchedEvent(
+            url: widget.productUrl,
+            isRefresh: true,
+          ),
+        );
     context.read<SubCategoryBloc>().add(SubcategoryFetch(
         url: "${AppConfig.subCategories}${widget.categoryId}",
         forceToLoadData: true));
@@ -40,7 +43,7 @@ class _SubCategoryViewState extends State<SubCategoryView> {
       appBar: customAppBar(title: widget.categoryName),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          if (state is ProductLoading && productBloc.productList.isEmpty) {
+          if (state is ProductLoading) {
             return loader();
           }
           if (state is ProductLoadingFailed) {
@@ -54,12 +57,12 @@ class _SubCategoryViewState extends State<SubCategoryView> {
             }
             return refresh(
               onRefresh: () async {
-                productBloc.add(
-                  ProductFetchedEvent(
-                    url: widget.productUrl,
-                    isRefresh: true,
-                  ),
-                );
+                context.read<ProductBloc>().add(
+                      ProductFetchedEvent(
+                        url: widget.productUrl,
+                        isRefresh: true,
+                      ),
+                    );
                 context.read<SubCategoryBloc>().add(
                       SubcategoryFetch(
                         url: "${AppConfig.subCategories}${widget.categoryId}",
@@ -72,9 +75,9 @@ class _SubCategoryViewState extends State<SubCategoryView> {
                   if (scrollInfo.metrics.pixels ==
                           scrollInfo.metrics.maxScrollExtent &&
                       !state.hasReachedMax) {
-                    productBloc.add(
-                      ProductFetchedEvent(url: widget.productUrl),
-                    );
+                    context.read<ProductBloc>().add(
+                          ProductFetchedEvent(url: widget.productUrl),
+                        );
                   }
                   return false;
                 },
@@ -107,7 +110,6 @@ class _SubCategoryViewState extends State<SubCategoryView> {
                                   "productId": product.id.toString(),
                                 },
                               );
-                              ;
                             },
                             image: product.thumbnailImage ?? defaultLogo,
                             productName: product.name ?? "",

@@ -67,7 +67,16 @@ class _CategoryViewState extends State<CategoryView> {
 
                           ///todays deal
                           customOfferContainer(
-                            onTap: () {},
+                            onTap: () {
+                              context.pushNamed(
+                                AppRoutes.product.name,
+                                extra: {
+                                  "title": todaysDeal,
+                                  "url": AppConfig.todaysDeal,
+                                  "isPagination": false,
+                                },
+                              );
+                            },
                             image: icToadyDeals,
                             offerName: todaysDeal,
                           ),
