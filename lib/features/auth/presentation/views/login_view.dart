@@ -1,4 +1,6 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/button.dart';
 import 'package:gym_swat/core/widgets/custom_input_decoration.dart';
 import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cubit.dart';
@@ -97,8 +99,9 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
 
-                    BlocBuilder<PasswordVisibilityCubit, bool>(
-                      builder: (context, isObscure) {
+                    BlocBuilder<PasswordVisibilityCubit,
+                        PasswordVisibilityState>(
+                      builder: (context, state) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: SizedBox(
@@ -106,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                             child: TextField(
                               controller: passwordController,
                               autofocus: false,
-                              obscureText: isObscure,
+                              obscureText: state.loginPasswordObscure,
                               enableSuggestions: false,
                               autocorrect: false,
                               decoration:
@@ -117,10 +120,10 @@ class _LoginViewState extends State<LoginView> {
                                   onPressed: () {
                                     context
                                         .read<PasswordVisibilityCubit>()
-                                        .toggleVisibility();
+                                        .toggleLoginPasswordVisibility();
                                   },
                                   icon: Icon(
-                                    isObscure
+                                    state.loginPasswordObscure
                                         ? Icons.visibility_off
                                         : Icons.visibility,
                                     color: Colors.grey,
@@ -213,14 +216,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return const SignupView();
-                  //     },
-                  //   ),
-                  // );
+                  context.pushNamed(AppRoutes.signup.name);
                 },
               ),
             ],

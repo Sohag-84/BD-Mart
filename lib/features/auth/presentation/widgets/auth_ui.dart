@@ -55,17 +55,14 @@ class AuthScreen {
                             ),
                           )
                         : Container(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            refreshIcon,
-                            height: 45.h,
-                          ),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          refreshIcon,
+                          height: 90.h,
+                        ),
+                      ],
                     ),
                     Gap(10.h),
                     Padding(

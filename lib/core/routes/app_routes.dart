@@ -13,6 +13,11 @@ class AppRoutes {
     path: "/login",
   );
 
+  static Route signup = Route(
+    name: "Signup",
+    path: "/signup",
+  );
+
   static Route category = Route(
     name: "Category",
     path: "/category",
