@@ -1,4 +1,5 @@
 import 'package:any_image_view/any_image_view.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gym_swat/core/constants/exports.dart';
@@ -58,5 +59,20 @@ RatingBarIndicator ratingBar({
     itemCount: 5,
     itemSize: starSize,
     direction: Axis.horizontal,
+  );
+}
+
+
+///for eassy loading
+Future<void> eassyLoading() {
+  return EasyLoading.show(
+    status: "loading....",
+    indicator: AnyImageView(
+      imagePath: defaultLogo,
+      height: 25.h,
+      width: 25.w,
+      boxFit: BoxFit.fill,
+      shape: BoxShape.circle,
+    ),
   );
 }

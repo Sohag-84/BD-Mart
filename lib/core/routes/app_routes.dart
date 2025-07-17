@@ -4,7 +4,7 @@ class AppRoutes {
   static Route splash = Route(name: "Splash", path: "/");
 
   static Route bottomNavbar = Route(
-    name: "Bottom Navigation",
+    name: "BottomNavigation",
     path: "/bottom-nav-view",
   );
 

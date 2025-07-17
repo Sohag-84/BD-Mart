@@ -14,6 +14,7 @@ part 'app_routes.dart';
 
 class AppPages {
   static final router = GoRouter(
+    debugLogDiagnostics: true,
     initialLocation: AppRoutes.splash.path,
     routes: [
       ///Splash view
