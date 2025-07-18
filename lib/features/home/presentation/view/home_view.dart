@@ -18,17 +18,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final String url = AppConfig.featureudCategory;
   final productUrl = AppConfig.products;
+  late ProductBloc productBloc;
   @override
   void initState() {
     super.initState();
-
+    productBloc = context.read<ProductBloc>();
     context.read<HomeBloc>().add(HomeSliderFetchedEvent());
     // Fetch only if not already loaded
     final bloc = context.read<FeatureCategoryBloc>();
     if (bloc.state is! FeatureCategoryLoaded) {
       bloc.add(FeatureCategoryFetch(url: url));
     }
-    context.read<ProductBloc>().add(ProductFetchedEvent(url: productUrl));
+    productBloc.add(ProductFetchedEvent(url: productUrl));
   }
 
   @override
@@ -60,54 +61,64 @@ class _HomeViewState extends State<HomeView> {
                 const ProductFetchedEvent(url: AppConfig.products),
               );
         },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              BlocBuilder<HomeBloc, HomeState>(
-                buildWhen: (previous, current) =>
-                    current is HomeSliderLoaded ||
-                    current is HomeSliderLoading ||
-                    current is HomeSliderLoadingError,
-                builder: (context, state) {
-                  if (state is HomeSliderLoading) {
-                    return SizedBox(
-                      height: 160.h,
-                      child: Center(child: loader()),
-                    );
-                  } else if (state is HomeSliderLoadingError) {
-                    return Center(
-                      child: Text(state.message),
-                    );
-                  } else if (state is HomeSliderLoaded) {
-                    return homeSlider(
-                      imageList: state.sliderList
-                          .map((slider) => slider.photo)
-                          .toList(),
-                      boxFit: BoxFit.fill,
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
-              const Gap(10),
-
-              ///others section
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///categories
-                    const CategorySection(),
-                    Gap(15.h),
-
-                    allProductsSection(context: context),
-                  ],
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (scrollInfo) {
+            if (scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent &&
+                !productBloc.hasReachedMax) {
+              productBloc.add(ProductFetchedEvent(url: productUrl));
+            }
+            return false;
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                BlocBuilder<HomeBloc, HomeState>(
+                  buildWhen: (previous, current) =>
+                      current is HomeSliderLoaded ||
+                      current is HomeSliderLoading ||
+                      current is HomeSliderLoadingError,
+                  builder: (context, state) {
+                    if (state is HomeSliderLoading) {
+                      return SizedBox(
+                        height: 160.h,
+                        child: Center(child: loader()),
+                      );
+                    } else if (state is HomeSliderLoadingError) {
+                      return Center(
+                        child: Text(state.message),
+                      );
+                    } else if (state is HomeSliderLoaded) {
+                      return homeSlider(
+                        imageList: state.sliderList
+                            .map((slider) => slider.photo)
+                            .toList(),
+                        boxFit: BoxFit.fill,
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
                 ),
-              ),
-            ],
+                const Gap(10),
+
+                ///others section
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///categories
+                      const CategorySection(),
+                      Gap(15.h),
+
+                      allProductsSection(context: context),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

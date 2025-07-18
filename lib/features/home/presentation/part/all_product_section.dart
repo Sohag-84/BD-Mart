@@ -55,34 +55,42 @@ Widget allProductsSection({
               child: Text(state.message),
             );
           } else if (state is ProductLoaded) {
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.h,
-                crossAxisSpacing: 15.w,
-                mainAxisExtent: 290.h,
-              ),
-              itemCount: state.productList.length,
-              itemBuilder: (BuildContext context, int index) {
-                final product = state.productList[index];
-                return customProductContainer(
-                  onTap: () {
-                    context.pushNamed(
-                      AppRoutes.productDetails.name,
-                      extra: {
-                        "productId": product.id.toString(),
+            return Column(
+              children: [
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.h,
+                    crossAxisSpacing: 15.w,
+                    mainAxisExtent: 290.h,
+                  ),
+                  itemCount: state.productList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final product = state.productList[index];
+                    return customProductContainer(
+                      onTap: () {
+                        context.pushNamed(
+                          AppRoutes.productDetails.name,
+                          extra: {
+                            "productId": product.id.toString(),
+                          },
+                        );
                       },
+                      image: product.thumbnailImage ?? defaultLogo,
+                      productName: product.name ?? "",
+                      discount: "${product.discount}",
+                      discountPrice: null,
+                      sellingPrice: product.mainPrice ?? "",
                     );
                   },
-                  image: product.thumbnailImage ?? defaultLogo,
-                  productName: product.name ?? "",
-                  discount: "${product.discount}",
-                  discountPrice: null,
-                  sellingPrice: product.mainPrice ?? "",
-                );
-              },
+                ),
+                Gap(5.h),
+                if (state.isFetching && state.productList.isNotEmpty)
+                  paginationLoader(),
+                Gap(5.h),
+              ],
             );
           } else {
             return const SizedBox();
