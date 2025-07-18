@@ -28,7 +28,9 @@ class AppPages {
       GoRoute(
         path: AppRoutes.bottomNavbar.path,
         name: AppRoutes.bottomNavbar.name,
-        builder: (context, state) => const BottomNavView(),
+        builder: (context, state) => BottomNavView(
+          currentIndex: (state.extra as Map)['currentIndex']??0,
+        ),
       ),
 
       ///Login view

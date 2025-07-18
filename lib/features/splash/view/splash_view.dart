@@ -16,7 +16,9 @@ class _SplashViewState extends State<SplashView> {
 
     Future.delayed(const Duration(seconds: 3), () {
       // ignore: use_build_context_synchronously
-      context.pushReplacementNamed(AppRoutes.bottomNavbar.name);
+      context.pushReplacementNamed(AppRoutes.bottomNavbar.name, extra: {
+        "currentIndex": 0,
+      });
     });
   }
 

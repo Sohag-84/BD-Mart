@@ -45,25 +45,21 @@ class _LoginViewState extends State<LoginView> {
         if (state is AuthLoading) {
           eassyLoading();
         }
+        if (state is AuthOtpSent) {
+          Fluttertoast.showToast(msg: "Hello world");
+        }
         if (state is AuthSuccess) {
           EasyLoading.dismiss();
           Fluttertoast.showToast(msg: state.message);
-          //if (!context.mounted) return;
-
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const BottomNavView()),
-
-          // );
+          context.goNamed(AppRoutes.bottomNavbar.name, extra: {
+            "currentIndex": 0,
+          });
         } else if (state is AuthFailure) {
           EasyLoading.dismiss();
           Fluttertoast.showToast(msg: state.error);
         }
       },
       builder: (context, state) {
-        if (state is AuthSuccess) {
-          context.pushReplacementNamed(AppRoutes.bottomNavbar.name);
-        }
         return Column(
           children: [
             ///login form with login button

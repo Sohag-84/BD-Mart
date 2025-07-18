@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/auth/domain/usecases/user_login_usecase.dart';
 
 part 'auth_event.dart';
@@ -43,6 +44,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (user) {
         if (user.result == true) {
           emit(AuthSuccess(message: user.message ?? "Login Successfull"));
+          LocalPreferenceService.instance
+              .setToken(token: user.accessToken ?? "");
         } else if (user.message == "Please verify your account") {
           emit(AuthOtpSent(userId: user.userId.toString()));
         } else {

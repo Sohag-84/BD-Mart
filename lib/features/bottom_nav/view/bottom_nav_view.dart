@@ -1,16 +1,18 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:gym_swat/core/theme/app_colors.dart';
 import 'package:gym_swat/features/bottom_nav/widgets/build_pages.dart';
 
 class BottomNavView extends StatefulWidget {
-  const BottomNavView({super.key});
+  int currentIndex;
+  BottomNavView({super.key, this.currentIndex = 0});
 
   @override
   State<BottomNavView> createState() => _BottomNavViewState();
 }
 
 class _BottomNavViewState extends State<BottomNavView> {
-  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +21,15 @@ class _BottomNavViewState extends State<BottomNavView> {
         backgroundColor: Colors.white.withValues(alpha: 0.95),
         unselectedItemColor: const Color.fromRGBO(168, 175, 179, 1),
         selectedItemColor: AppColors.primaryColor,
-        currentIndex: currentIndex,
+        currentIndex: widget.currentIndex,
         onTap: (int index) {
           setState(() {
-            currentIndex = index;
+            widget.currentIndex = index;
           });
         },
         items: bottomTabs,
       ),
-      body: buildPage(index: currentIndex),
+      body: buildPage(index: widget.currentIndex),
     );
   }
 }
