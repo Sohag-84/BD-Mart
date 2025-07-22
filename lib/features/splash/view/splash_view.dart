@@ -25,11 +25,12 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.blackColor,
       appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.blackColor,
       ),
-      body: const Center(
-        child: Text("Splash View"),
+      body: Center(
+        child: Image.asset(refreshIcon),
       ),
     );
   }
