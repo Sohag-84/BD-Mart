@@ -44,8 +44,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (user) {
         if (user.result == true) {
           emit(AuthSuccess(message: user.message ?? "Login Successfull"));
-          LocalPreferenceService.instance
-              .setToken(token: user.accessToken ?? "");
+          if (user.user != null) {
+            LocalPreferenceService.instance.setToken(
+              token: user.accessToken!,
+            );
+            LocalPreferenceService.instance.setUserId(
+              userId: user.user?.id ?? 0,
+            );
+            LocalPreferenceService.instance.setUsername(
+              username: user.user?.name ?? "",
+            );
+            LocalPreferenceService.instance.setEmail(
+              email: user.user?.email ?? "",
+            );
+            LocalPreferenceService.instance.setPhone(
+              phone: user.user?.phone ?? "",
+            );
+
+            LocalPreferenceService.instance.setProfilePic(
+              profileImg: user.user?.avatarOriginal ?? "",
+            );
+          }
         } else if (user.message == "Please verify your account") {
           emit(AuthOtpSent(userId: user.userId.toString()));
         } else {

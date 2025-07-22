@@ -94,4 +94,19 @@ class LocalPreferenceService {
   Future<void> removeEmail() async {
     await _prefs.remove("email");
   }
+
+  ///for get user phone
+  String getPhone() {
+    return _prefs.getString("phone") ?? '';
+  }
+
+  ///for set phone
+  Future<void> setPhone({required String phone}) async {
+    await _prefs.setString('phone', phone);
+  }
+
+  ///for remove phone
+  Future<void> removePhone() async {
+    await _prefs.remove("phone");
+  }
 }

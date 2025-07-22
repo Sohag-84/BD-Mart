@@ -1,5 +1,6 @@
 import 'package:any_image_view/any_image_view.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/utils/local_preferences.dart';
 
 /// appbar section
 Widget buildAppbarSection() {
@@ -50,23 +51,23 @@ Widget buildUserInfo() {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Column(
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Ih Sohag",
-            style: TextStyle(
+            LocalPreferenceService.instance.getUsername(),
+            style: const TextStyle(
               fontSize: 14,
               color: AppColors.blackColor,
               fontWeight: FontWeight.w600,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 4.0),
+            padding: const EdgeInsets.only(top: 4.0),
             child: Text(
-              "ihsohag84@gmail.com",
-              style: TextStyle(
+              LocalPreferenceService.instance.getEmail(),
+              style: const TextStyle(
                 color: AppColors.blackColor,
               ),
             ),
