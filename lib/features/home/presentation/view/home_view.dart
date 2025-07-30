@@ -1,5 +1,7 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
@@ -46,7 +48,9 @@ class _HomeViewState extends State<HomeView> {
             ),
             Gap(5.w),
             homeSearchBar(
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(AppRoutes.search.name);
+              },
             ),
           ],
         ),

@@ -7,6 +7,10 @@ class AppRoutes {
     name: "Bottom Navigation",
     path: "/bottom-nav-view",
   );
+  static Route search = Route(
+    name: "Search",
+    path: "/search",
+  );
 
   static Route login = Route(
     name: "Login",

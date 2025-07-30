@@ -8,6 +8,7 @@ import 'package:gym_swat/features/category/presentation/views/category_view.dart
 import 'package:gym_swat/features/category/presentation/views/sub_category_view.dart';
 import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
+import 'package:gym_swat/features/search/presentation/view/search_view.dart';
 import 'package:gym_swat/features/splash/view/splash_view.dart';
 
 part 'app_routes.dart';
@@ -29,8 +30,15 @@ class AppPages {
         path: AppRoutes.bottomNavbar.path,
         name: AppRoutes.bottomNavbar.name,
         builder: (context, state) => BottomNavView(
-          currentIndex: (state.extra as Map)['currentIndex']??0,
+          currentIndex: (state.extra as Map)['currentIndex'] ?? 0,
         ),
+      ),
+
+      ///Search view
+      GoRoute(
+        path: AppRoutes.search.path,
+        name: AppRoutes.search.name,
+        builder: (context, state) => const SearchView(),
       ),
 
       ///Login view
