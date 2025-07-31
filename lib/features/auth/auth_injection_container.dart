@@ -3,16 +3,25 @@ import 'package:gym_swat/features/auth/data/datasource/auth_remote_datasource_im
 import 'package:gym_swat/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:gym_swat/features/auth/domain/repository/auth_repository.dart';
 import 'package:gym_swat/features/auth/domain/usecases/user_login_usecase.dart';
+import 'package:gym_swat/features/auth/domain/usecases/user_signup_usecase.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 Future<void> authInjectionContainer() async {
   //BLOC INJECTION
-  sl.registerFactory<AuthBloc>(() => AuthBloc(userLoginUsecase: sl.call()));
+  sl.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      userSignupUsecase: sl.call(),
+      userLoginUsecase: sl.call(),
+    ),
+  );
 
   //USECASE INJECTION
   sl.registerLazySingleton<UserLoginUsecase>(
     () => UserLoginUsecase(authRepository: sl.call()),
+  );
+  sl.registerLazySingleton<UserSignupUsecase>(
+    () => UserSignupUsecase(authRepository: sl.call()),
   );
 
   //REPOSITORY & DATA SOURCE INJECTION

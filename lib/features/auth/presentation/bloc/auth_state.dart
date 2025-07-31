@@ -9,6 +9,7 @@ sealed class AuthState extends Equatable {
 
 final class AuthInitial extends AuthState {}
 
+//login
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
@@ -23,6 +24,25 @@ class AuthFailure extends AuthState {
   final String error;
 
   const AuthFailure({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
+//signup
+class RegisterLoading extends AuthState {}
+
+class RegisterSuccess extends AuthState {
+  final String message;
+
+  const RegisterSuccess({required this.message});
+  @override
+  List<Object> get props => [message];
+}
+
+class RegisterFailure extends AuthState {
+  final String error;
+
+  const RegisterFailure({required this.error});
   @override
   List<Object> get props => [error];
 }
