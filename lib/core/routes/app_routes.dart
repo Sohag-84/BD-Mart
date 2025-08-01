@@ -22,6 +22,11 @@ class AppRoutes {
     path: "/signup",
   );
 
+  static Route otpVerification = Route(
+    name: "OTP",
+    path: "/otp",
+  );
+
   static Route category = Route(
     name: "Category",
     path: "/category",

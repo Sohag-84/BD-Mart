@@ -70,7 +70,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             );
           }
         } else if (user.message == "Please verify your account") {
-          emit(AuthOtpSent(userId: user.userId.toString()));
+          emit(
+            AuthOtpSent(
+              message: user.message ?? "",
+              userId: user.userId.toString(),
+              emailOrPhone: event.email,
+            ),
+          );
         } else {
           emit(AuthFailure(error: user.message ?? "Login Failed"));
         }
@@ -121,12 +127,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (user.result == true) {
           emit(
             RegisterSuccess(
-                message: user.message ?? "Registration Successfull"),
+              message: user.message ?? "Registration Successfull",
+              emailOrPhone: event.emailOrPhone,
+              userId: user.userId.toString(),
+            ),
           );
           LocalPreferenceService.instance.setUserId(
             userId: user.userId!,
           );
-        } else {}
+        } else {
+          emit(RegisterFailure(error: user.message ?? ""));
+        }
       },
     );
   }

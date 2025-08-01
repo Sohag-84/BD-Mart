@@ -33,10 +33,16 @@ class RegisterLoading extends AuthState {}
 
 class RegisterSuccess extends AuthState {
   final String message;
+  final String emailOrPhone;
+  final String userId;
 
-  const RegisterSuccess({required this.message});
+  const RegisterSuccess({
+    required this.message,
+    required this.emailOrPhone,
+    required this.userId,
+  });
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, emailOrPhone, userId];
 }
 
 class RegisterFailure extends AuthState {
@@ -48,10 +54,16 @@ class RegisterFailure extends AuthState {
 }
 
 class AuthOtpSent extends AuthState {
+  final String message;
   final String userId;
+  final String emailOrPhone;
 
-  const AuthOtpSent({required this.userId});
+  const AuthOtpSent({
+    required this.message,
+    required this.userId,
+    required this.emailOrPhone,
+  });
 
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [message, userId, emailOrPhone];
 }

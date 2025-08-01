@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/features/auth/presentation/views/login_view.dart';
+import 'package:gym_swat/features/auth/presentation/views/otp_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/signup_view.dart';
 import 'package:gym_swat/features/bottom_nav/view/bottom_nav_view.dart';
 import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
@@ -53,6 +54,16 @@ class AppPages {
         path: AppRoutes.signup.path,
         name: AppRoutes.signup.name,
         builder: (context, state) => const SignupView(),
+      ),
+
+      ///OTP Verification
+      GoRoute(
+        path: AppRoutes.otpVerification.path,
+        name: AppRoutes.otpVerification.name,
+        builder: (context, state) => OtpView(
+          emailOrPhone: (state.extra as Map)["emailOrPhone"].toString(),
+          userId: (state.extra as Map)["userId"].toString(),
+        ),
       ),
 
       ///Cart view
