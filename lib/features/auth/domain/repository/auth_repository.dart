@@ -1,6 +1,7 @@
 import 'package:gym_swat/core/utils/typedef.dart';
-import 'package:gym_swat/features/auth/domain/entity/user_entity.dart';
-import 'package:gym_swat/features/auth/domain/entity/user_signup_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/otp_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_signup_entity.dart';
 
 abstract interface class AuthRepository {
   ResultFuture<UserResponseEntity> userSignup({
@@ -11,6 +12,16 @@ abstract interface class AuthRepository {
     required String retypePassword,
     required String registerBy,
     required String deviceToken,
+  });
+
+  ResultFuture<OtpEntity> otpSubmit({
+    required String userId,
+    required String otpCode,
+  });
+
+  ResultFuture<String> otpResend({
+    required String userId,
+    required String registerBy,
   });
 
   ResultFuture<UserModelEntity> userLogin({

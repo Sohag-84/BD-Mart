@@ -3,7 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
-import 'package:gym_swat/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:gym_swat/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:gym_swat/features/auth/presentation/bloc/otp/otp_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
 import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => PasswordVisibilityCubit()),
               BlocProvider(create: (context) => PaymentMethodCubit()),
               BlocProvider(create: (context) => sl<AuthBloc>()),
+              BlocProvider(create: (context) => sl<OtpBloc>()),
               BlocProvider(create: (context) => sl<HomeBloc>()),
               BlocProvider(create: (context) => sl<ProductBloc>()),
               BlocProvider(create: (context) => sl<ProductDetailsBloc>()),

@@ -5,7 +5,7 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/button.dart';
 import 'package:gym_swat/core/widgets/custom_input_decoration.dart';
-import 'package:gym_swat/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:gym_swat/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:gym_swat/features/auth/presentation/widgets/auth_ui.dart';
 

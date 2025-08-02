@@ -5,8 +5,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/auth/data/datasource/auth_remote_datasource.dart';
-import 'package:gym_swat/features/auth/domain/entity/user_entity.dart';
-import 'package:gym_swat/features/auth/domain/entity/user_signup_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/otp_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_signup_entity.dart';
 import 'package:gym_swat/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -53,6 +54,48 @@ class AuthRepositoryImpl implements AuthRepository {
         retypePassword: retypePassword,
         registerBy: registerBy,
         deviceToken: deviceToken,
+      );
+
+      return right(response);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<OtpEntity> otpSubmit({
+    required String userId,
+    required String otpCode,
+  }) async {
+    try {
+      final response = await authRemoteDatasource.otpSubmit(
+        userId: userId,
+        otpCode: otpCode,
+      );
+
+      return right(response);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<String> otpResend({
+    required String userId,
+    required String registerBy,
+  }) async {
+    try {
+      final response = await authRemoteDatasource.otpResend(
+        userId: userId,
+        registerBy: registerBy,
       );
 
       return right(response);

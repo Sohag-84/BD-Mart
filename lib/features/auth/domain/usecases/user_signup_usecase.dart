@@ -1,6 +1,6 @@
 import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
-import 'package:gym_swat/features/auth/domain/entity/user_signup_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_signup_entity.dart';
 import 'package:gym_swat/features/auth/domain/repository/auth_repository.dart';
 
 class UserSignupUsecase implements Usecase<void, UserSignupParams> {

@@ -1,4 +1,4 @@
-import 'package:gym_swat/features/auth/domain/entity/user_signup_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_signup_entity.dart';
 
 class UserResponseModel extends UserResponseEntity {
   UserResponseModel({

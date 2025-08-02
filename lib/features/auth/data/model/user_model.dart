@@ -1,4 +1,4 @@
-import 'package:gym_swat/features/auth/domain/entity/user_entity.dart';
+import 'package:gym_swat/features/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserModelEntity {
   UserModel({

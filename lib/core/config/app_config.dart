@@ -4,7 +4,7 @@ class AppConfig {
 
   static const signUp = "auth/signup";
   static const confirmOtp = "auth/confirm_code";
-  static const resendOtp = "${baseURL}auth/resend_code";
+  static const resendOtp = "auth/resend_code";
   static const login = "auth/login";
   static const forgetPassword = "${baseURL}auth/password/forget_request";
   static const confrimReset = "${baseURL}auth/password/confirm_reset";
