@@ -10,17 +10,13 @@ final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   ///get slider
   @override
   Future<List<SliderModel>> getSliders() async {
-    try {
-      final response = await apiServices.getApi(endPoint: AppConfig.slider);
+    final response = await apiServices.getApi(endPoint: AppConfig.slider);
 
-      if (response['data'] != null) {
-        final List<dynamic> sliders = response['data'];
-        return sliders.map((json) => SliderModel.fromJson(json)).toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
+    if (response['data'] != null) {
+      final List<dynamic> sliders = response['data'];
+      return sliders.map((json) => SliderModel.fromJson(json)).toList();
+    } else {
+      return [];
     }
   }
 }

@@ -8,17 +8,13 @@ class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
 
   @override
   Future<List<CategoryModel>> getCategories({required String url}) async {
-    try {
-      final response = await apiServices.getApi(endPoint: url);
+    final response = await apiServices.getApi(endPoint: url);
 
-      if (response['data'] != null) {
-        final List<dynamic> categories = response['data'];
-        return categories.map((json) => CategoryModel.fromJson(json)).toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
+    if (response['data'] != null) {
+      final List<dynamic> categories = response['data'];
+      return categories.map((json) => CategoryModel.fromJson(json)).toList();
+    } else {
+      return [];
     }
   }
 }

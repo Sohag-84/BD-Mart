@@ -13,18 +13,14 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     required String url,
     required int page,
   }) async {
-    try {
-      final response = await apiServices.getApi(
-        fullApiUrl: "$url?page=$page",
-      );
-      if (response['data'] != null) {
-        final List<dynamic> product = response['data'];
-        return product.map((json) => Product.fromJson(json)).toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
+    final response = await apiServices.getApi(
+      fullApiUrl: "$url?page=$page",
+    );
+    if (response['data'] != null) {
+      final List<dynamic> product = response['data'];
+      return product.map((json) => Product.fromJson(json)).toList();
+    } else {
+      return [];
     }
   }
 
@@ -32,37 +28,27 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<List<ProductDetailsModel>> getProductDetails({
     required String productId,
   }) async {
-    try {
-      final response = await apiServices.getApi(
-        endPoint: "${AppConfig.productDetails}$productId",
-      );
-      if (response['data'] != null) {
-        final List<dynamic> product = response['data'];
-        return product
-            .map((json) => ProductDetailsModel.fromJson(json))
-            .toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
+    final response = await apiServices.getApi(
+      endPoint: "${AppConfig.productDetails}$productId",
+    );
+    if (response['data'] != null) {
+      final List<dynamic> product = response['data'];
+      return product.map((json) => ProductDetailsModel.fromJson(json)).toList();
+    } else {
+      return [];
     }
   }
 
   @override
   Future<List<Product>> getRelatedProducts({required String productId}) async {
-    try {
-      final response = await apiServices.getApi(
-        endPoint: "${AppConfig.relatedProduct}$productId",
-      );
-      if (response['data'] != null) {
-        final List<dynamic> product = response['data'];
-        return product.map((json) => Product.fromJson(json)).toList();
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
+    final response = await apiServices.getApi(
+      endPoint: "${AppConfig.relatedProduct}$productId",
+    );
+    if (response['data'] != null) {
+      final List<dynamic> product = response['data'];
+      return product.map((json) => Product.fromJson(json)).toList();
+    } else {
+      return [];
     }
   }
 }
