@@ -56,9 +56,7 @@ class _LoginViewState extends State<LoginView> {
         }
         if (state is AuthSuccess) {
           Fluttertoast.showToast(msg: state.message);
-          context.goNamed(AppRoutes.bottomNavbar.name, extra: {
-            "currentIndex": 0,
-          });
+          context.goNamed(AppRoutes.splash.name);
         } else if (state is AuthFailure) {
           Fluttertoast.showToast(msg: state.error);
         }
@@ -219,14 +217,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return const ForgetPasswordWithEmailView();
-                      //     },
-                      //   ),
-                      // );
+                      context.pushNamed(AppRoutes.forgetPassword.name);
                     },
                     child: const Text(
                       forgetPassword,

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gym_swat/features/auth/presentation/views/forget_password_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/login_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/otp_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/signup_view.dart';
@@ -30,9 +31,7 @@ class AppPages {
       GoRoute(
         path: AppRoutes.bottomNavbar.path,
         name: AppRoutes.bottomNavbar.name,
-        builder: (context, state) => BottomNavView(
-          currentIndex: (state.extra as Map)['currentIndex'] ?? 0,
-        ),
+        builder: (context, state) => const BottomNavView(),
       ),
 
       ///Search view
@@ -64,6 +63,20 @@ class AppPages {
           emailOrPhone: (state.extra as Map)["emailOrPhone"].toString(),
           userId: (state.extra as Map)["userId"].toString(),
         ),
+      ),
+
+      ///Forget password
+      GoRoute(
+        path: AppRoutes.forgetPassword.path,
+        name: AppRoutes.forgetPassword.name,
+        builder: (context, state) => const ForgetPasswordView(),
+      ),
+
+      ///Forget password otp submit
+      GoRoute(
+        path: AppRoutes.forgetPasswordOtpSubmit.path,
+        name: AppRoutes.forgetPasswordOtpSubmit.name,
+        builder: (context, state) => const ForgetPasswordView(),
       ),
 
       ///Cart view
