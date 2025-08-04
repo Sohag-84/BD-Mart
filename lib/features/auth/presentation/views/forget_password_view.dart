@@ -1,4 +1,6 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/button.dart';
 import 'package:gym_swat/core/widgets/custom_input_decoration.dart';
 import 'package:gym_swat/features/auth/presentation/widgets/auth_ui.dart';
@@ -82,12 +84,14 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   child: const Text(
                     sendCode,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppColors.whiteColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    context.pushNamed(AppRoutes.forgetPasswordConfirm.name);
+                  },
                 ),
               ),
             ),

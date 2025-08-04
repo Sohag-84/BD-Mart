@@ -32,9 +32,9 @@ class AppRoutes {
     path: "/forget-passwrod",
   );
 
-  static Route forgetPasswordOtpSubmit = Route(
-    name: "Forget_Password_OTP_Submit",
-    path: "/forget-password-otp-submit",
+  static Route forgetPasswordConfirm = Route(
+    name: "Forget_Password_Confirm",
+    path: "/forget-password-confirm",
   );
 
   static Route category = Route(

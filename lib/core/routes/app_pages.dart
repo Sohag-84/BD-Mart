@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gym_swat/features/auth/presentation/views/forget_password_confirm_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/forget_password_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/login_view.dart';
 import 'package:gym_swat/features/auth/presentation/views/otp_view.dart';
@@ -74,9 +75,9 @@ class AppPages {
 
       ///Forget password otp submit
       GoRoute(
-        path: AppRoutes.forgetPasswordOtpSubmit.path,
-        name: AppRoutes.forgetPasswordOtpSubmit.name,
-        builder: (context, state) => const ForgetPasswordView(),
+        path: AppRoutes.forgetPasswordConfirm.path,
+        name: AppRoutes.forgetPasswordConfirm.name,
+        builder: (context, state) => const ForgetPasswordConfirmView(),
       ),
 
       ///Cart view
