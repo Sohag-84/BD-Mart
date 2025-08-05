@@ -6,8 +6,8 @@ class AppConfig {
   static const confirmOtp = "auth/confirm_code";
   static const resendOtp = "auth/resend_code";
   static const login = "auth/login";
-  static const forgetPassword = "${baseURL}auth/password/forget_request";
-  static const confrimReset = "${baseURL}auth/password/confirm_reset";
+  static const forgetPassword = "auth/password/forget_request";
+  static const confrimReset = "auth/password/confirm_reset";
   static const updateProfile = "profile/update";
   static const updateProfileImage = "profile/update-image";
   static const slider = "sliders";

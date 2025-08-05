@@ -1,4 +1,4 @@
-import 'package:gym_swat/features/auth/data/model/otp_model.dart';
+import 'package:gym_swat/core/model/response_model.dart';
 import 'package:gym_swat/features/auth/data/model/user_model.dart';
 import 'package:gym_swat/features/auth/data/model/user_signup_model.dart';
 
@@ -13,7 +13,7 @@ abstract interface class AuthRemoteDatasource {
     required String deviceToken,
   });
 
-  Future<OtpModel> otpSubmit({
+  Future<ResponseModel> otpSubmit({
     required String userId,
     required String otpCode,
   });
@@ -27,5 +27,15 @@ abstract interface class AuthRemoteDatasource {
     required String email,
     required String password,
     required String deviceToken,
+  });
+
+  Future<ResponseModel> forgetPasswordRequest({
+    required String emailOrPhone,
+    required String sendCodeBy,
+  });
+
+  Future<ResponseModel> forgetPasswordConfirm({
+    required String verificationCode,
+    required String newPassword,
   });
 }

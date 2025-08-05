@@ -1,7 +1,7 @@
 import 'package:gym_swat/core/config/app_config.dart';
+import 'package:gym_swat/core/model/response_model.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/features/auth/data/datasource/auth_remote_datasource.dart';
-import 'package:gym_swat/features/auth/data/model/otp_model.dart';
 import 'package:gym_swat/features/auth/data/model/user_model.dart';
 import 'package:gym_swat/features/auth/data/model/user_signup_model.dart';
 
@@ -36,7 +36,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }
 
   @override
-  Future<OtpModel> otpSubmit({
+  Future<ResponseModel> otpSubmit({
     required String userId,
     required String otpCode,
   }) async {
@@ -49,7 +49,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       },
     );
 
-    return OtpModel.fromJson(response);
+    return ResponseModel.fromJson(response);
   }
 
   @override
@@ -77,12 +77,44 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     final response = await apiServices.postApi(
       endPoint: AppConfig.login,
       isEncodedData: true,
-      body: {
+      body: <String, dynamic>{
         "email": email,
         "password": password,
         "device_token": deviceToken,
       },
     );
     return UserModel.fromJson(response);
+  }
+
+  @override
+  Future<ResponseModel> forgetPasswordRequest({
+    required String emailOrPhone,
+    required String sendCodeBy,
+  }) async {
+    final response = await apiServices.postApi(
+      endPoint: AppConfig.forgetPassword,
+      isEncodedData: true,
+      body: <String, dynamic>{
+        "email_or_phone": emailOrPhone,
+        "send_code_by": sendCodeBy,
+      },
+    );
+    return ResponseModel.fromJson(response);
+  }
+
+  @override
+  Future<ResponseModel> forgetPasswordConfirm({
+    required String verificationCode,
+    required String newPassword,
+  }) async {
+    final response = await apiServices.postApi(
+      endPoint: AppConfig.confrimReset,
+      isEncodedData: true,
+      body: <String, dynamic>{
+        "verification_code": verificationCode,
+        "password": newPassword,
+      },
+    );
+    return ResponseModel.fromJson(response);
   }
 }

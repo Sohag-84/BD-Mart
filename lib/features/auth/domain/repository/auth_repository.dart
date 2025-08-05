@@ -1,5 +1,5 @@
+import 'package:gym_swat/core/entity/response_entity.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
-import 'package:gym_swat/features/auth/domain/entities/otp_entity.dart';
 import 'package:gym_swat/features/auth/domain/entities/user_entity.dart';
 import 'package:gym_swat/features/auth/domain/entities/user_signup_entity.dart';
 
@@ -14,7 +14,7 @@ abstract interface class AuthRepository {
     required String deviceToken,
   });
 
-  ResultFuture<OtpEntity> otpSubmit({
+  ResultFuture<ResponseEntity> otpSubmit({
     required String userId,
     required String otpCode,
   });
@@ -28,5 +28,15 @@ abstract interface class AuthRepository {
     required String email,
     required String password,
     required String deviceToken,
+  });
+
+  ResultFuture<ResponseEntity> forgetPasswordRequest({
+    required String emailOrPhone,
+    required String sendCodeBy,
+  });
+
+  ResultFuture<ResponseEntity> forgetPasswordConfirm({
+    required String verificationCode,
+    required String newPassword,
   });
 }

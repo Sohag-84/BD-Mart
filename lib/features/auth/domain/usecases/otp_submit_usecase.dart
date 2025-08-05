@@ -1,6 +1,6 @@
+import 'package:gym_swat/core/entity/response_entity.dart';
 import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
-import 'package:gym_swat/features/auth/domain/entities/otp_entity.dart';
 import 'package:gym_swat/features/auth/domain/repository/auth_repository.dart';
 
 class OtpSubmitUsecase implements Usecase<void, OtpSubmitParams> {
@@ -8,7 +8,7 @@ class OtpSubmitUsecase implements Usecase<void, OtpSubmitParams> {
   const OtpSubmitUsecase({required this.authRepository});
 
   @override
-  ResultFuture<OtpEntity> call(OtpSubmitParams params) async {
+  ResultFuture<ResponseEntity> call(OtpSubmitParams params) async {
     return await authRepository.otpSubmit(
       userId: params.userId,
       otpCode: params.otpCode,
