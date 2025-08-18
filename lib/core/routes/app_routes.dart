@@ -37,6 +37,16 @@ class AppRoutes {
     path: "/forget-password-confirm",
   );
 
+  static Route privaceyPolicy = Route(
+    name: "Privacry_Policy",
+    path: "/privacy-policy",
+  );
+
+  static Route termsAndConditions = Route(
+    name: "Terms and conditions",
+    path: "/terms-and-conditions",
+  );
+
   static Route category = Route(
     name: "Category",
     path: "/category",
