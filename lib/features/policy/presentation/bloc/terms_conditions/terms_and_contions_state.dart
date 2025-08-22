@@ -12,7 +12,7 @@ final class TermsAndContionsInitial extends TermsAndContionsState {}
 final class TermsAndContionsLoading extends TermsAndContionsState {}
 
 final class TermsAndContionsLoaded extends TermsAndContionsState {
-  final PolicyEntity policyEntity;
+  final List<PolicyEntity> policyEntity;
   const TermsAndContionsLoaded({required this.policyEntity});
 
   @override

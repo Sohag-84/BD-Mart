@@ -14,6 +14,7 @@ import 'package:gym_swat/features/category/presentation/bloc/feature_category/fe
 import 'package:gym_swat/features/category/presentation/bloc/sub_category/sub_category_bloc.dart';
 import 'package:gym_swat/features/home/presentation/bloc/home_bloc.dart';
 import 'package:gym_swat/features/policy/presentation/bloc/policy/policy_bloc.dart';
+import 'package:gym_swat/features/policy/presentation/bloc/terms_conditions/terms_and_contions_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_details/product_details_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/related_product/related_product_bloc.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<OtpBloc>()),
               BlocProvider(create: (context) => sl<ForgetPasswordBloc>()),
               BlocProvider(create: (context) => sl<PolicyBloc>()),
+              BlocProvider(create: (context) => sl<TermsAndContionsBloc>()),
               BlocProvider(create: (context) => sl<HomeBloc>()),
               BlocProvider(create: (context) => sl<ProductBloc>()),
               BlocProvider(create: (context) => sl<ProductDetailsBloc>()),
