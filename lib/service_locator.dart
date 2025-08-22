@@ -5,6 +5,7 @@ import 'package:gym_swat/features/category/category_injection_container.dart';
 import 'package:gym_swat/features/home/home_injection_container.dart';
 import 'package:gym_swat/features/policy/policy_injection_container.dart';
 import 'package:gym_swat/features/product/product_injection_container.dart';
+import 'package:gym_swat/features/search/search_injection_container.dart';
 
 final sl = GetIt.instance;
 
@@ -16,4 +17,5 @@ Future<void> setupLocator() async {
   await categoryInjectionContainer();
   await authInjectionContainer();
   await policyInjectionContainer();
+  await searchInjectionContainer();
 }

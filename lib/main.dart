@@ -18,6 +18,8 @@ import 'package:gym_swat/features/policy/presentation/bloc/terms_conditions/term
 import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_details/product_details_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/related_product/related_product_bloc.dart';
+import 'package:gym_swat/features/search/presentation/bloc/search_product/search_product_bloc.dart';
+import 'package:gym_swat/features/search/presentation/bloc/search_suggetion/search_suggetion_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
 void main() async {
@@ -60,6 +62,8 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<CategoryBloc>()),
               BlocProvider(create: (context) => sl<SubCategoryBloc>()),
               BlocProvider(create: (context) => sl<AllCategoryBloc>()),
+              BlocProvider(create: (context) => sl<SearchSuggetionBloc>()),
+              BlocProvider(create: (context) => sl<SearchProductBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',
