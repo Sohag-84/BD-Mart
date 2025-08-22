@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:gym_swat/core/constants/exports.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -10,8 +10,19 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Search"),),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.h),
+          child: AppBar(
+            elevation: 0,
+            title: const Text("Search"),
+          ),
+        ),
+      ),
     );
   }
 }
