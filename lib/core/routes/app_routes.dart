@@ -56,6 +56,7 @@ class AppRoutes {
     name: "Sub Category",
     path: "/sub-category",
   );
+  
   static Route cart = Route(
     name: "Cart",
     path: "/cart",

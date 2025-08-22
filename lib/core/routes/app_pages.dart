@@ -9,8 +9,8 @@ import 'package:gym_swat/features/cart/presentation/view/cart_view.dart';
 import 'package:gym_swat/features/cart/presentation/view/shipping_details_view.dart';
 import 'package:gym_swat/features/category/presentation/views/category_view.dart';
 import 'package:gym_swat/features/category/presentation/views/sub_category_view.dart';
-import 'package:gym_swat/features/policy/presentation/view/privacy_policy_view.dart';
-import 'package:gym_swat/features/policy/presentation/view/terms_and_conditions.dart';
+import 'package:gym_swat/features/policy/presentation/views/privacy_policy_view.dart';
+import 'package:gym_swat/features/policy/presentation/views/terms_and_conditions.dart';
 import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
 import 'package:gym_swat/features/product/presentation/views/product_view.dart';
 import 'package:gym_swat/features/search/presentation/view/search_view.dart';
@@ -84,14 +84,14 @@ class AppPages {
 
       ///Privacy policy
       GoRoute(
-        path: AppRoutes.privaceyPolicy.name,
+        path: AppRoutes.privaceyPolicy.path,
         name: AppRoutes.privaceyPolicy.name,
         builder: (context, state) => const PrivacyPolicyView(),
       ),
 
       ///Terms and conditions
       GoRoute(
-        path: AppRoutes.termsAndConditions.name,
+        path: AppRoutes.termsAndConditions.path,
         name: AppRoutes.termsAndConditions.name,
         builder: (context, state) => const TermsAndConditions(),
       ),

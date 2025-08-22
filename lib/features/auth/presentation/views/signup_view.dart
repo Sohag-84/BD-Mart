@@ -248,7 +248,8 @@ class _SignupViewState extends State<SignupView> {
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        // Get.to(() => const TermsConditionsView());
+                                        context.pushNamed(
+                                            AppRoutes.privaceyPolicy.name);
                                       },
                                     style: const TextStyle(
                                       color: AppColors.primaryColor,
