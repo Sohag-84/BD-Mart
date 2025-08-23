@@ -1,6 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
+import 'package:gym_swat/core/widgets/custom_product_container.dart';
 import 'package:gym_swat/features/search/domain/entity/search_suggetions_entity.dart';
+import 'package:gym_swat/features/search/presentation/bloc/search_product/search_product_bloc.dart';
 import 'package:gym_swat/features/search/presentation/bloc/search_suggetion/search_suggetion_bloc.dart';
 
 class SearchView extends StatefulWidget {
@@ -16,8 +19,12 @@ class _SearchViewState extends State<SearchView> {
   @override
   void initState() {
     context.read<SearchSuggetionBloc>().add(
-          const FetchedSearchSuggetions(query: "Nivea"),
+          const FetchedSearchSuggetions(query: "Nevia"),
         );
+    context.read<SearchProductBloc>().add(
+          const FetchedSearchProduct(query: ""),
+        );
+
     super.initState();
   }
 
@@ -61,8 +68,7 @@ class _SearchViewState extends State<SearchView> {
                       builder: (context, state) {
                         if (state is SearchSuggetionFailure) {
                           return const Text("");
-                        }
-                        if (state is SearchSuggetionLoaded) {
+                        } else if (state is SearchSuggetionLoaded) {
                           return Autocomplete<SearchSuggetionsEntity>(
                             optionsBuilder: (TextEditingValue value) {
                               if (value.text.isEmpty) {
@@ -158,7 +164,47 @@ class _SearchViewState extends State<SearchView> {
             ),
           ),
         ),
-        body: const Text("data"),
+        body: BlocBuilder<SearchProductBloc, SearchProductState>(
+          builder: (context, state) {
+            if (state is SearchProductLoading) {
+              return loader();
+            } else if (state is SearchProductFailure) {
+              return const Center(
+                child: Text("Something went wrong"),
+              );
+            } else if (state is SearchProductLoaded) {
+              return GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10.h,
+                  crossAxisSpacing: 15.w,
+                  mainAxisExtent: 290.h,
+                ),
+                itemCount: state.products.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final product = state.products[index];
+                  return customProductContainer(
+                    onTap: () {
+                      context.pushNamed(
+                        AppRoutes.productDetails.name,
+                        extra: {
+                          "productId": product.id.toString(),
+                        },
+                      );
+                    },
+                    image: product.thumbnailImage ?? defaultLogo,
+                    productName: product.name ?? "",
+                    discount: "${product.discount}",
+                    discountPrice: "200",
+                    sellingPrice: product.mainPrice ?? "",
+                  );
+                },
+              );
+            }
+            return const Text("data");
+          },
+        ),
       ),
     );
   }

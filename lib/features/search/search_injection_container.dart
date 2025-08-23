@@ -4,6 +4,7 @@ import 'package:gym_swat/features/search/data/repository/search_repository_impl.
 import 'package:gym_swat/features/search/domain/repository/search_repository.dart';
 import 'package:gym_swat/features/search/domain/usecases/get_search_product_usecase.dart';
 import 'package:gym_swat/features/search/domain/usecases/get_search_suggetions_usecase.dart';
+import 'package:gym_swat/features/search/presentation/bloc/search_product/search_product_bloc.dart';
 import 'package:gym_swat/features/search/presentation/bloc/search_suggetion/search_suggetion_bloc.dart';
 import 'package:gym_swat/service_locator.dart';
 
@@ -12,6 +13,11 @@ Future<void> searchInjectionContainer() async {
   sl.registerLazySingleton(
     () => SearchSuggetionBloc(
       searchSuggetionsUsecase: sl.call(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SearchProductBloc(
+      searchProductUsecase: sl.call(),
     ),
   );
 

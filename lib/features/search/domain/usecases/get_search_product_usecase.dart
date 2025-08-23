@@ -10,7 +10,7 @@ class GetSearchProductUsecase
 
   @override
   ResultFuture<List<ProductEntity>> call(SearchProductParams params) async {
-    return await searchRepository.getSearchProduct(
+    return await searchRepository.filterSearchProducts(
       searchQuery: params.query,
       page: params.page,
     );

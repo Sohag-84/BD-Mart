@@ -3,7 +3,7 @@ import 'package:gym_swat/features/product/domain/entity/product_entity.dart';
 import 'package:gym_swat/features/search/domain/entity/search_suggetions_entity.dart';
 
 abstract interface class SearchRepository {
-  ResultFuture<List<ProductEntity>> getSearchProduct({
+  ResultFuture<List<ProductEntity>> filterSearchProducts({
     required String searchQuery,
     required int page,
   });

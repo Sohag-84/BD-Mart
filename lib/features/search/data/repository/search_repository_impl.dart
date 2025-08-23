@@ -15,12 +15,12 @@ class SearchRepositoryImpl implements SearchRepository {
   const SearchRepositoryImpl({required this.searchRemoteDatasource});
 
   @override
-  ResultFuture<List<ProductEntity>> getSearchProduct({
+  ResultFuture<List<ProductEntity>> filterSearchProducts({
     required String searchQuery,
     required int page,
   }) async {
     try {
-      final result = await searchRemoteDatasource.getSearchProduct(
+      final result = await searchRemoteDatasource.filterSearchProducts(
         searchQuery: searchQuery,
         page: page,
       );

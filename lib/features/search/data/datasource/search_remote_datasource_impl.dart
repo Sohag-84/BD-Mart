@@ -9,12 +9,24 @@ class SearchRemoteDatasourceImpl implements SearchRemoteDatasource {
   const SearchRemoteDatasourceImpl({required this.apiServices});
 
   @override
-  Future<List<Product>> getSearchProduct({
+  Future<List<Product>> filterSearchProducts({
     required String searchQuery,
     required int page,
   }) async {
-    final response = await apiServices.getApi(
-      fullApiUrl: "${AppConfig.search}$searchQuery&page=$page",
+    final body = {
+      "brands": "",
+      "categories": "",
+      "selected_attribute_values": [],
+      "name": searchQuery,
+      "keyword": null,
+      "sort_by": "newest",
+      "min_price": null,
+      "max_price": null,
+    };
+    final response = await apiServices.postApi(
+      endPoint: "${AppConfig.filter}?page=$page",
+      isEncodedData: true,
+      body: body,
     );
 
     if (response['data'] != null) {
