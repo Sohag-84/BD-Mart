@@ -22,8 +22,6 @@ class _SearchViewState extends State<SearchView> {
     context.read<SearchProductBloc>().add(
           const FetchedSearchProduct(query: ""),
         );
-
-        
   }
 
   @override
@@ -209,49 +207,69 @@ class _SearchViewState extends State<SearchView> {
                           scrollInfo.metrics.maxScrollExtent &&
                       !state.hasReachedMax) {
                     context.read<SearchProductBloc>().add(
-                          FetchedSearchProduct(query: ""),
+                          const FetchedSearchProduct(query: ""),
                         );
                   }
                   return false;
                 },
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10.h,
-                          crossAxisSpacing: 15.w,
-                          mainAxisExtent: 290.h,
-                        ),
-                        itemCount: state.products.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final product = state.products[index];
-                          return customProductContainer(
-                            onTap: () {
-                              context.pushNamed(
-                                AppRoutes.productDetails.name,
-                                extra: {
-                                  "productId": product.id.toString(),
-                                },
-                              );
-                            },
-                            image: product.thumbnailImage ?? defaultLogo,
-                            productName: product.name ?? "",
-                            discount: "${product.discount}",
-                            discountPrice: "200",
-                            sellingPrice: product.mainPrice ?? "",
+                child: refresh(
+                  onRefresh: () {
+                    if (queryController.text.isEmpty) {
+                      context.read<SearchProductBloc>().add(
+                            const FetchedSearchProduct(
+                              query: "",
+                              isRefresh: true,
+                            ),
                           );
-                        },
-                      ),
-                      Gap(5.h),
-                      if (state.isFetching && state.products.isNotEmpty)
-                        paginationLoader(),
-                      Gap(5.h),
-                    ],
+                    } else {
+                      context.read<SearchProductBloc>().add(
+                            FetchedSearchProduct(
+                              query: queryController.text,
+                              isRefresh: true,
+                            ),
+                          );
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.h,
+                            crossAxisSpacing: 15.w,
+                            mainAxisExtent: 290.h,
+                          ),
+                          itemCount: state.products.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final product = state.products[index];
+                            return customProductContainer(
+                              onTap: () {
+                                context.pushNamed(
+                                  AppRoutes.productDetails.name,
+                                  extra: {
+                                    "productId": product.id.toString(),
+                                  },
+                                );
+                              },
+                              image: product.thumbnailImage ?? defaultLogo,
+                              productName: product.name ?? "",
+                              discount: "${product.discount}",
+                              discountPrice: "200",
+                              sellingPrice: product.mainPrice ?? "",
+                            );
+                          },
+                        ),
+                        Gap(5.h),
+                        if (state.isFetching && state.products.isNotEmpty)
+                          paginationLoader(),
+                        Gap(5.h),
+                      ],
+                    ),
                   ),
                 ),
               );
