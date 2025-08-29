@@ -9,6 +9,7 @@ import 'package:gym_swat/features/home/presentation/part/all_product_section.dar
 import 'package:gym_swat/features/home/presentation/part/category_section.dart';
 import 'package:gym_swat/features/home/presentation/part/home_seach_bar.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product/product_bloc.dart';
+import 'package:gym_swat/features/search/presentation/bloc/search_suggetion/search_suggetion_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -32,6 +33,9 @@ class _HomeViewState extends State<HomeView> {
       bloc.add(FeatureCategoryFetch(url: url));
     }
     productBloc.add(ProductFetchedEvent(url: productUrl));
+    context.read<SearchSuggetionBloc>().add(
+          const FetchedSearchSuggetions(query: ""),
+        );
   }
 
   @override

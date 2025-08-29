@@ -18,14 +18,12 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   void initState() {
-    context.read<SearchSuggetionBloc>().add(
-          const FetchedSearchSuggetions(query: "Nevia"),
-        );
+    super.initState();
     context.read<SearchProductBloc>().add(
           const FetchedSearchProduct(query: ""),
         );
 
-    super.initState();
+        
   }
 
   @override
@@ -37,9 +35,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.h),
@@ -48,11 +44,8 @@ class _SearchViewState extends State<SearchView> {
             elevation: 0,
             title: Row(
               children: [
-                // Back button
                 GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
+                  onTap: () => context.pop(),
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 25.h,
@@ -85,22 +78,46 @@ class _SearchViewState extends State<SearchView> {
                                 option.query.toString(),
                             fieldViewBuilder: (context, textEditingController,
                                 focusNode, onFieldSubmitted) {
-                              textEditingController.text =
-                                  queryController.text.trim();
+                              if (textEditingController.text.isEmpty) {
+                                textEditingController.text =
+                                    queryController.text.trim();
+                              }
+
                               return TextField(
                                 controller: textEditingController,
                                 focusNode: focusNode,
                                 cursorColor: AppColors.darkCharcoal,
                                 onChanged: (value) {
                                   queryController.text = value;
-                                  context.read<SearchSuggetionBloc>().add(
-                                        FetchedSearchSuggetions(query: value),
-                                      );
+
+                                  if (value.isEmpty) {
+                                    context.read<SearchProductBloc>().add(
+                                          const FetchedSearchProduct(
+                                              query: "", isRefresh: true),
+                                        );
+                                  } else {
+                                    context.read<SearchSuggetionBloc>().add(
+                                          FetchedSearchSuggetions(query: value),
+                                        );
+                                    context.read<SearchProductBloc>().add(
+                                          FetchedSearchProduct(
+                                              query: value, isRefresh: true),
+                                        );
+                                  }
                                 },
                                 onSubmitted: (value) {
-                                  queryController.text =
-                                      textEditingController.text.trim();
                                   FocusScope.of(context).unfocus();
+                                  if (value.isEmpty) {
+                                    context.read<SearchProductBloc>().add(
+                                          const FetchedSearchProduct(
+                                              query: "", isRefresh: true),
+                                        );
+                                  } else {
+                                    context.read<SearchProductBloc>().add(
+                                          FetchedSearchProduct(
+                                              query: value, isRefresh: true),
+                                        );
+                                  }
                                 },
                                 style: TextStyle(
                                   fontSize: 13.sp,
@@ -108,7 +125,22 @@ class _SearchViewState extends State<SearchView> {
                                 ),
                                 decoration: InputDecoration(
                                   suffixIcon: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      if (textEditingController.text.isEmpty) {
+                                        context.read<SearchProductBloc>().add(
+                                              const FetchedSearchProduct(
+                                                  query: "", isRefresh: true),
+                                            );
+                                      } else {
+                                        context.read<SearchProductBloc>().add(
+                                              FetchedSearchProduct(
+                                                query:
+                                                    textEditingController.text,
+                                                isRefresh: true,
+                                              ),
+                                            );
+                                      }
+                                    },
                                     child: Container(
                                       width: 45.w,
                                       alignment: Alignment.center,
@@ -139,8 +171,8 @@ class _SearchViewState extends State<SearchView> {
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.r),
                                     borderSide: BorderSide(
-                                      color: AppColors.whiteColor
-                                          .withValues(alpha: 0.5),
+                                      color:
+                                          AppColors.whiteColor.withAlpha(128),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -169,40 +201,62 @@ class _SearchViewState extends State<SearchView> {
             if (state is SearchProductLoading) {
               return loader();
             } else if (state is SearchProductFailure) {
-              return const Center(
-                child: Text("Something went wrong"),
-              );
+              return const Center(child: Text("Something went wrong"));
             } else if (state is SearchProductLoaded) {
-              return GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.h,
-                  crossAxisSpacing: 15.w,
-                  mainAxisExtent: 290.h,
-                ),
-                itemCount: state.products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final product = state.products[index];
-                  return customProductContainer(
-                    onTap: () {
-                      context.pushNamed(
-                        AppRoutes.productDetails.name,
-                        extra: {
-                          "productId": product.id.toString(),
-                        },
-                      );
-                    },
-                    image: product.thumbnailImage ?? defaultLogo,
-                    productName: product.name ?? "",
-                    discount: "${product.discount}",
-                    discountPrice: "200",
-                    sellingPrice: product.mainPrice ?? "",
-                  );
+              return NotificationListener<ScrollNotification>(
+                onNotification: (scrollInfo) {
+                  if (scrollInfo.metrics.pixels ==
+                          scrollInfo.metrics.maxScrollExtent &&
+                      !state.hasReachedMax) {
+                    context.read<SearchProductBloc>().add(
+                          FetchedSearchProduct(query: ""),
+                        );
+                  }
+                  return false;
                 },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.h,
+                          crossAxisSpacing: 15.w,
+                          mainAxisExtent: 290.h,
+                        ),
+                        itemCount: state.products.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final product = state.products[index];
+                          return customProductContainer(
+                            onTap: () {
+                              context.pushNamed(
+                                AppRoutes.productDetails.name,
+                                extra: {
+                                  "productId": product.id.toString(),
+                                },
+                              );
+                            },
+                            image: product.thumbnailImage ?? defaultLogo,
+                            productName: product.name ?? "",
+                            discount: "${product.discount}",
+                            discountPrice: "200",
+                            sellingPrice: product.mainPrice ?? "",
+                          );
+                        },
+                      ),
+                      Gap(5.h),
+                      if (state.isFetching && state.products.isNotEmpty)
+                        paginationLoader(),
+                      Gap(5.h),
+                    ],
+                  ),
+                ),
               );
             }
-            return const Text("data");
+            return const SizedBox();
           },
         ),
       ),

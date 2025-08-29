@@ -9,8 +9,12 @@ sealed class SearchProductEvent extends Equatable {
 
 final class FetchedSearchProduct extends SearchProductEvent {
   final String query;
-  const FetchedSearchProduct({required this.query});
+  final bool isRefresh;
+  const FetchedSearchProduct({
+    required this.query,
+    this.isRefresh = false,
+  });
 
   @override
-  List<Object> get props => [query];
+  List<Object> get props => [query, isRefresh];
 }
