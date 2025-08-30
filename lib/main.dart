@@ -7,6 +7,7 @@ import 'package:gym_swat/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/forget_password/forget_password_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/otp/otp_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
 import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
@@ -30,7 +31,6 @@ void main() async {
 
   SystemChrome.setPreferredOrientations(
     [
-      DeviceOrientation.portraitUp,
       DeviceOrientation.portraitUp,
     ],
   );
@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<AllCategoryBloc>()),
               BlocProvider(create: (context) => sl<SearchSuggetionBloc>()),
               BlocProvider(create: (context) => sl<SearchProductBloc>()),
+              BlocProvider(create: (context) => sl<AddToCartBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

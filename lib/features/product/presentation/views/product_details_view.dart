@@ -4,6 +4,7 @@ import 'package:gym_swat/core/utils/custom_snackbar.dart';
 import 'package:gym_swat/core/widgets/slider_image.dart';
 import 'package:gym_swat/features/product/presentation/bloc/product_details/product_details_bloc.dart';
 import 'package:gym_swat/features/product/presentation/bloc/related_product/related_product_bloc.dart';
+import 'package:gym_swat/features/product/presentation/part/cart_and_buy_now_button.dart';
 import 'package:gym_swat/features/product/presentation/part/product_description_section.dart';
 import 'package:gym_swat/features/product/presentation/part/product_info_container.dart';
 import 'package:gym_swat/features/product/presentation/part/refund_section.dart';
@@ -35,6 +36,16 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Details"),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          left: 10.w,
+          right: 10.w,
+          bottom: 12.h,
+        ),
+        child: CartAndBuyNowButton(
+          productId: widget.productId,
+        ),
       ),
       body: refresh(
         onRefresh: () async {
