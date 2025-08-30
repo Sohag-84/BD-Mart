@@ -4,20 +4,20 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/features/cart/domain/usecases/add_to_cart_usecase.dart';
 
-part 'add_to_cart_event.dart';
-part 'add_to_cart_state.dart';
+part 'buy_now_event.dart';
+part 'buy_now_state.dart';
 
-class AddToCartBloc extends Bloc<AddToCartEvent, AddToCartState> {
+class BuyNowBloc extends Bloc<BuyNowEvent, BuyNowState> {
   final AddToCartUsecase addToCartUsecase;
-  AddToCartBloc({required this.addToCartUsecase}) : super(AddToCartInitial()) {
-    on<AddedToCart>(_addedToCart);
+  BuyNowBloc({required this.addToCartUsecase}) : super(BuyNowInitial()) {
+    on<AddedBuyNow>(_addedBuyNow);
   }
 
-  Future<void> _addedToCart(
-    AddedToCart event,
-    Emitter<AddToCartState> emit,
+  Future<void> _addedBuyNow(
+    AddedBuyNow event,
+    Emitter<BuyNowState> emit,
   ) async {
-    emit(AddToCartLoading());
+    emit(BuyNowLoading());
 
     final result = await addToCartUsecase.call(
       CartParams(
@@ -28,8 +28,8 @@ class AddToCartBloc extends Bloc<AddToCartEvent, AddToCartState> {
       ),
     );
     result.fold(
-      (error) => emit(AddToCartFailure(error: error.message)),
-      (success) => emit(AddToCartSuccess(message: success)),
+      (error) => emit(BuyNowFailure(error: error.message)),
+      (success) => emit(BuyNowSuccess(message: success)),
     );
   }
 }
