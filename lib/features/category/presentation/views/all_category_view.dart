@@ -32,6 +32,7 @@ class _AllCategoryViewState extends State<AllCategoryView> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: customAppBar(
+        context: context,
         title: allCategories,
       ),
       body: BlocBuilder<AllCategoryBloc, AllCategoryState>(

@@ -40,7 +40,10 @@ class _SubCategoryViewState extends State<SubCategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: widget.categoryName),
+      appBar: customAppBar(
+        context: context,
+        title: widget.categoryName,
+      ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {

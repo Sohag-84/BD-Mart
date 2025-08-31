@@ -28,6 +28,7 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
       requiresToken: true,
       body: bodyData,
     );
+    print(response);
     return response['message'];
   }
 
@@ -49,6 +50,9 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
     );
 
     final List<dynamic> cartItem = response;
+    for(var i in cartItem){
+      print(i);
+    }
     return cartItem.map((data) => CartModel.fromJson(data)).toList();
   }
 

@@ -1,6 +1,9 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 
 AppBar customAppBar({
+  required BuildContext context,
   required String title,
   bool isSearchButton = true,
 }) {
@@ -13,7 +16,9 @@ AppBar customAppBar({
                 Icons.search,
                 size: 30.h,
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(AppRoutes.search.name);
+              },
             )
           : const SizedBox(),
     ],

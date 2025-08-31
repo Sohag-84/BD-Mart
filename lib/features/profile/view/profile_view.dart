@@ -20,6 +20,7 @@ class ProfileView extends StatelessWidget {
         ? const LoginView()
         : Scaffold(
             appBar: customAppBar(
+              context: context,
               title: profile,
               isSearchButton: false,
             ),

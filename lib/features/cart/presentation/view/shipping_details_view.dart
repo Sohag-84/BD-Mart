@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/enums/payment_method.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
@@ -13,6 +12,7 @@ class ShippingDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(
+        context: context,
         title: shippingDetails,
         isSearchButton: false,
       ),
@@ -75,7 +75,7 @@ class ShippingDetailsView extends StatelessWidget {
                         ? "Cash on Delivery"
                         : "Online Payment";
 
-                        print(paymentText);
+                    print(paymentText);
                   },
                   child: Text("data"),
                 );
