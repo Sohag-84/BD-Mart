@@ -26,3 +26,19 @@ final class CartFailure extends CartState {
   @override
   List<Object> get props => [error];
 }
+
+//update cart item quantity
+final class CartItemUpdate extends CartState {}
+
+//delete cart Item
+class CartItemDeleteSuccess extends CartState {}
+
+class CartItemDeleteLoading extends CartState{}
+
+class CartItemDeleteFailure extends CartState {
+  final String error;
+  const CartItemDeleteFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

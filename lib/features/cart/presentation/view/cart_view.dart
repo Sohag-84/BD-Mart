@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
@@ -6,13 +7,24 @@ import 'package:gym_swat/core/widgets/custom_icon_button.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
   const CartView({super.key});
+
+  @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CartBloc>().add(FetchedCartItem());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: cart,context: context),
+      appBar: customAppBar(title: cart, context: context),
       bottomNavigationBar: amountAndShippingButton(
         totalAmount: "1290",
         onTap: () {
@@ -21,13 +33,23 @@ class CartView extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(12.w),
-        child: BlocBuilder<CartBloc, CartState>(
+        child: BlocConsumer<CartBloc, CartState>(
+          listener: (context, state) {
+            if (state is CartItemDeleteFailure) {
+              Fluttertoast.showToast(msg: state.error);
+            } else if (state is CartItemDeleteSuccess) {
+              Fluttertoast.showToast(msg: "Item deleted successfully");
+            }
+          },
           builder: (context, state) {
             if (state is CartLoading) {
               return loader();
             } else if (state is CartFailure) {
               return const Center(child: Text("Something went wrong"));
             } else if (state is CartLoaded) {
+              if (state.cartItemList.isEmpty) {
+                return dataNotFound();
+              }
               return ListView.builder(
                 itemCount: state.cartItemList.length,
                 itemBuilder: (BuildContext context, int shopIndex) {
@@ -41,12 +63,12 @@ class CartView extends StatelessWidget {
 
                         return InkWell(
                           onTap: () {
-                            // context.pushNamed(
-                            //   AppRoutes.productDetails.name,
-                            //   extra: {
-                            //     "productId": product.id.toString(),
-                            //   },
-                            // );
+                            context.pushNamed(
+                              AppRoutes.productDetails.name,
+                              extra: {
+                                "productId": cartItem.id.toString(),
+                              },
+                            );
                           },
                           child: Container(
                             padding: EdgeInsets.all(5.w),
@@ -116,7 +138,12 @@ class CartView extends StatelessWidget {
                                           //delete button
                                           InkWell(
                                             onTap: () {
-                                              // delete item from cart
+                                              context.read<CartBloc>().add(
+                                                    DeletedCartItem(
+                                                      productId: cartItem.id
+                                                          .toString(),
+                                                    ),
+                                                  );
                                             },
                                             child: Icon(
                                               Icons.delete_outline,

@@ -68,9 +68,9 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<SearchProductBloc>()),
               BlocProvider(
                 create: (context) => sl<CartBloc>()
-                  ..add(
-                    FetchedCartItem(),
-                  ),
+                  // ..add(
+                  //   FetchedCartItem(),
+                  // ),
               ),
               BlocProvider(create: (context) => sl<AddToCartBloc>()),
               BlocProvider(create: (context) => sl<BuyNowBloc>()),

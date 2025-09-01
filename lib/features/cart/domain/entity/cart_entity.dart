@@ -2,11 +2,28 @@ class CartEntity {
   final String? name;
   final int? ownerId;
   final List<CartItemEntity> cartItems;
-  CartEntity({
+  final bool selected;
+
+  const CartEntity({
     required this.name,
     required this.ownerId,
     required this.cartItems,
+    this.selected = false,
   });
+
+  CartEntity copyWith({
+    String? name,
+    int? ownerId,
+    List<CartItemEntity>? cartItems,
+    bool? selected,
+  }) {
+    return CartEntity(
+      name: name ?? this.name,
+      ownerId: ownerId ?? this.ownerId,
+      cartItems: cartItems ?? this.cartItems,
+      selected: selected ?? this.selected,
+    );
+  }
 }
 
 class CartItemEntity {
@@ -21,12 +38,13 @@ class CartItemEntity {
   final String? currencySymbol;
   final int? tax;
   final int? shippingCost;
-  int? quantity;
+  final int? quantity;
   final int? lowerLimit;
   final int? upperLimit;
-  bool selected; // For tracking product selection
+  final bool selected;
+  final bool isDeleting;
 
-  CartItemEntity({
+  const CartItemEntity({
     required this.id,
     required this.ownerId,
     required this.userId,
@@ -42,5 +60,45 @@ class CartItemEntity {
     required this.lowerLimit,
     required this.upperLimit,
     this.selected = false,
+    this.isDeleting = false,
   });
+
+  CartItemEntity copyWith({
+    int? id,
+    int? ownerId,
+    int? userId,
+    int? productId,
+    String? productName,
+    String? productThumbnailImage,
+    String? variation,
+    int? price,
+    String? currencySymbol,
+    int? tax,
+    int? shippingCost,
+    int? quantity,
+    int? lowerLimit,
+    int? upperLimit,
+    bool? selected,
+    bool? isDeleting,
+  }) {
+    return CartItemEntity(
+      id: id ?? this.id,
+      ownerId: ownerId ?? this.ownerId,
+      userId: userId ?? this.userId,
+      productId: productId ?? this.productId,
+      productName: productName ?? this.productName,
+      productThumbnailImage:
+          productThumbnailImage ?? this.productThumbnailImage,
+      variation: variation ?? this.variation,
+      price: price ?? this.price,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      tax: tax ?? this.tax,
+      shippingCost: shippingCost ?? this.shippingCost,
+      quantity: quantity ?? this.quantity,
+      lowerLimit: lowerLimit ?? this.lowerLimit,
+      upperLimit: upperLimit ?? this.upperLimit,
+      selected: selected ?? this.selected,
+      isDeleting: isDeleting ?? this.isDeleting,
+    );
+  }
 }
