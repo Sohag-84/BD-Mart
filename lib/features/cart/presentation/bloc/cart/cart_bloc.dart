@@ -25,6 +25,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<UpdateCartQuantity>(_updateCartQuantity);
   }
 
+  //fetched cart Item
   Future<void> _fetchedCartItem(
     FetchedCartItem event,
     Emitter<CartState> emit,
@@ -38,6 +39,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     );
   }
 
+  //delete cart Item
   Future<void> _deletedCartItem(
     DeletedCartItem event,
     Emitter<CartState> emit,
