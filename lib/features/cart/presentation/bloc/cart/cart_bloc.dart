@@ -50,20 +50,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } else {
       // if porduct is not loaded, first load the cart product
       final result = await cartItemsUsecase.call(NoParams());
-      result.fold(
-        (error) => emit(CartFailure(error: error.message)),
+      currentState = result.fold(
+        (error) {
+          emit(CartFailure(error: error.message));
+          return null;
+        },
         (cartItems) => currentState = CartLoaded(cartItemList: cartItems),
       );
     }
 
-    if (currentState == null) return;
-
+    if (currentState == null || currentState!.cartItemList.isEmpty) return;
+    emit(CartLoaded(
+      cartItemList: currentState!.cartItemList,
+      isUpdating: true,
+    ));
     final result = await deleteCartItemUsecase.call(
       ProductIdParam(productId: event.productId),
     );
 
     result.fold(
-      (error) => emit(CartItemDeleteFailure(error: error.message)),
+      (error) {
+        emit(CartItemDeleteFailure(error: error.message));
+        emit(CartLoaded(
+          cartItemList: currentState!.cartItemList,
+          isUpdating: false,
+        ));
+      },
       (message) {
         final updateList = currentState!.cartItemList.map((shop) {
           final updatedCartItems = shop.cartItems
@@ -71,8 +83,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               .toList();
           return shop.copyWith(cartItems: updatedCartItems);
         }).toList();
-        emit(CartItemDeleteSuccess());
-        emit(CartLoaded(cartItemList: updateList));
+        emit(CartLoaded(cartItemList: updateList, isUpdating: false));
       },
     );
   }
