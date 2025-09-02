@@ -13,10 +13,11 @@ final class CartLoading extends CartState {}
 
 final class CartLoaded extends CartState {
   final List<CartEntity> cartItemList;
-  const CartLoaded({required this.cartItemList});
+  final bool isUpdating;
+  const CartLoaded({required this.cartItemList,this.isUpdating=false});
 
   @override
-  List<Object> get props => [cartItemList];
+  List<Object> get props => [cartItemList,isUpdating];
 }
 
 final class CartFailure extends CartState {

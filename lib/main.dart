@@ -36,6 +36,7 @@ void main() async {
       DeviceOrientation.portraitUp,
     ],
   );
+  //  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -66,12 +67,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<AllCategoryBloc>()),
               BlocProvider(create: (context) => sl<SearchSuggetionBloc>()),
               BlocProvider(create: (context) => sl<SearchProductBloc>()),
-              BlocProvider(
-                create: (context) => sl<CartBloc>()
-                  // ..add(
-                  //   FetchedCartItem(),
-                  // ),
-              ),
+              BlocProvider(create: (context) => sl<CartBloc>()),
               BlocProvider(create: (context) => sl<AddToCartBloc>()),
               BlocProvider(create: (context) => sl<BuyNowBloc>()),
             ],

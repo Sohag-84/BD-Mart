@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +44,12 @@ class _CartViewState extends State<CartView> {
               Fluttertoast.showToast(msg: state.error);
             } else if (state is CartItemDeleteSuccess) {
               Fluttertoast.showToast(msg: "Item deleted successfully");
+            } else if (state is CartLoaded) {
+              if (state.isUpdating) {
+                EasyLoading.show();
+              } else {
+                EasyLoading.dismiss();
+              }
             }
           },
           builder: (context, state) {
@@ -65,135 +72,130 @@ class _CartViewState extends State<CartView> {
                         final cartItem =
                             state.cartItemList[shopIndex].cartItems[index];
 
-                        return Stack(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(
-                                  AppRoutes.productDetails.name,
-                                  extra: {
-                                    "productId": cartItem.id.toString(),
-                                  },
-                                );
+                        return InkWell(
+                          onTap: () {
+                            context.pushNamed(
+                              AppRoutes.productDetails.name,
+                              extra: {
+                                "productId": cartItem.id.toString(),
                               },
-                              child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                margin: EdgeInsets.symmetric(vertical: 5.h),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: boxShadow,
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(5.w),
+                            margin: EdgeInsets.symmetric(vertical: 5.h),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: boxShadow,
+                            ),
+                            child: Row(
+                              children: [
+                                customImage(
+                                  imagePath: cartItem.productThumbnailImage,
+                                  height: 80.h,
+                                  width: 90.w,
                                 ),
-                                child: Row(
-                                  children: [
-                                    customImage(
-                                      imagePath: cartItem.productThumbnailImage,
-                                      height: 80.h,
-                                      width: 90.w,
-                                    ),
-                                    Gap(5.w),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                Gap(5.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cartItem.productName ?? "",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.blackColor,
+                                        ),
+                                      ),
+                                      Gap(5.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            cartItem.productName ?? "",
+                                            "$takaSign ${cartItem.price}",
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 13.sp,
                                               fontWeight: FontWeight.w500,
-                                              color: AppColors.blackColor,
                                             ),
                                           ),
-                                          Gap(5.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "$takaSign ${cartItem.price}",
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w500,
+                                          InkWell(
+                                            onTap: () {
+                                              cartBloc.add(
+                                                DeletedCartItem(
+                                                  productId:
+                                                      cartItem.id.toString(),
                                                 ),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  cartBloc.add(
-                                                    DeletedCartItem(
-                                                      productId: cartItem.id
-                                                          .toString(),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Icon(
-                                                  Icons.delete_outline,
-                                                  color: Colors.redAccent
-                                                      .withAlpha(180),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              customIconButton(
-                                                onTap: () {
-                                                  cartBloc.add(
-                                                    UpdateCartQuantity(
-                                                      productId: cartItem.id
-                                                          .toString(),
-                                                      newQuantity:
-                                                          cartItem.quantity! -
-                                                              1,
-                                                    ),
-                                                  );
-                                                },
-                                                icon: FontAwesomeIcons.minus,
-                                                padding: 3,
-                                                iconColor:
-                                                    AppColors.secondaryColor,
-                                                bgColor: AppColors.darkCharcoal,
-                                              ),
-                                              Gap(10.w),
-                                              Text(
-                                                "${cartItem.quantity}",
-                                                style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              Gap(10.w),
-                                              customIconButton(
-                                                onTap: () {
-                                                  cartBloc.add(
-                                                    UpdateCartQuantity(
-                                                      productId: cartItem.id
-                                                          .toString(),
-                                                      newQuantity:
-                                                          cartItem.quantity! +
-                                                              1,
-                                                    ),
-                                                  );
-                                                },
-                                                icon: Icons.add,
-                                                padding: 3,
-                                                bgColor: AppColors.darkCharcoal,
-                                                iconColor:
-                                                    AppColors.secondaryColor,
-                                              ),
-                                            ],
+                                              );
+                                            },
+                                            child: Icon(
+                                              Icons.delete_outline,
+                                              color: Colors.redAccent
+                                                  .withAlpha(180),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                      Row(
+                                        children: [
+                                          customIconButton(
+                                            onTap: () {
+                                              if (cartItem.quantity! <= 1) {
+                                                return;
+                                              }
+                                              cartBloc.add(
+                                                UpdateCartQuantity(
+                                                  productId:
+                                                      cartItem.id.toString(),
+                                                  newQuantity:
+                                                      cartItem.quantity! - 1,
+                                                ),
+                                              );
+                                            },
+                                            icon: FontAwesomeIcons.minus,
+                                            padding: 3,
+                                            iconColor: AppColors.secondaryColor,
+                                            bgColor: AppColors.darkCharcoal,
+                                          ),
+                                          Gap(10.w),
+                                          Text(
+                                            "${cartItem.quantity}",
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Gap(10.w),
+                                          customIconButton(
+                                            onTap: () {
+                                              cartBloc.add(
+                                                UpdateCartQuantity(
+                                                  productId:
+                                                      cartItem.id.toString(),
+                                                  newQuantity:
+                                                      cartItem.quantity! + 1,
+                                                ),
+                                              );
+                                            },
+                                            icon: Icons.add,
+                                            padding: 3,
+                                            bgColor: AppColors.darkCharcoal,
+                                            iconColor: AppColors.secondaryColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         );
                       });
                 },

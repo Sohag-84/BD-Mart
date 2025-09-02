@@ -82,24 +82,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     UpdateCartQuantity event,
     Emitter<CartState> emit,
   ) async {
+    // 1️⃣ Ensure cart is loaded
     CartLoaded? currentState;
-
-    // Wait until state is CartLoaded
     if (state is CartLoaded) {
       currentState = state as CartLoaded;
     } else {
-      // if porduct is not loaded, first load the cart product
+      // If cart not loaded yet, fetch cart first
       final result = await cartItemsUsecase.call(NoParams());
-      result.fold(
-        (error) => emit(CartFailure(error: error.message)),
-        (cartItems) => currentState = CartLoaded(
-          cartItemList: cartItems,
-        ),
+      currentState = result.fold(
+        (error) {
+          emit(CartFailure(error: error.message));
+          return null;
+        },
+        (cartItems) => CartLoaded(cartItemList: cartItems),
       );
     }
 
-    if (currentState == null) return;
-    
+    if (currentState == null || currentState.cartItemList.isEmpty) return;
+
+    // 2️⃣ Emit updating state
+    emit(CartLoaded(
+      cartItemList: currentState.cartItemList,
+      isUpdating: true,
+    ));
+
+    // 3️⃣ Call API to update quantity
     final result = await updateQuantityUsecase.call(
       UpdateQuantityParams(
         productId: event.productId,
@@ -107,9 +114,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       ),
     );
 
+    // 4️⃣ Update state after API
     result.fold(
       (error) {
         emit(CartQuantityUpdateFailure(error: error.message));
+        // reset updating flag
+        emit(CartLoaded(
+          cartItemList: currentState!.cartItemList,
+          isUpdating: false,
+        ));
       },
       (_) {
         final updatedList = currentState!.cartItemList.map((shop) {
@@ -122,7 +135,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           return shop.copyWith(cartItems: updatedItems);
         }).toList();
 
-        emit(CartLoaded(cartItemList: updatedList));
+        emit(CartLoaded(cartItemList: updatedList, isUpdating: false));
       },
     );
   }
