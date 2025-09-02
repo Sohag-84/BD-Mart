@@ -9,7 +9,18 @@ sealed class CartEvent extends Equatable {
 
 final class FetchedCartItem extends CartEvent {}
 
-final class UpdatedCartItem extends CartEvent {}
+class UpdateCartQuantity extends CartEvent {
+  final String productId;
+  final int newQuantity;
+
+  const UpdateCartQuantity({
+    required this.productId,
+    required this.newQuantity,
+  });
+
+  @override
+  List<Object> get props => [productId, newQuantity];
+}
 
 final class DeletedCartItem extends CartEvent {
   final String productId;

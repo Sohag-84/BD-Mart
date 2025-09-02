@@ -67,7 +67,6 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
       requiresToken: true,
       body: body,
     );
-
     return response;
   }
 }

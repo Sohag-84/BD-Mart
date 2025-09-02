@@ -27,6 +27,7 @@ Future<void> cartInjectionContainer() async {
     () => CartBloc(
       cartItemsUsecase: sl.call(),
       deleteCartItemUsecase: sl.call(),
+      updateQuantityUsecase: sl.call(),
     ),
   );
 

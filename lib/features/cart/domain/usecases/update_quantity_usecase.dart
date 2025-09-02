@@ -9,7 +9,9 @@ class UpdateQuantityUsecase implements Usecase<void, UpdateQuantityParams> {
   @override
   ResultFuture<void> call(UpdateQuantityParams params) async {
     return await cartRepository.updateCartQuantity(
-        productId: params.productId, quantity: params.quantity);
+      productId: params.productId,
+      quantity: params.quantity,
+    );
   }
 }
 
@@ -17,5 +19,8 @@ class UpdateQuantityParams {
   final String productId;
   final String quantity;
 
-  const UpdateQuantityParams({required this.productId, required this.quantity});
+  const UpdateQuantityParams({
+    required this.productId,
+    required this.quantity,
+  });
 }

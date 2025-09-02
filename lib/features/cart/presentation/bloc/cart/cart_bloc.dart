@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/features/cart/domain/entity/cart_entity.dart';
 import 'package:gym_swat/features/cart/domain/usecases/delete_cart_item_usecase.dart';
 import 'package:gym_swat/features/cart/domain/usecases/get_cart_items_usecase.dart';
+import 'package:gym_swat/features/cart/domain/usecases/update_quantity_usecase.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -14,12 +14,15 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   final GetCartItemsUsecase cartItemsUsecase;
   final DeleteCartItemUsecase deleteCartItemUsecase;
+  final UpdateQuantityUsecase updateQuantityUsecase;
   CartBloc({
     required this.cartItemsUsecase,
     required this.deleteCartItemUsecase,
+    required this.updateQuantityUsecase,
   }) : super(CartInitial()) {
     on<FetchedCartItem>(_fetchedCartItem);
     on<DeletedCartItem>(_deletedCartItem);
+    on<UpdateCartQuantity>(_updateCartQuantity);
   }
 
   Future<void> _fetchedCartItem(
@@ -70,6 +73,56 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         }).toList();
         emit(CartItemDeleteSuccess());
         emit(CartLoaded(cartItemList: updateList));
+      },
+    );
+  }
+
+  //update cart quantity
+  Future<void> _updateCartQuantity(
+    UpdateCartQuantity event,
+    Emitter<CartState> emit,
+  ) async {
+    CartLoaded? currentState;
+
+    // Wait until state is CartLoaded
+    if (state is CartLoaded) {
+      currentState = state as CartLoaded;
+    } else {
+      // if porduct is not loaded, first load the cart product
+      final result = await cartItemsUsecase.call(NoParams());
+      result.fold(
+        (error) => emit(CartFailure(error: error.message)),
+        (cartItems) => currentState = CartLoaded(
+          cartItemList: cartItems,
+        ),
+      );
+    }
+
+    if (currentState == null) return;
+    
+    final result = await updateQuantityUsecase.call(
+      UpdateQuantityParams(
+        productId: event.productId,
+        quantity: event.newQuantity.toString(),
+      ),
+    );
+
+    result.fold(
+      (error) {
+        emit(CartQuantityUpdateFailure(error: error.message));
+      },
+      (_) {
+        final updatedList = currentState!.cartItemList.map((shop) {
+          final updatedItems = shop.cartItems.map((item) {
+            if (item.id.toString() == event.productId) {
+              return item.copyWith(quantity: event.newQuantity);
+            }
+            return item;
+          }).toList();
+          return shop.copyWith(cartItems: updatedItems);
+        }).toList();
+
+        emit(CartLoaded(cartItemList: updatedList));
       },
     );
   }

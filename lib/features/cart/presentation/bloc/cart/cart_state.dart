@@ -28,12 +28,26 @@ final class CartFailure extends CartState {
 }
 
 //update cart item quantity
-final class CartItemUpdate extends CartState {}
+class CartQuantityUpdating extends CartState {
+  final String productId;
+  final int newQuantity;
+
+  const CartQuantityUpdating(this.productId, this.newQuantity);
+
+  @override
+  List<Object> get props => [productId, newQuantity];
+}
+
+class CartQuantityUpdateFailure extends CartState {
+  final String error;
+  const CartQuantityUpdateFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
 
 //delete cart Item
 class CartItemDeleteSuccess extends CartState {}
-
-class CartItemDeleteLoading extends CartState{}
 
 class CartItemDeleteFailure extends CartState {
   final String error;
