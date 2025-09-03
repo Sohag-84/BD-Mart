@@ -29,3 +29,5 @@ final class DeletedCartItem extends CartEvent {
   @override
   List<Object> get props => [productId];
 }
+
+final class FetchedCartSummary extends CartEvent {}

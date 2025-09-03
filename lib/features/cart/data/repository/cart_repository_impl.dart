@@ -5,7 +5,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/cart/data/datasource/cart_remote_datasource.dart';
-import 'package:gym_swat/features/cart/domain/entity/cart_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_counter_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_summary_entity.dart';
 import 'package:gym_swat/features/cart/domain/repository/cart_repository.dart';
 
 class CartRepositoryImpl implements CartRepository {
@@ -76,6 +78,34 @@ class CartRepositoryImpl implements CartRepository {
         productId: productId,
         quantity: quantity,
       );
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<CartCounterEntity> getCartCounter() async {
+    try {
+      final result = await cartRemoteDatasource.getCartCounter();
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<CartSummaryEntity> getCartSummary() async {
+    try {
+      final result = await cartRemoteDatasource.getCartSummary();
       return right(result);
     } on SocketException {
       return left(const NetworkFailure("No internet connection"));

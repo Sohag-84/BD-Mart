@@ -1,5 +1,7 @@
 import 'package:gym_swat/core/utils/typedef.dart';
-import 'package:gym_swat/features/cart/domain/entity/cart_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_counter_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_summary_entity.dart';
 
 abstract interface class CartRepository {
   ResultFuture<String> addToCart({
@@ -17,4 +19,8 @@ abstract interface class CartRepository {
     required String productId,
     required String quantity,
   });
+
+  ResultFuture<CartCounterEntity> getCartCounter();
+
+  ResultFuture<CartSummaryEntity> getCartSummary();
 }

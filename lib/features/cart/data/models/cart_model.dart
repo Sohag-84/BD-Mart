@@ -1,4 +1,4 @@
-import 'package:gym_swat/features/cart/domain/entity/cart_entity.dart';
+import 'package:gym_swat/features/cart/domain/entities/cart_entity.dart';
 
 class CartModel extends CartEntity {
   CartModel({

@@ -2,7 +2,9 @@ import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/data/datasource/cart_remote_datasource.dart';
-import 'package:gym_swat/features/cart/data/model/cart_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_counter_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_summary_model.dart';
 
 class CartRemoteDatasourceImpl implements CartRemoteDatasource {
   final ApiServices apiServices;
@@ -68,5 +70,24 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
       body: body,
     );
     return response;
+  }
+
+  @override
+  Future<CartCounterModel> getCartCounter() async {
+    final response = await apiServices.getApi(
+      fullApiUrl: AppConfig.profileCounters,
+      requiresToken: true,
+    );
+
+    return CartCounterModel.fromJson(response);
+  }
+
+  @override
+  Future<CartSummaryModel> getCartSummary() async {
+    var response = await apiServices.getApi(
+      fullApiUrl: AppConfig.cartSummery,
+      requiresToken: true,
+    );
+    return CartSummaryModel.fromJson(response);
   }
 }

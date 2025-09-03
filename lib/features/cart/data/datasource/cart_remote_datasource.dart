@@ -1,4 +1,6 @@
-import 'package:gym_swat/features/cart/data/model/cart_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_counter_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_model.dart';
+import 'package:gym_swat/features/cart/data/models/cart_summary_model.dart';
 
 abstract interface class CartRemoteDatasource {
   Future<String> addToCart({
@@ -16,4 +18,8 @@ abstract interface class CartRemoteDatasource {
     required String productId,
     required String quantity,
   });
+
+  Future<CartCounterModel> getCartCounter();
+
+  Future<CartSummaryModel> getCartSummary();
 }
