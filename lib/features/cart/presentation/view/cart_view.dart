@@ -6,6 +6,7 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_icon_button.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
 
 class CartView extends StatefulWidget {
@@ -24,8 +25,6 @@ class _CartViewState extends State<CartView> {
     cartBloc.add(FetchedCartItem());
   }
 
-  bool isUpdating = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +42,6 @@ class _CartViewState extends State<CartView> {
             if (state is CartItemDeleteFailure) {
               Fluttertoast.showToast(msg: state.error);
             } else if (state is CartItemDeleteSuccess) {
-              Fluttertoast.showToast(msg: "Item deleted successfully");
             } else if (state is CartLoaded) {
               if (state.isUpdating) {
                 EasyLoading.show();
@@ -58,11 +56,12 @@ class _CartViewState extends State<CartView> {
             } else if (state is CartFailure) {
               return Center(child: Text(state.error));
             } else if (state is CartLoaded) {
+              context.read<CartCounterCubit>().cartCounter();
               if (state.cartItemList.isEmpty) {
                 return dataNotFound();
               }
               return refresh(
-                onRefresh: (){
+                onRefresh: () {
                   cartBloc.add(FetchedCartItem());
                 },
                 child: ListView.builder(
@@ -71,11 +70,12 @@ class _CartViewState extends State<CartView> {
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.cartItemList[shopIndex].cartItems.length,
+                        itemCount:
+                            state.cartItemList[shopIndex].cartItems.length,
                         itemBuilder: (BuildContext context, int index) {
                           final cartItem =
                               state.cartItemList[shopIndex].cartItems[index];
-                
+
                           return InkWell(
                             onTap: () {
                               context.pushNamed(
@@ -164,7 +164,8 @@ class _CartViewState extends State<CartView> {
                                               },
                                               icon: FontAwesomeIcons.minus,
                                               padding: 3,
-                                              iconColor: AppColors.secondaryColor,
+                                              iconColor:
+                                                  AppColors.secondaryColor,
                                               bgColor: AppColors.darkCharcoal,
                                             ),
                                             Gap(10.w),
@@ -190,7 +191,8 @@ class _CartViewState extends State<CartView> {
                                               icon: Icons.add,
                                               padding: 3,
                                               bgColor: AppColors.darkCharcoal,
-                                              iconColor: AppColors.secondaryColor,
+                                              iconColor:
+                                                  AppColors.secondaryColor,
                                             ),
                                           ],
                                         ),

@@ -1,7 +1,7 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/enums/payment_method.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
-import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/order_summery_widgets.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/select_payment_option_button.dart';
 

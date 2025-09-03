@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/enums/payment_method.dart';
-import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
 
 class SelectPaymentOptionButton extends StatelessWidget {
   final PaymentMethod method;

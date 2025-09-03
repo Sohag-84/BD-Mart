@@ -5,6 +5,7 @@ import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/buy_now/buy_now_bloc.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
 
 class CartAndBuyNowButton extends StatefulWidget {
   final String productId;
@@ -24,6 +25,7 @@ class _CartAndBuyNowButtonState extends State<CartAndBuyNowButton> {
           child: BlocConsumer<AddToCartBloc, AddToCartState>(
             listener: (context, state) {
               if (state is AddToCartSuccess) {
+                context.read<CartCounterCubit>().cartCounter();
                 Fluttertoast.showToast(msg: state.message);
               } else if (state is AddToCartFailure) {
                 Fluttertoast.showToast(msg: state.error);
@@ -59,6 +61,7 @@ class _CartAndBuyNowButtonState extends State<CartAndBuyNowButton> {
           child: BlocConsumer<BuyNowBloc, BuyNowState>(
             listener: (context, state) {
               if (state is BuyNowSuccess) {
+                context.read<CartCounterCubit>().cartCounter();
                 Fluttertoast.showToast(msg: state.message);
                 context.pushNamed(AppRoutes.cart.name);
               } else if (state is BuyNowFailure) {

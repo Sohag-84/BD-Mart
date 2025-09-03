@@ -10,7 +10,8 @@ import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cu
 import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/buy_now/buy_now_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
-import 'package:gym_swat/features/cart/presentation/cubit/payment_method_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/feature_category/feature_category_bloc.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<CartBloc>()),
               BlocProvider(create: (context) => sl<AddToCartBloc>()),
               BlocProvider(create: (context) => sl<BuyNowBloc>()),
+              BlocProvider(create: (context) => sl<CartCounterCubit>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',
