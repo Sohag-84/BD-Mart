@@ -58,19 +58,3 @@ class CartItemDeleteFailure extends CartState {
   List<Object> get props => [error];
 }
 
-//cart summary
-class CartSummaryLoaded extends CartState {
-  final CartSummaryEntity cartSummary;
-  const CartSummaryLoaded({required this.cartSummary});
-
-  @override
-  List<Object> get props => [cartSummary];
-}
-
-class CartSummaryFailure extends CartState {
-  final String error;
-  const CartSummaryFailure({required this.error});
-
-  @override
-  List<Object> get props => [error];
-}

@@ -4,10 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/usecase/usecase.dart';
 import 'package:gym_swat/features/cart/domain/entities/cart_entity.dart';
-import 'package:gym_swat/features/cart/domain/entities/cart_summary_entity.dart';
 import 'package:gym_swat/features/cart/domain/usecases/delete_cart_item_usecase.dart';
 import 'package:gym_swat/features/cart/domain/usecases/get_cart_items_usecase.dart';
-import 'package:gym_swat/features/cart/domain/usecases/get_cart_summary_usecase.dart';
 import 'package:gym_swat/features/cart/domain/usecases/update_quantity_usecase.dart';
 
 part 'cart_event.dart';
@@ -17,17 +15,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final GetCartItemsUsecase cartItemsUsecase;
   final DeleteCartItemUsecase deleteCartItemUsecase;
   final UpdateQuantityUsecase updateQuantityUsecase;
-  final GetCartSummaryUsecase cartSummaryUsecase;
   CartBloc({
     required this.cartItemsUsecase,
     required this.deleteCartItemUsecase,
     required this.updateQuantityUsecase,
-    required this.cartSummaryUsecase,
   }) : super(CartInitial()) {
     on<FetchedCartItem>(_fetchedCartItem);
     on<DeletedCartItem>(_deletedCartItem);
     on<UpdateCartQuantity>(_updateCartQuantity);
-    on<FetchedCartSummary>(_fetchedCartSummary);
   }
 
   //fetched cart Item
@@ -155,20 +150,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         emit(CartLoaded(cartItemList: updatedList, isUpdating: false));
       },
-    );
-  }
-
-  Future<void> _fetchedCartSummary(
-    FetchedCartSummary event,
-    Emitter<CartState> emit,
-  ) async {
-    final result = await cartSummaryUsecase.call(NoParams());
-
-    result.fold(
-      (error) => emit(CartSummaryFailure(error: error.message)),
-      (summary) => emit(
-        CartSummaryLoaded(cartSummary: summary),
-      ),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_icon_button.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/part/amount_and_shipping_button.dart';
 
 class CartView extends StatefulWidget {
@@ -23,6 +24,7 @@ class _CartViewState extends State<CartView> {
     super.initState();
     cartBloc = context.read<CartBloc>();
     cartBloc.add(FetchedCartItem());
+    context.read<CartSummaryCubit>().fetchedCartSummary();
   }
 
   @override
@@ -30,7 +32,6 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       appBar: customAppBar(title: cart, context: context),
       bottomNavigationBar: amountAndShippingButton(
-        totalAmount: "1290",
         onTap: () {
           context.pushNamed(AppRoutes.shippingDetails.name);
         },

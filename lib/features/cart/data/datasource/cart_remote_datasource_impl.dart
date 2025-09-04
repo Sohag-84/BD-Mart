@@ -78,7 +78,6 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
       fullApiUrl: AppConfig.profileCounters,
       requiresToken: true,
     );
-    print("Cart Counter: $response");
     return CartCounterModel.fromJson(response);
   }
 

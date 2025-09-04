@@ -11,6 +11,7 @@ import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart
 import 'package:gym_swat/features/cart/presentation/bloc/buy_now/buy_now_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:gym_swat/features/category/presentation/bloc/all_category/all_category_bloc.dart';
 import 'package:gym_swat/features/category/presentation/bloc/category/category_bloc.dart';
@@ -37,7 +38,6 @@ void main() async {
       DeviceOrientation.portraitUp,
     ],
   );
-  //  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<AddToCartBloc>()),
               BlocProvider(create: (context) => sl<BuyNowBloc>()),
               BlocProvider(create: (context) => sl<CartCounterCubit>()),
+              BlocProvider(create: (context) => sl<CartSummaryCubit>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

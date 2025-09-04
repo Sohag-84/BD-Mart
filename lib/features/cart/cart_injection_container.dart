@@ -12,6 +12,7 @@ import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart
 import 'package:gym_swat/features/cart/presentation/bloc/buy_now/buy_now_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 import 'package:gym_swat/service_locator.dart';
 
 Future<void> cartInjectionContainer() async {
@@ -32,13 +33,17 @@ Future<void> cartInjectionContainer() async {
       cartItemsUsecase: sl.call(),
       deleteCartItemUsecase: sl.call(),
       updateQuantityUsecase: sl.call(),
-      cartSummaryUsecase: sl.call(),
     ),
   );
 
   sl.registerLazySingleton(
     () => CartCounterCubit(
       cartCounterUsecase: sl.call(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => CartSummaryCubit(
+      cartSummaryUsecase: sl.call(),
     ),
   );
 
