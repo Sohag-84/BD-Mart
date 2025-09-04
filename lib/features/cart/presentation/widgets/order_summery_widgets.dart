@@ -1,84 +1,62 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 
 class OrderSummaryWidget extends StatelessWidget {
-  final int itemCount;
-  final String subtotal;
-  final String shippingCost;
-  final String tax;
-  final String discount;
-  final String total;
-
-  const OrderSummaryWidget({
-    required this.itemCount,
-    required this.subtotal,
-    required this.shippingCost,
-    required this.tax,
-    required this.discount,
-    required this.total,
-    super.key,
-  });
+  const OrderSummaryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Summary",
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10.w,
-                vertical: 5.h,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(5.r),
-              ),
-              child: Text(
-                "$itemCount Items",
+    return BlocBuilder<CartSummaryCubit, CartSummaryState>(
+      builder: (context, state) {
+        if (state is CartSummaryFailure) {
+          return const SizedBox();
+        } else if (state is CartSummaryLoaded) {
+          final summary = state.cartSummary;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Summary",
                 style: TextStyle(
-                  color: Colors.white,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
-                  fontSize: 12.sp,
+                  color: Colors.black,
                 ),
               ),
-            ),
-          ],
-        ),
-        const Divider(),
+              const Divider(),
 
-        /// Subtotal, Tax, Total
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            children: [
-              _summaryRow("Subtotal", subtotal),
-              _summaryRow("Shipping Cost", shippingCost),
-              _summaryRow("Tax", tax),
-              _summaryRow("Discount", discount),
-              Gap(5.h),
-              const DottedLine(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.center,
-                lineLength: double.infinity,
-                dashColor: AppColors.darkCharcoal,
-                dashGapColor: Colors.transparent,
+              /// Subtotal, Tax, Total
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  children: [
+                    _summaryRow("Subtotal", summary.subTotal ?? "0"),
+                    _summaryRow("Shipping Cost", summary.shippingCost ?? "0"),
+                    _summaryRow("Tax", summary.tax ?? "0"),
+                    _summaryRow("Discount", summary.discount ?? "0"),
+                    Gap(5.h),
+                    const DottedLine(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      lineLength: double.infinity,
+                      dashColor: AppColors.darkCharcoal,
+                      dashGapColor: Colors.transparent,
+                    ),
+                    _summaryRow(
+                      "Total",
+                      "${summary.grandTotal}",
+                      isBold: true,
+                    ),
+                  ],
+                ),
               ),
-              _summaryRow("Total", total, isBold: true),
             ],
-          ),
-        ),
-      ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 

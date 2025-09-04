@@ -41,14 +41,7 @@ class ShippingDetailsView extends StatelessWidget {
             Gap(10.h),
 
             ///order summery
-            const OrderSummaryWidget(
-              itemCount: 10,
-              subtotal: "4576",
-              shippingCost: "60",
-              tax: "12",
-              discount: "78",
-              total: "10000",
-            ),
+            const OrderSummaryWidget(),
             Gap(20.h),
 
             /// Payment Selection Section

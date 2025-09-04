@@ -31,11 +31,7 @@ class _CartViewState extends State<CartView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(title: cart, context: context),
-      bottomNavigationBar: amountAndShippingButton(
-        onTap: () {
-          context.pushNamed(AppRoutes.shippingDetails.name);
-        },
-      ),
+      bottomNavigationBar: amountAndShippingButton(),
       body: Padding(
         padding: EdgeInsets.all(12.w),
         child: BlocConsumer<CartBloc, CartState>(

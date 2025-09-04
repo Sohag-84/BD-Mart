@@ -1,18 +1,18 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 
-Widget amountAndShippingButton({
-  required VoidCallback onTap,
-}) {
+Widget amountAndShippingButton() {
   return BlocBuilder<CartSummaryCubit, CartSummaryState>(
     builder: (context, state) {
-      int totalAmount = 0;
+      String totalAmount = "0";
       if (state is CartSummaryLoaded) {
-        totalAmount = state.cartSummary.grandTotalValue ?? 0;
+        totalAmount = state.cartSummary.grandTotal ?? "0";
       }
 
-      return totalAmount == 0
+      return totalAmount == "0"
           ? const SizedBox()
           : Container(
               height: 100,
@@ -57,7 +57,9 @@ Widget amountAndShippingButton({
                   const Spacer(),
                   customButton(
                     height: 40,
-                    onTap: onTap,
+                    onTap: () {
+                      context.pushNamed(AppRoutes.shippingDetails.name);
+                    },
                     btnText: "Checkout",
                     fontSize: 14,
                     fontColor: AppColors.secondaryColor,
