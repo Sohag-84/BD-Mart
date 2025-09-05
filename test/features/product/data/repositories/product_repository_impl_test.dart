@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/features/product/data/datasources/product_remote_data_source_impl.dart';
+import 'package:gym_swat/features/product/data/models/product_model.dart';
 import 'package:gym_swat/features/product/data/repository/product_repository_impl.dart';
 import 'package:gym_swat/features/product/domain/entity/product_details_entity.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,7 +23,6 @@ void main() {
       productRemoteDataSource: remoteDataSource,
     );
   });
-
   const tProductId = "123";
 
   final tProductJson = {
@@ -58,6 +58,46 @@ void main() {
     "coupon_code": null,
     "link": null,
   };
+
+  group("Get Products", () {
+    test("should return Products list when API call is successful", () async {
+      //arrange
+      when(() => mockApiServices
+              .getApi(fullApiUrl: "${AppConfig.products}?page=1"))
+          .thenAnswer((_) async => {
+                "data": [
+                  {
+                    "id": 1,
+                    "name": "Test Product",
+                    "thumbnail_image": "thumb.png",
+                    "has_discount": false,
+                    "discount": "0",
+                    "stroked_price": "200",
+                    "main_price": "100",
+                    "rating": 5,
+                    "sales": 0,
+                    "links": {"details": "details-url"}
+                  }
+                ]
+              });
+
+      //act
+      final result = await repository.getProducts(
+        url: AppConfig.products,
+        page: 1,
+      );
+
+      //assert
+      // expect(result.isRight(), true);
+      result.fold(
+        (_) => fail("Expected Right but got Left"),
+        (data) => {
+          expect(data, isA<List<Product>>()),
+          expect(data.first.name, "Test Product"),
+        },
+      );
+    });
+  });
 
   group("getProductDetails", () {
     test("should return ProductDetailsEntity list when API call is successful",
