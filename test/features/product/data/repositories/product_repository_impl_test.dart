@@ -88,7 +88,7 @@ void main() {
       );
 
       //assert
-      // expect(result.isRight(), true);
+      expect(result.isRight(), true);
       result.fold(
         (_) => fail("Expected Right but got Left"),
         (data) => {
