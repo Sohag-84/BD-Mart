@@ -41,7 +41,7 @@ class ShippingAddressRepositoryImpl implements AddressRepository {
   }
 
   @override
-  ResultFuture<List<ShippingAddressEntity>> getShippingAddress() async {
+  ResultFuture<List<AddressEntity>> getShippingAddress() async {
     try {
       final result = await shippingAddressRemoteDatasource.getShippingAddress();
       return right(result);
@@ -73,6 +73,21 @@ class ShippingAddressRepositoryImpl implements AddressRepository {
         cityId: cityId,
         stateId: stateId,
       );
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<String> deleteShippingAddress({required int id}) async {
+    try {
+      final result =
+          await shippingAddressRemoteDatasource.deleteShippingAddress(id: id);
       return right(result);
     } on SocketException {
       return left(const NetworkFailure("No internet connection"));

@@ -1,27 +1,3 @@
-class ShippingAddressEntity {
-  final List<AddressEntity> data;
-  final bool? success;
-  final int? status;
-
-  const ShippingAddressEntity({
-    required this.data,
-    this.success,
-    this.status,
-  });
-
-  ShippingAddressEntity copyWith({
-    List<AddressEntity>? data,
-    bool? success,
-    int? status,
-  }) {
-    return ShippingAddressEntity(
-      data: data ?? this.data,
-      success: success ?? this.success,
-      status: status ?? this.status,
-    );
-  }
-}
-
 class AddressEntity {
   final int? id;
   final int? userId;

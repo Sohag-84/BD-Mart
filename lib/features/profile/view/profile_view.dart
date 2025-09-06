@@ -14,7 +14,7 @@ class ProfileView extends StatelessWidget {
     List<String> counterRowItemName = [
       cart,
       wishlist,
-      "myOrders",
+      myOrders,
     ];
     return LocalPreferenceService.instance.getToken().isEmpty
         ? const LoginView()

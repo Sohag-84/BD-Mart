@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
+import 'package:gym_swat/features/address/presentation/bloc/bloc/address_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/forget_password/forget_password_bloc.dart';
 import 'package:gym_swat/features/auth/presentation/bloc/otp/otp_bloc.dart';
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<BuyNowBloc>()),
               BlocProvider(create: (context) => sl<CartCounterCubit>()),
               BlocProvider(create: (context) => sl<CartSummaryCubit>()),
+              BlocProvider(create: (context) => sl<AddressBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

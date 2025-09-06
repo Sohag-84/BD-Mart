@@ -25,6 +25,7 @@ const String proceedToCheckout = "Proceed to Checkout";
 const String profile = "Profile";
 const String allOrders = "All Orders";
 const String wishlist = "Wishlist";
+const String myOrders = "My Orders";
 
 const String youNeedToLogin = "You need to login";
 const String coupons = "Coupons";

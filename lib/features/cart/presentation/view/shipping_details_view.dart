@@ -1,12 +1,25 @@
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/enums/payment_method.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
+import 'package:gym_swat/features/address/presentation/bloc/bloc/address_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/part/shippin_address_section.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/order_summery_widgets.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/select_payment_option_button.dart';
 
-class ShippingDetailsView extends StatelessWidget {
+class ShippingDetailsView extends StatefulWidget {
   const ShippingDetailsView({super.key});
+
+  @override
+  State<ShippingDetailsView> createState() => _ShippingDetailsViewState();
+}
+
+class _ShippingDetailsViewState extends State<ShippingDetailsView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AddressBloc>().add(FetchedShippingAddress());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +51,10 @@ class ShippingDetailsView extends StatelessWidget {
               color: AppColors.darkCharcoal,
               fontColor: AppColors.whiteColor,
             ),
+            Gap(10.h),
+
+            /// Shipping address list
+            shippingAddressSection(),
             Gap(10.h),
 
             ///order summery

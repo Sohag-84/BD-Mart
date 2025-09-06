@@ -9,6 +9,8 @@ abstract interface class ShippingAddressRemoteDatasource {
     required int stateId,
   });
 
+  Future<List<AddressModel>> getShippingAddress();
+
   Future<String> updateShippingAddress({
     required int id,
     required String address,
@@ -18,5 +20,5 @@ abstract interface class ShippingAddressRemoteDatasource {
     required int stateId,
   });
 
-  Future<List<ShippingAddressModel>> getShippingAddress();
+  Future<String> deleteShippingAddress({required int id});
 }

@@ -1,24 +1,5 @@
 import 'package:gym_swat/features/address/domain/entities/shipping_address_entity.dart';
 
-class ShippingAddressModel extends ShippingAddressEntity {
-  const ShippingAddressModel({
-    required List<AddressModel> super.data,
-    super.success,
-    super.status,
-  });
-
-  factory ShippingAddressModel.fromJson(Map<String, dynamic> json) {
-    return ShippingAddressModel(
-      data: json["data"] == null
-          ? []
-          : List<AddressModel>.from(
-              json["data"].map((x) => AddressModel.fromJson(x))),
-      success: json["success"],
-      status: json["status"],
-    );
-  }
-}
-
 class AddressModel extends AddressEntity {
   const AddressModel({
     super.id,

@@ -10,6 +10,8 @@ abstract interface class AddressRepository {
     required int stateId,
   });
 
+  ResultFuture<List<AddressEntity>> getShippingAddress();
+
   ResultFuture<String> updateShippingAddress({
     required int id,
     required String address,
@@ -19,5 +21,5 @@ abstract interface class AddressRepository {
     required int stateId,
   });
 
-  ResultFuture<List<ShippingAddressEntity>> getShippingAddress();
+  ResultFuture<String> deleteShippingAddress({required int id});
 }

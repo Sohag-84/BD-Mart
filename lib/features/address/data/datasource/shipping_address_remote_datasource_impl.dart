@@ -35,7 +35,7 @@ class ShippingAddressRemoteDatasourceImpl
   }
 
   @override
-  Future<List<ShippingAddressModel>> getShippingAddress() async {
+  Future<List<AddressModel>> getShippingAddress() async {
     final userId = LocalPreferenceService.instance.getUserId();
     var response = await apiServices.getApi(
       endPoint: "${AppConfig.getShippingAddress}$userId",
@@ -43,9 +43,7 @@ class ShippingAddressRemoteDatasourceImpl
     );
     if (response['data'] != null) {
       final List<dynamic> address = response['data'];
-      return address
-          .map((json) => ShippingAddressModel.fromJson(json))
-          .toList();
+      return address.map((json) => AddressModel.fromJson(json)).toList();
     } else {
       return [];
     }
@@ -73,6 +71,15 @@ class ShippingAddressRemoteDatasourceImpl
         "postal_code": postalCode,
         "phone": phoneNumber,
       },
+    );
+    return response['message'];
+  }
+
+  @override
+  Future<String> deleteShippingAddress({required int id}) async {
+    final response = await apiServices.getApi(
+      endPoint: "${AppConfig.deleteShippingAddress}$id",
+      requiresToken: true,
     );
     return response['message'];
   }
