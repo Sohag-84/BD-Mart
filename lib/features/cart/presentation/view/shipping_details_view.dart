@@ -2,8 +2,9 @@ import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/enums/payment_method.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';
 import 'package:gym_swat/features/address/presentation/bloc/bloc/address_bloc.dart';
+import 'package:gym_swat/features/address/presentation/widgets/buid_add_address_dialog.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
-import 'package:gym_swat/features/cart/presentation/part/shippin_address_section.dart';
+import 'package:gym_swat/features/cart/presentation/part/shipping_address_section.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/order_summery_widgets.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/select_payment_option_button.dart';
 
@@ -15,10 +16,21 @@ class ShippingDetailsView extends StatefulWidget {
 }
 
 class _ShippingDetailsViewState extends State<ShippingDetailsView> {
+  TextEditingController addressController = TextEditingController();
+  TextEditingController postalCodeController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   void initState() {
     super.initState();
     context.read<AddressBloc>().add(FetchedShippingAddress());
+  }
+
+  @override
+  void dispose() {
+    addressController.dispose();
+    postalCodeController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,7 +58,14 @@ class _ShippingDetailsViewState extends State<ShippingDetailsView> {
           children: [
             //add new address button
             customButton(
-              onTap: () {},
+              onTap: () async {
+                await buildAddAddressDialog(
+                  context: context,
+                  addressController: addressController,
+                  postalCodeController: postalCodeController,
+                  phoneController: phoneController,
+                );
+              },
               btnText: "+ $addNewAddress",
               color: AppColors.darkCharcoal,
               fontColor: AppColors.whiteColor,

@@ -12,6 +12,7 @@ Widget shippingAddressSection() {
         return state.shippingAddressList.isEmpty
             ? const SizedBox()
             : Column(
+              crossAxisAlignment:CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Shipping Address",
