@@ -6,7 +6,7 @@ import 'package:gym_swat/features/address/domain/usecases/add_shipping_address_u
 import 'package:gym_swat/features/address/domain/usecases/delete_shipping_address_usecase.dart';
 import 'package:gym_swat/features/address/domain/usecases/get_shipping_address_usecase.dart';
 import 'package:gym_swat/features/address/domain/usecases/update_shipping_address_usecase.dart';
-import 'package:gym_swat/features/address/presentation/bloc/bloc/address_bloc.dart';
+import 'package:gym_swat/features/address/presentation/bloc/address_bloc.dart';
 
 import 'package:gym_swat/service_locator.dart';
 

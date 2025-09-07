@@ -1,10 +1,10 @@
 import 'package:gym_swat/core/constants/exports.dart';
-import 'package:gym_swat/features/address/presentation/bloc/bloc/address_bloc.dart';
+import 'package:gym_swat/features/address/presentation/bloc/address_bloc.dart';
 
 Widget shippingAddressSection() {
   return BlocBuilder<AddressBloc, AddressState>(
     builder: (context, state) {
-      if (state is AddressLoading) {
+      if (state is AddressLoading) { 
         return loader();
       } else if (state is AddressFailure) {
         return const Center(child: Text("Something went wrong"));

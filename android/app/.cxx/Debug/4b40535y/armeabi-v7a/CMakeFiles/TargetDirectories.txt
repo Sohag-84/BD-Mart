@@ -1,0 +1,2 @@
+G:/Flutter/Clean Architecture/BD-Mart/android/app/.cxx/Debug/4b40535y/armeabi-v7a/CMakeFiles/edit_cache.dir
+G:/Flutter/Clean Architecture/BD-Mart/android/app/.cxx/Debug/4b40535y/armeabi-v7a/CMakeFiles/rebuild_cache.dir
