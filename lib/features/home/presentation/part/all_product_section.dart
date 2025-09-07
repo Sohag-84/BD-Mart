@@ -27,7 +27,7 @@ Widget allProductsSection({
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ProductView(
+                  builder: (context) => ProductView(
                     title: "Products",
                     url: AppConfig.products,
                   ),

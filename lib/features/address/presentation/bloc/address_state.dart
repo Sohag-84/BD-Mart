@@ -13,10 +13,14 @@ final class AddressLoading extends AddressState {}
 
 final class AddressLoaded extends AddressState {
   final List<AddressEntity> shippingAddressList;
-  const AddressLoaded({required this.shippingAddressList});
+  final bool isUpdating;
+  const AddressLoaded({
+    required this.shippingAddressList,
+    this.isUpdating = false,
+  });
 
   @override
-  List<Object> get props => [shippingAddressList];
+  List<Object> get props => [shippingAddressList, isUpdating];
 }
 
 final class AddressFailure extends AddressState {
@@ -40,6 +44,22 @@ final class AddAddressSuccess extends AddressState {
 final class AddAddressFailure extends AddressState {
   final String error;
   const AddAddressFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
+
+final class DeleteAddressSuccess extends AddressState {
+  final String message;
+  const DeleteAddressSuccess({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class DeleteAddressFailure extends AddressState {
+  final String error;
+  const DeleteAddressFailure({required this.error});
 
   @override
   List<Object> get props => [error];

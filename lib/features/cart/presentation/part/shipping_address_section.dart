@@ -1,10 +1,20 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/features/address/presentation/bloc/address_bloc.dart';
 
 Widget shippingAddressSection() {
-  return BlocBuilder<AddressBloc, AddressState>(
+  return BlocConsumer<AddressBloc, AddressState>(
+    listener: (context, state) {
+      if (state is AddressLoaded) {
+        if (state.isUpdating) {
+          eassyLoading();
+        } else {
+          EasyLoading.dismiss();
+        }
+      }
+    },
     builder: (context, state) {
-      if (state is AddressLoading) { 
+      if (state is AddressLoading) {
         return loader();
       } else if (state is AddressFailure) {
         return const Center(child: Text("Something went wrong"));
@@ -12,7 +22,7 @@ Widget shippingAddressSection() {
         return state.shippingAddressList.isEmpty
             ? const SizedBox()
             : Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Shipping Address",
@@ -59,39 +69,47 @@ Widget shippingAddressSection() {
                                   ),
                                 ),
                                 Expanded(
-                                    child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        shippingAddress,
-                                        style: TextStyle(fontSize: 11.sp),
-                                      ),
-                                    ),
-                                    Gap(5.w),
-                                    PopupMenuButton<String>(
-                                      icon: Icon(
-                                        Icons.more_vert,
-                                        color: AppColors.darkGrey,
-                                        size: 15,
-                                      ),
-                                      onSelected: (value) async {
-                                        if (value == 'edit') {
-                                        } else if (value == 'delete') {}
-                                      },
-                                      itemBuilder: (BuildContext context) => [
-                                        const PopupMenuItem<String>(
-                                          value: 'edit',
-                                          child: Text(edit),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          shippingAddress,
+                                          style: TextStyle(fontSize: 11.sp),
                                         ),
-                                        const PopupMenuItem<String>(
-                                          value: 'delete',
-                                          child: Text(delete),
+                                      ),
+                                      Gap(5.w),
+                                      PopupMenuButton<String>(
+                                        icon: Icon(
+                                          Icons.more_vert,
+                                          color: AppColors.darkGrey,
+                                          size: 15,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),),
+                                        onSelected: (value) async {
+                                          if (value == 'edit') {
+                                          } else if (value == 'delete') {
+                                            context.read<AddressBloc>().add(
+                                                  DeleteShippingAddress(
+                                                    addressId: addressData.id!,
+                                                  ),
+                                                );
+                                          }
+                                        },
+                                        itemBuilder: (BuildContext context) => [
+                                          const PopupMenuItem<String>(
+                                            value: 'edit',
+                                            child: Text(edit),
+                                          ),
+                                          const PopupMenuItem<String>(
+                                            value: 'delete',
+                                            child: Text(delete),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),

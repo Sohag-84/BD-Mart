@@ -16,6 +16,7 @@ Future<void> addressInjectionContainer() async {
     () => AddressBloc(
       addShippingAddressUsecase: sl.call(),
       getShippingAddressUsecase: sl.call(),
+      deleteShippingAddressUsecase: sl.call(),
     ),
   );
 

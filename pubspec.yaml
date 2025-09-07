@@ -38,6 +38,7 @@ dependencies:
   badges: ^3.1.2
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
     - assets/images/
     - assets/logo/
     - assets/icons/
+    - .env
 
   fonts:
     - family: Montserrat

@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/routes/app_pages.dart';
@@ -39,6 +40,12 @@ void main() async {
       DeviceOrientation.portraitUp,
     ],
   );
+
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    throw Exception('Error loading .env file: $e');
+  }
   runApp(const MyApp());
 }
 

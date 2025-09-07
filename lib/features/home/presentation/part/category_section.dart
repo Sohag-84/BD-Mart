@@ -93,7 +93,7 @@ class _CategorySectionState extends State<CategorySection> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const AllCategoryView(
+                            builder: (context) => AllCategoryView(
                               endPoint: AppConfig.featureudCategory,
                             ),
                           ),

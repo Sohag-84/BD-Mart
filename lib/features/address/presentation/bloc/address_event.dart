@@ -33,3 +33,11 @@ final class AddShippingAddress extends AddressEvent {
 }
 
 final class FetchedShippingAddress extends AddressEvent {}
+
+final class DeleteShippingAddress extends AddressEvent {
+  final int addressId;
+  const DeleteShippingAddress({required this.addressId});
+
+  @override
+  List<Object> get props => [addressId];
+}
