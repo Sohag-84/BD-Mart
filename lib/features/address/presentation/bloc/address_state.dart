@@ -11,16 +11,32 @@ final class AddressInitial extends AddressState {}
 
 final class AddressLoading extends AddressState {}
 
-final class AddressLoaded extends AddressState {
+class AddressLoaded extends AddressState {
   final List<AddressEntity> shippingAddressList;
   final bool isUpdating;
+  final String selectedAddressId;
+
   const AddressLoaded({
     required this.shippingAddressList,
     this.isUpdating = false,
+    this.selectedAddressId = '',
   });
 
+  AddressLoaded copyWith({
+    List<AddressEntity>? shippingAddressList,
+    bool? isUpdating,
+    String? selectedAddressId,
+  }) {
+    return AddressLoaded(
+      shippingAddressList: shippingAddressList ?? this.shippingAddressList,
+      isUpdating: isUpdating ?? this.isUpdating,
+      selectedAddressId: selectedAddressId ?? this.selectedAddressId,
+    );
+  }
+
   @override
-  List<Object> get props => [shippingAddressList, isUpdating];
+  List<Object> get props =>
+      [shippingAddressList, isUpdating, selectedAddressId];
 }
 
 final class AddressFailure extends AddressState {

@@ -24,6 +24,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     on<AddShippingAddress>(_addShippingAddress);
     on<FetchedShippingAddress>(_fetchedShippingAddress);
     on<DeleteShippingAddress>(_deleteShippingAddress);
+
+    on<SelectShippingAddress>((event, emit) {
+  if (state is AddressLoaded) {
+    final currentState = state as AddressLoaded;
+    emit(currentState.copyWith(selectedAddressId: event.addressId));
+  }
+});
+
   }
 
   Future<void> _addShippingAddress(

@@ -41,3 +41,10 @@ final class DeleteShippingAddress extends AddressEvent {
   @override
   List<Object> get props => [addressId];
 }
+
+class SelectShippingAddress extends AddressEvent {
+  final String addressId;
+  const SelectShippingAddress({required this.addressId});
+  @override
+  List<Object> get props => [addressId];
+}

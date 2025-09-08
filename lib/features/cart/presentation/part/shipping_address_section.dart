@@ -63,9 +63,20 @@ Widget shippingAddressSection() {
                                   scale: 0.8,
                                   child: Radio<String>(
                                     value: addressData.id.toString(),
-                                    groupValue: "",
+                                    groupValue: state.selectedAddressId,
                                     activeColor: AppColors.primaryColor,
-                                    onChanged: (String? value) async {},
+                                    onChanged: (String? value) {
+                                      if (value != null) {
+                                        context.read<AddressBloc>().add(
+                                            SelectShippingAddress(
+                                                addressId: value));
+                                        print(
+                                            "Selected Address: $shippingAddress");
+                                      }
+                                    },
+                                    // groupValue: "",
+                                    // activeColor: AppColors.primaryColor,
+                                    // onChanged: (String? value) async {},
                                   ),
                                 ),
                                 Expanded(
