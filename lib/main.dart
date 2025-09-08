@@ -12,6 +12,7 @@ import 'package:gym_swat/features/auth/presentation/cubit/password_visibility_cu
 import 'package:gym_swat/features/cart/presentation/bloc/add_to_cart/add_to_cart_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/buy_now/buy_now_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/cart/cart_bloc.dart';
+import 'package:gym_swat/features/cart/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => sl<CartCounterCubit>()),
               BlocProvider(create: (context) => sl<CartSummaryCubit>()),
               BlocProvider(create: (context) => sl<AddressBloc>()),
+              BlocProvider(create: (context) => sl<CheckoutBloc>()),
             ],
             child: MaterialApp.router(
               title: 'BD MART',

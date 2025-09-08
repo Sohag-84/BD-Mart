@@ -14,7 +14,7 @@ part 'address_state.dart';
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final AddShippingAddressUsecase addShippingAddressUsecase;
   final GetShippingAddressUsecase getShippingAddressUsecase;
-  DeleteShippingAddressUsecase deleteShippingAddressUsecase;
+  final DeleteShippingAddressUsecase deleteShippingAddressUsecase;
 
   AddressBloc({
     required this.addShippingAddressUsecase,

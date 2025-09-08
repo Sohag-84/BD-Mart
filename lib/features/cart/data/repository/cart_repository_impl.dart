@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:gym_swat/core/entity/response_entity.dart';
 import 'package:gym_swat/core/error/failure.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/cart/data/datasource/cart_remote_datasource.dart';
@@ -106,6 +107,26 @@ class CartRepositoryImpl implements CartRepository {
   ResultFuture<CartSummaryEntity> getCartSummary() async {
     try {
       final result = await cartRemoteDatasource.getCartSummary();
+      return right(result);
+    } on SocketException {
+      return left(const NetworkFailure("No internet connection"));
+    } on TimeoutException {
+      return left(const NetworkFailure("Request timed out"));
+    } catch (e) {
+      return left(ServerFailure("Server error: $e"));
+    }
+  }
+
+  @override
+  ResultFuture<ResponseEntity> checkout({
+    required String addressId,
+    required String paymentType,
+  }) async {
+    try {
+      final result = await cartRemoteDatasource.checkout(
+        addressId: addressId,
+        paymentType: paymentType,
+      );
       return right(result);
     } on SocketException {
       return left(const NetworkFailure("No internet connection"));

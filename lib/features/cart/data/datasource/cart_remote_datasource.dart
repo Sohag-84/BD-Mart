@@ -1,3 +1,4 @@
+import 'package:gym_swat/core/model/response_model.dart';
 import 'package:gym_swat/features/cart/data/models/cart_counter_model.dart';
 import 'package:gym_swat/features/cart/data/models/cart_model.dart';
 import 'package:gym_swat/features/cart/data/models/cart_summary_model.dart';
@@ -22,4 +23,9 @@ abstract interface class CartRemoteDatasource {
   Future<CartCounterModel> getCartCounter();
 
   Future<CartSummaryModel> getCartSummary();
+
+  Future<ResponseModel> checkout({
+    required String addressId,
+    required String paymentType,
+  });
 }

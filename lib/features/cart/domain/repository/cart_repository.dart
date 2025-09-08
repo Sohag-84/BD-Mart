@@ -1,3 +1,4 @@
+import 'package:gym_swat/core/entity/response_entity.dart';
 import 'package:gym_swat/core/utils/typedef.dart';
 import 'package:gym_swat/features/cart/domain/entities/cart_counter_entity.dart';
 import 'package:gym_swat/features/cart/domain/entities/cart_entity.dart';
@@ -23,4 +24,9 @@ abstract interface class CartRepository {
   ResultFuture<CartCounterEntity> getCartCounter();
 
   ResultFuture<CartSummaryEntity> getCartSummary();
+
+  ResultFuture<ResponseEntity> checkout({
+    required String addressId,
+    required String paymentType,
+  });
 }

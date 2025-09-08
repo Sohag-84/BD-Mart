@@ -1,4 +1,5 @@
 import 'package:gym_swat/core/config/app_config.dart';
+import 'package:gym_swat/core/model/response_model.dart';
 import 'package:gym_swat/core/services/api_services.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/cart/data/datasource/cart_remote_datasource.dart';
@@ -88,5 +89,23 @@ class CartRemoteDatasourceImpl implements CartRemoteDatasource {
       requiresToken: true,
     );
     return CartSummaryModel.fromJson(response);
+  }
+
+  @override
+  Future<ResponseModel> checkout({
+    required String addressId,
+    required String paymentType,
+  }) async {
+    final response = await apiServices.postApi(
+      endPoint: AppConfig.orderSotre,
+      requiresToken: true,
+      isEncodedData: true,
+      body: {
+        "user_id": LocalPreferenceService.instance.getUserId(),
+        "payment_type": paymentType,
+        "address_id": addressId,
+      },
+    );
+    return ResponseModel.fromJson(response);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppConfig {
-  static String baseURL = "${dotenv.env['BASE_URL']}";
+  static String baseURL = "${dotenv.env['BASE_URL']}/api/v2/";
   static String oneSignalAppId = "${dotenv.env['ONE_SIGNAL_APP_ID']}";
 
   static String signUp = "auth/signup";

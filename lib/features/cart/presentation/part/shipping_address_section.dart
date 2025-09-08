@@ -68,15 +68,15 @@ Widget shippingAddressSection() {
                                     onChanged: (String? value) {
                                       if (value != null) {
                                         context.read<AddressBloc>().add(
-                                            SelectShippingAddress(
-                                                addressId: value));
+                                              SelectShippingAddress(
+                                                addressId: value,
+                                              ),
+                                            );
                                         print(
-                                            "Selected Address: $shippingAddress");
+                                            "Selected Address: ${shippingAddress}");
                                       }
                                     },
-                                    // groupValue: "",
-                                    // activeColor: AppColors.primaryColor,
-                                    // onChanged: (String? value) async {},
+                                    
                                   ),
                                 ),
                                 Expanded(
