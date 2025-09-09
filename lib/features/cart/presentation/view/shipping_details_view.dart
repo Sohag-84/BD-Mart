@@ -1,4 +1,9 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
+import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart'
+    show SSLCommerzInitialization;
+import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
+import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
@@ -10,10 +15,12 @@ import 'package:gym_swat/features/address/presentation/bloc/address_bloc.dart';
 import 'package:gym_swat/features/address/presentation/widgets/buid_add_address_dialog.dart';
 import 'package:gym_swat/features/cart/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
+import 'package:gym_swat/features/cart/presentation/cubit/cart_summary/cart_summary_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:gym_swat/features/cart/presentation/part/shipping_address_section.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/order_summery_widgets.dart';
 import 'package:gym_swat/features/cart/presentation/widgets/select_payment_option_button.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ShippingDetailsView extends StatefulWidget {
   const ShippingDetailsView({super.key});
@@ -45,6 +52,25 @@ class _ShippingDetailsViewState extends State<ShippingDetailsView> {
     return paymentState == PaymentMethod.cashOnDelivery
         ? "Cash on Delivery"
         : "Online Payment";
+  }
+
+  Future<String> onlinePayment({required String amount}) async {
+    String cleanedAmount = amount.replaceAll(",", "");
+    Sslcommerz sslcommerz = Sslcommerz(
+      initializer: SSLCommerzInitialization(
+        // multi_card_name: "visa,master,bkash",
+        store_id: "${dotenv.env['STROE_ID']}",
+        store_passwd: "${dotenv.env['STROE_PASSWORD']}",
+        total_amount: double.parse(cleanedAmount),
+        currency: SSLCurrencyType.BDT,
+        tran_id: DateTime.now().millisecondsSinceEpoch.toString(),
+        product_category: 'Top Up',
+        sdkType: SSLCSdkType.TESTBOX,
+      ),
+    );
+
+    final response = await sslcommerz.payNow();
+    return response.status ?? "";
   }
 
   @override
@@ -91,7 +117,7 @@ class _ShippingDetailsViewState extends State<ShippingDetailsView> {
           },
           builder: (context, state) {
             return customButton(
-              onTap: () {
+              onTap: () async {
                 if (selectedAdressId(context).isEmpty) {
                   Fluttertoast.showToast(msg: "Please Select Shipping Address");
                   return;
@@ -100,13 +126,31 @@ class _ShippingDetailsViewState extends State<ShippingDetailsView> {
                   Fluttertoast.showToast(msg: "Please Select Payment Option");
                   return;
                 }
-
-                context.read<CheckoutBloc>().add(
-                      CheckoutOrder(
-                        addressId: selectedAdressId(context),
-                        paymentType: selectedPayemtnType(context),
-                      ),
+                if (selectedPayemtnType(context) == "Online Payment") {
+                  final state = context.read<CartSummaryCubit>().state;
+                  if (state is CartSummaryLoaded) {
+                    String result = await onlinePayment(
+                      amount: 
+                        state.cartSummary.grandTotal ?? "0",
+                      
                     );
+                    if (result == "VALID") {
+                      context.read<CheckoutBloc>().add(
+                            CheckoutOrder(
+                              addressId: selectedAdressId(context),
+                              paymentType: selectedPayemtnType(context),
+                            ),
+                          );
+                    }
+                  }
+                } else {
+                  context.read<CheckoutBloc>().add(
+                        CheckoutOrder(
+                          addressId: selectedAdressId(context),
+                          paymentType: selectedPayemtnType(context),
+                        ),
+                      );
+                }
               },
               btnText: proceedToCheckout,
               fontSize: 14,

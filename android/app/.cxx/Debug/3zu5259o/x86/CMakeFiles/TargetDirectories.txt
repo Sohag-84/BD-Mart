@@ -1,0 +1,2 @@
+G:/Flutter/Clean Architecture/BD-Mart/android/app/.cxx/Debug/3zu5259o/x86/CMakeFiles/edit_cache.dir
+G:/Flutter/Clean Architecture/BD-Mart/android/app/.cxx/Debug/3zu5259o/x86/CMakeFiles/rebuild_cache.dir
