@@ -1,4 +1,6 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 import 'package:gym_swat/core/utils/local_preferences.dart';
 import 'package:gym_swat/features/auth/presentation/views/login_view.dart';
 import 'package:gym_swat/features/cart/presentation/cubit/cart_counter/cart_counter_cubit.dart';
@@ -47,9 +49,7 @@ class ProfileView extends StatelessWidget {
                     children: List.generate(3, (index) {
                       return buildCountersRowItem(
                         context: context,
-                        onTap: () {
-                          LocalPreferenceService.instance.removeToken();
-                        },
+                        onTap: () {},
                         counter: cartCounter[index].toString(),
                         title: counterRowItemName[index],
                       );
@@ -65,10 +65,21 @@ class ProfileView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         customProfileRow(),
                         Gap(30.h),
                         customProfileRow1(),
+                        Gap(30.h),
+                        //logout
+                        buildProfileIconColumn(
+                          icon: Icons.logout,
+                          title: "Logout",
+                          onTap: () {
+                            context.go(AppRoutes.splash.path);
+                            LocalPreferenceService.instance.removeToken();
+                          },
+                        ),
                       ],
                     ),
                   ),
