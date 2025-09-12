@@ -3,37 +3,16 @@
 BD-Mart is a full-featured **e-commerce mobile application** built with **Flutter** using a strict **Clean Architecture** and `flutter_bloc` for state management.  
 The app supports **phone number authentication**, **online payments via SSLCommerz**, and **cash on delivery**, with a modular structure designed for scalability and maintainability.
 
----
 
 ## ✨ Features
 
-### 🔐 Secure Phone Authentication
-- OTP verification using **pinput**  
-- Session management & validation
+| 🔐 Authentication | 🧭 Bottom Navigation | 👤 Profile | 🛒 Shopping | 💳 Checkout & Orders |
+|------------------|-------------------|-----------|------------|--------------------|
+| OTP verification using **pinput** | Home – Product feed & banners | Update user info | Product details with carousel images & ratings | Add/manage shipping addresses |
+| Session management & validation | Cart – Real-time cart | View past orders & check status | Add/remove items from cart, update quantity | Place orders with **Online Payment (SSLCommerz)** |
+|                  | Category – Browse/filter products |           | Instant product search with filtering | Place orders with **Cash on Delivery** |
+|                  | Profile – Manage details & order history |           |            | Track order status after purchase |
 
-### 🧭 Bottom Navigation
-- **Home** – Product feed, banners, and promotions  
-- **Cart** – Real-time cart with price calculation  
-- **Category** – Browse and filter products by category  
-- **Profile** – Manage personal details & order history  
-
-### 👤 Profile Management
-- Update user info  
-- View past orders and check order status  
-
-### 🛒 Shopping Experience
-- Product details with carousel images & ratings  
-- Add/remove items from cart, update quantity  
-- Instant product search with dynamic filtering  
-
-### 💳 Checkout & Orders
-- Add and manage shipping addresses  
-- Place orders with:
-  - **Online Payment (SSLCommerz)**
-  - **Cash on Delivery**
-- Track order status after purchase  
-
----
 
 ## 🏗️ Clean Architecture
 
