@@ -13,6 +13,12 @@ The app supports **phone number authentication**, **online payments via SSLComme
 |                  | Category – Browse/filter products |           | Instant product search with filtering | Place orders with **Cash on Delivery** |
 |                  | Profile – Manage details & order history |           |            | Track order status after purchase |
 
+## 📸 Screenshots
+
+| Home | Category | Product Details | Cart | Checkout | Profile |
+|------|---------|------|---------|---------|---------|
+| ![Home](screenshots/home.png) | ![Category](screenshots/sub-category.png) | ![Product Details](screenshots/product-details.png) | ![Cart](screenshots/cart.png) | ![Checkout](screenshots/checkout.png) | ![Profile](screenshots/profile.png)  |
+
 
 ## 🏗️ Clean Architecture
 
