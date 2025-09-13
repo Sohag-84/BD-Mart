@@ -5,6 +5,7 @@ import 'package:gym_swat/features/auth/auth_injection_container.dart';
 import 'package:gym_swat/features/cart/cart_injection_container.dart';
 import 'package:gym_swat/features/category/category_injection_container.dart';
 import 'package:gym_swat/features/home/home_injection_container.dart';
+import 'package:gym_swat/features/order_status/order_status_injection_container.dart';
 import 'package:gym_swat/features/policy/policy_injection_container.dart';
 import 'package:gym_swat/features/product/product_injection_container.dart';
 import 'package:gym_swat/features/search/search_injection_container.dart';
@@ -22,4 +23,5 @@ Future<void> setupLocator() async {
   await searchInjectionContainer();
   await cartInjectionContainer();
   await addressInjectionContainer();
+  await orderStatusInjectionContainer();
 }

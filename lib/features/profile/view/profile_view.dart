@@ -49,7 +49,11 @@ class ProfileView extends StatelessWidget {
                     children: List.generate(3, (index) {
                       return buildCountersRowItem(
                         context: context,
-                        onTap: () {},
+                        onTap: () {
+                          if (index == 2) {
+                            context.pushNamed(AppRoutes.allOrder.name);
+                          }
+                        },
                         counter: cartCounter[index].toString(),
                         title: counterRowItemName[index],
                       );

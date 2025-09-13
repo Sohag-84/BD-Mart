@@ -56,7 +56,7 @@ class AppRoutes {
     name: "Sub Category",
     path: "/sub-category",
   );
-  
+
   static Route cart = Route(
     name: "Cart",
     path: "/cart",
@@ -74,6 +74,11 @@ class AppRoutes {
   static Route productDetails = Route(
     name: "Product Details",
     path: "/product-details",
+  );
+
+  static Route allOrder = Route(
+    name: "All Order",
+    path: "/all-order",
   );
 }
 
