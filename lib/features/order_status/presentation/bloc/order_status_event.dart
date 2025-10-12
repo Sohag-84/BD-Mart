@@ -15,3 +15,12 @@ final class FetchedAllOrder extends OrderStatusEvent {
   @override
   List<Object> get props => [page];
 }
+
+final class FetchedTrackOrder extends OrderStatusEvent {
+  final String orderCode;
+
+  const FetchedTrackOrder({required this.orderCode});
+
+  @override
+  List<Object> get props => [orderCode];
+}

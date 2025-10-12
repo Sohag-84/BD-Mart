@@ -71,7 +71,7 @@ class ProfileView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        customProfileRow(),
+                        customProfileRow(context: context),
                         Gap(30.h),
                         customProfileRow1(),
                         Gap(30.h),

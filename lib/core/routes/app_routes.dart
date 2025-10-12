@@ -80,6 +80,10 @@ class AppRoutes {
     name: "All Order",
     path: "/all-order",
   );
+  static Route trackOrder = Route(
+    name: "Track Order",
+    path: "/track-order",
+  );
 }
 
 class Route {

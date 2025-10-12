@@ -10,6 +10,7 @@ import 'package:gym_swat/features/cart/presentation/view/shipping_details_view.d
 import 'package:gym_swat/features/category/presentation/views/category_view.dart';
 import 'package:gym_swat/features/category/presentation/views/sub_category_view.dart';
 import 'package:gym_swat/features/order_status/presentation/views/all_order_view.dart';
+import 'package:gym_swat/features/order_status/presentation/views/track_order_view.dart';
 import 'package:gym_swat/features/policy/presentation/views/privacy_policy_view.dart';
 import 'package:gym_swat/features/policy/presentation/views/terms_and_conditions_view.dart';
 import 'package:gym_swat/features/product/presentation/views/product_details_view.dart';
@@ -154,6 +155,13 @@ class AppPages {
         path: AppRoutes.allOrder.path,
         name: AppRoutes.allOrder.name,
         builder: (context, state) => const AllOrderView(),
+      ),
+
+      ///Track Orders view
+      GoRoute(
+        path: AppRoutes.trackOrder.path,
+        name: AppRoutes.trackOrder.name,
+        builder: (context, state) => const TrackOrderView(),
       ),
     ],
   );

@@ -28,3 +28,24 @@ final class AllOrderFailure extends OrderStatusState {
   @override
   List<Object> get props => [error];
 }
+
+//for track order
+final class TrackOrderLoading extends OrderStatusState {}
+
+final class TrackOrderLoaded extends OrderStatusState {
+  final List<TrackOrderModel> orderList;
+
+  const TrackOrderLoaded({required this.orderList});
+
+  @override
+  List<Object> get props => [orderList];
+}
+
+final class TrackOrderFailure extends OrderStatusState {
+  final String error;
+
+  const TrackOrderFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

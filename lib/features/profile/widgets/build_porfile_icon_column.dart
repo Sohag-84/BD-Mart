@@ -1,6 +1,8 @@
+import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/constants/exports.dart';
+import 'package:gym_swat/core/routes/app_pages.dart';
 
-Row customProfileRow() {
+Row customProfileRow({required BuildContext context}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -8,7 +10,9 @@ Row customProfileRow() {
       buildProfileIconColumn(
         icon: Icons.local_shipping_outlined,
         title: trackOrder,
-        onTap: () {},
+        onTap: () {
+          context.pushNamed(AppRoutes.trackOrder.name);
+        },
       ),
 
       ///message
