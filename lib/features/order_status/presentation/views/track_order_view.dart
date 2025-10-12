@@ -15,6 +15,8 @@ class TrackOrderView extends StatefulWidget {
 class _TrackOrderViewState extends State<TrackOrderView> {
   TextEditingController orderCodeController = TextEditingController();
 
+  bool isTrack = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -68,6 +70,9 @@ class _TrackOrderViewState extends State<TrackOrderView> {
                     context
                         .read<OrderStatusBloc>()
                         .add(FetchedTrackOrder(orderCode: orderCode));
+                    setState(() {
+                      isTrack = true;
+                    });
                   } else {
                     Fluttertoast.showToast(msg: "Please enter an order code.");
                   }
@@ -82,6 +87,9 @@ class _TrackOrderViewState extends State<TrackOrderView> {
                   } else if (state is TrackOrderFailure) {
                     return const Center(child: Text("Something went wrong!"));
                   } else if (state is TrackOrderLoaded) {
+                    if (isTrack == false) {
+                      return Container();
+                    }
                     if (state.orderList.isEmpty) {
                       return Text(
                         "No order found.",

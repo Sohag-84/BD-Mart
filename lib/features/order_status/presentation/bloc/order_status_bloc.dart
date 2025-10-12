@@ -55,7 +55,9 @@ class OrderStatusBloc extends Bloc<OrderStatusEvent, OrderStatusState> {
     final result = await trackOrderUsecase
         .call(TrackOrderParam(orderCode: event.orderCode));
 
-    result.fold((error) => emit(TrackOrderFailure(error: error.message)),
-        (orderData) => emit(TrackOrderLoaded(orderList: orderData)));
+    result.fold(
+      (error) => emit(TrackOrderFailure(error: error.message)),
+      (orderData) => emit(TrackOrderLoaded(orderList: orderData)),
+    );
   }
 }
