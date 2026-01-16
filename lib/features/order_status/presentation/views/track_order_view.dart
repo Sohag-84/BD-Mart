@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gym_swat/core/constants/exports.dart';
 import 'package:gym_swat/core/widgets/custom_button.dart';

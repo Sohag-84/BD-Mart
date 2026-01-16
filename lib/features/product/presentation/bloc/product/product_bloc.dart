@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_swat/core/services/network_service.dart';
 import 'package:gym_swat/features/product/domain/entity/product_entity.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_usecase.dart';
 
@@ -14,9 +15,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   bool hasReachedMax = false;
   bool isFetching = false;
   String? lastUrl;
+  bool isOffline = false;
+  final ConnectionChecker connectionChecker;
+
   List<ProductEntity> productList = [];
 
-  ProductBloc({required this.getProductUsecase}) : super(ProductInitial()) {
+  ProductBloc({
+    required this.getProductUsecase,
+    required this.connectionChecker,
+  }) : super(ProductInitial()) {
     on<ProductFetchedEvent>(_onProductFetched);
   }
 
@@ -24,6 +31,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductFetchedEvent event,
     Emitter<ProductState> emit,
   ) async {
+    isOffline = !(await connectionChecker.isConnected);
+
+    /// RESET when refresh
+    if (event.isRefresh) {
+      currentPage = 1;
+      hasReachedMax = false;
+      productList.clear();
+    }
+
+    // offline pagination stop (but allow refresh)
+    if (isOffline && currentPage > 1 && !event.isRefresh) {
+      hasReachedMax = true;
+      return;
+    }
+
     if (lastUrl != event.url) {
       lastUrl = event.url;
       currentPage = 1;
@@ -31,31 +53,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       productList.clear();
     }
 
-    if (isFetching || (hasReachedMax && !event.isRefresh)) return;
+    if (isFetching || hasReachedMax) return;
 
     isFetching = true;
-
-    //Emit fetching=true before making API call
-    emit(
-      ProductLoaded(
-        productList: List.from(productList),
-        hasReachedMax: hasReachedMax,
-        isFetching: true,
-      ),
-    );
-
-    if (event.isRefresh) {
-      currentPage = 1;
-      hasReachedMax = false;
-      productList.clear();
-    }
 
     if (currentPage == 1) {
       emit(ProductLoading());
     }
 
     final result = await getProductUsecase(
-      ProductPaginationParams(url: event.url, page: currentPage),
+      ProductPaginationParams(
+        url: event.url,
+        page: currentPage,
+      ),
     );
 
     result.fold(
@@ -67,7 +77,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         if (products.isEmpty) {
           hasReachedMax = true;
         } else {
-          productList.addAll(products);
+          final newProducts = products.where(
+            (p) => !productList.any((e) => e.id == p.id),
+          );
+
+          productList.addAll(newProducts);
           currentPage++;
         }
 

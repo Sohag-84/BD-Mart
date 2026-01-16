@@ -237,7 +237,7 @@ class _SignupViewState extends State<SignupView> {
                             child: RichText(
                               maxLines: 2,
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.darkGrey,
                                   fontSize: 12,
                                 ),
@@ -320,7 +320,7 @@ class _SignupViewState extends State<SignupView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                     child: Text(
                   alreadyHaveAccount,
                   style: TextStyle(

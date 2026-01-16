@@ -50,8 +50,8 @@ Future<void> buildAddAddressDialog({
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       /// Address field
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
                         child: Text(
                           "Address",
                           style: TextStyle(
@@ -77,8 +77,8 @@ Future<void> buildAddAddressDialog({
                         ),
                       ),
                       // Postal code
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
                         child: Text(
                           "Postal Code",
                           style: TextStyle(
@@ -100,8 +100,8 @@ Future<void> buildAddAddressDialog({
                       const SizedBox(height: 16),
 
                       // Phone number
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
                         child: Text(
                           "Phone Number",
                           style: TextStyle(

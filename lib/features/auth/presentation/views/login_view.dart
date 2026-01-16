@@ -228,7 +228,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     dontHaveAnAccount,
                     style: TextStyle(
                       color: AppColors.darkGrey,

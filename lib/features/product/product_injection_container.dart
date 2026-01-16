@@ -1,5 +1,8 @@
-import 'package:gym_swat/features/product/data/datasources/product_remote_data_source.dart';
-import 'package:gym_swat/features/product/data/datasources/product_remote_data_source_impl.dart';
+import 'package:gym_swat/core/objectbox/objectbox.dart';
+import 'package:gym_swat/features/product/data/datasources/local_datasource/product_local_data_source.dart';
+import 'package:gym_swat/features/product/data/datasources/local_datasource/product_local_data_source_impl.dart';
+import 'package:gym_swat/features/product/data/datasources/remote_datasource/product_remote_data_source.dart';
+import 'package:gym_swat/features/product/data/datasources/remote_datasource/product_remote_data_source_impl.dart';
 import 'package:gym_swat/features/product/data/repository/product_repository_impl.dart';
 import 'package:gym_swat/features/product/domain/repositories/product_repository.dart';
 import 'package:gym_swat/features/product/domain/usecases/get_product_details_usecase.dart';
@@ -15,6 +18,7 @@ Future<void> productInjectionContainer() async {
   sl.registerLazySingleton(
     () => ProductBloc(
       getProductUsecase: sl.call(),
+      connectionChecker: sl.call(),
     ),
   );
   sl.registerLazySingleton(
@@ -40,10 +44,17 @@ Future<void> productInjectionContainer() async {
   );
 
   //REPOSITORY & DATA SOURCE INJECTION
-  sl.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(productRemoteDataSource: sl.call()),
-  );
+  sl.registerLazySingleton<ProductLocalDataSource>(
+      () => ProductLocalDataSourceImpl(productBox: sl<ObjectBox>().productBox));
   sl.registerLazySingleton<ProductRemoteDataSource>(
     () => ProductRemoteDataSourceImpl(apiServices: sl.call()),
+  );
+
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
+      productRemoteDataSource: sl.call(),
+      productLocalDataSource: sl.call(),
+      connectionChecker: sl.call(),
+    ),
   );
 }

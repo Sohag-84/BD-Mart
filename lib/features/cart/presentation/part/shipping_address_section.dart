@@ -73,7 +73,7 @@ Widget shippingAddressSection() {
                                               ),
                                             );
                                         print(
-                                            "Selected Address: ${shippingAddress}");
+                                            "Selected Address: $shippingAddress");
                                       }
                                     },
                                     
@@ -92,7 +92,7 @@ Widget shippingAddressSection() {
                                       ),
                                       Gap(5.w),
                                       PopupMenuButton<String>(
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.more_vert,
                                           color: AppColors.darkGrey,
                                           size: 15,

@@ -1,6 +1,6 @@
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
-import 'package:gym_swat/features/product/data/datasources/product_remote_data_source.dart';
+import 'package:gym_swat/features/product/data/datasources/remote_datasource/product_remote_data_source.dart';
 import 'package:gym_swat/features/product/data/models/product_details_model.dart';
 import 'package:gym_swat/features/product/data/models/product_model.dart';
 

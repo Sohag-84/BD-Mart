@@ -15,12 +15,12 @@ class InputDecorations {
         fontSize: 12.0,
         color: AppColors.textFieldGrey,
       ),
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
         borderSide: BorderSide(
           color: AppColors.darkGrey,
           width: 0.2,
         ),
-        borderRadius: const BorderRadius.all(
+        borderRadius: BorderRadius.all(
           Radius.circular(6.0),
         ),
       ),

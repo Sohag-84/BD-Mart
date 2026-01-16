@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
               .read<FeatureCategoryBloc>()
               .add(FeatureCategoryFetch(url: url, forceToLoadData: true));
           context.read<ProductBloc>().add(
-                ProductFetchedEvent(url: AppConfig.products),
+                ProductFetchedEvent(url: AppConfig.products, isRefresh: true),
               );
         },
         child: NotificationListener<ScrollNotification>(
