@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'features/home/domain/entity/slider_obx_entity.dart';
 import 'features/product/data/models/product_obx_entity.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -71,6 +72,28 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(2, 5204027810725911480),
+    name: 'SliderObxEntity',
+    lastPropertyId: const obx_int.IdUid(2, 7683935926952498631),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1547701933059522272),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 7683935926952498631),
+        name: 'photo',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -111,7 +134,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(1, 7545132289609355045),
+    lastEntityId: const obx_int.IdUid(2, 5204027810725911480),
     lastIndexId: const obx_int.IdUid(1, 6208428721871805051),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -195,6 +218,39 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    SliderObxEntity: obx_int.EntityDefinition<SliderObxEntity>(
+      model: _entities[1],
+      toOneRelations: (SliderObxEntity object) => [],
+      toManyRelations: (SliderObxEntity object) => {},
+      getId: (SliderObxEntity object) => object.id,
+      setId: (SliderObxEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (SliderObxEntity object, fb.Builder fbb) {
+        final photoOffset = fbb.writeString(object.photo);
+        fbb.startTable(3);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, photoOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final photoParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final object = SliderObxEntity(id: idParam, photo: photoParam);
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -235,5 +291,18 @@ class ProductObxEntity_ {
   /// See [ProductObxEntity.productId].
   static final productId = obx.QueryIntegerProperty<ProductObxEntity>(
     _entities[0].properties[6],
+  );
+}
+
+/// [SliderObxEntity] entity fields to define ObjectBox queries.
+class SliderObxEntity_ {
+  /// See [SliderObxEntity.id].
+  static final id = obx.QueryIntegerProperty<SliderObxEntity>(
+    _entities[1].properties[0],
+  );
+
+  /// See [SliderObxEntity.photo].
+  static final photo = obx.QueryStringProperty<SliderObxEntity>(
+    _entities[1].properties[1],
   );
 }

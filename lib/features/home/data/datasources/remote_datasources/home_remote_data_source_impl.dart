@@ -1,6 +1,6 @@
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/services/api_services.dart';
-import 'package:gym_swat/features/home/data/datasources/home_remote_data_source.dart';
+import 'package:gym_swat/features/home/data/datasources/remote_datasources/home_remote_data_source.dart';
 import 'package:gym_swat/features/home/data/models/slider_model.dart';
 
 final class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {

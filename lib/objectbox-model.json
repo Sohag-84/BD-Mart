@@ -46,9 +46,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:5204027810725911480",
+      "lastPropertyId": "2:7683935926952498631",
+      "name": "SliderObxEntity",
+      "properties": [
+        {
+          "id": "1:1547701933059522272",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7683935926952498631",
+          "name": "photo",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7545132289609355045",
+  "lastEntityId": "2:5204027810725911480",
   "lastIndexId": "1:6208428721871805051",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
