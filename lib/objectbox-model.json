@@ -65,9 +65,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:5887354731456482183",
+      "lastPropertyId": "6:3101281100387813948",
+      "name": "CategoryObxEntity",
+      "properties": [
+        {
+          "id": "1:8236956757099910838",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2827385691006067931",
+          "name": "categoryId",
+          "type": 6
+        },
+        {
+          "id": "3:5797428397884092369",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6042703288794158423",
+          "name": "banner",
+          "type": 9
+        },
+        {
+          "id": "5:5612090595006398194",
+          "name": "icon",
+          "type": 9
+        },
+        {
+          "id": "6:3101281100387813948",
+          "name": "numberOfChildren",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:5204027810725911480",
+  "lastEntityId": "3:5887354731456482183",
   "lastIndexId": "1:6208428721871805051",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

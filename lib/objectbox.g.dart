@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'features/category/domain/entity/category_obx_entity.dart';
 import 'features/home/domain/entity/slider_obx_entity.dart';
 import 'features/product/data/models/product_obx_entity.dart';
 
@@ -94,6 +95,52 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 5887354731456482183),
+    name: 'CategoryObxEntity',
+    lastPropertyId: const obx_int.IdUid(6, 3101281100387813948),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 8236956757099910838),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 2827385691006067931),
+        name: 'categoryId',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 5797428397884092369),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 6042703288794158423),
+        name: 'banner',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 5612090595006398194),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 3101281100387813948),
+        name: 'numberOfChildren',
+        type: 6,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -134,7 +181,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(2, 5204027810725911480),
+    lastEntityId: const obx_int.IdUid(3, 5887354731456482183),
     lastIndexId: const obx_int.IdUid(1, 6208428721871805051),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -251,6 +298,75 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    CategoryObxEntity: obx_int.EntityDefinition<CategoryObxEntity>(
+      model: _entities[2],
+      toOneRelations: (CategoryObxEntity object) => [],
+      toManyRelations: (CategoryObxEntity object) => {},
+      getId: (CategoryObxEntity object) => object.id,
+      setId: (CategoryObxEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (CategoryObxEntity object, fb.Builder fbb) {
+        final nameOffset = object.name == null
+            ? null
+            : fbb.writeString(object.name!);
+        final bannerOffset = object.banner == null
+            ? null
+            : fbb.writeString(object.banner!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.categoryId);
+        fbb.addOffset(2, nameOffset);
+        fbb.addOffset(3, bannerOffset);
+        fbb.addOffset(4, iconOffset);
+        fbb.addInt64(5, object.numberOfChildren);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final categoryIdParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final bannerParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final numberOfChildrenParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          14,
+        );
+        final object = CategoryObxEntity(
+          id: idParam,
+          categoryId: categoryIdParam,
+          name: nameParam,
+          banner: bannerParam,
+          icon: iconParam,
+          numberOfChildren: numberOfChildrenParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -304,5 +420,38 @@ class SliderObxEntity_ {
   /// See [SliderObxEntity.photo].
   static final photo = obx.QueryStringProperty<SliderObxEntity>(
     _entities[1].properties[1],
+  );
+}
+
+/// [CategoryObxEntity] entity fields to define ObjectBox queries.
+class CategoryObxEntity_ {
+  /// See [CategoryObxEntity.id].
+  static final id = obx.QueryIntegerProperty<CategoryObxEntity>(
+    _entities[2].properties[0],
+  );
+
+  /// See [CategoryObxEntity.categoryId].
+  static final categoryId = obx.QueryIntegerProperty<CategoryObxEntity>(
+    _entities[2].properties[1],
+  );
+
+  /// See [CategoryObxEntity.name].
+  static final name = obx.QueryStringProperty<CategoryObxEntity>(
+    _entities[2].properties[2],
+  );
+
+  /// See [CategoryObxEntity.banner].
+  static final banner = obx.QueryStringProperty<CategoryObxEntity>(
+    _entities[2].properties[3],
+  );
+
+  /// See [CategoryObxEntity.icon].
+  static final icon = obx.QueryStringProperty<CategoryObxEntity>(
+    _entities[2].properties[4],
+  );
+
+  /// See [CategoryObxEntity.numberOfChildren].
+  static final numberOfChildren = obx.QueryIntegerProperty<CategoryObxEntity>(
+    _entities[2].properties[5],
   );
 }
