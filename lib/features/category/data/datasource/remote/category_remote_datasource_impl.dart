@@ -1,5 +1,5 @@
 import 'package:gym_swat/core/services/api_services.dart';
-import 'package:gym_swat/features/category/data/datasource/category_remote_datasource.dart';
+import 'package:gym_swat/features/category/data/datasource/remote/category_remote_datasource.dart';
 import 'package:gym_swat/features/category/data/model/category_model.dart';
 
 class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {

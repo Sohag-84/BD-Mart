@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_swat/core/config/app_config.dart';
 import 'package:gym_swat/core/constants/exports.dart';
@@ -125,14 +126,19 @@ class _CategoryViewState extends State<CategoryView> {
                           final category = state.categoryList[index];
                           return GestureDetector(
                             onTap: () {
-                              context.pushNamed(
-                                AppRoutes.subCategory.name,
-                                extra: {
-                                  "categoryName": category.name,
-                                  "productUrl": category.links.products,
-                                  "categoryId": category.id.toString(),
-                                },
-                              );
+                              if (category.links.products.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Check you internet connection");
+                              } else {
+                                context.pushNamed(
+                                  AppRoutes.subCategory.name,
+                                  extra: {
+                                    "categoryName": category.name,
+                                    "productUrl": category.links.products,
+                                    "categoryId": category.id.toString(),
+                                  },
+                                );
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.all(5.w),

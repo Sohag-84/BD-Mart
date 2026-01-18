@@ -96,43 +96,43 @@ final _entities = <obx_int.ModelEntity>[
     backlinks: <obx_int.ModelBacklink>[],
   ),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(3, 5887354731456482183),
+    id: const obx_int.IdUid(5, 4872267335955745776),
     name: 'CategoryObxEntity',
-    lastPropertyId: const obx_int.IdUid(6, 3101281100387813948),
+    lastPropertyId: const obx_int.IdUid(7, 5872657525415136853),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 8236956757099910838),
+        id: const obx_int.IdUid(1, 5071802020458947910),
         name: 'id',
         type: 6,
         flags: 1,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 2827385691006067931),
+        id: const obx_int.IdUid(2, 5906736861421553819),
         name: 'categoryId',
         type: 6,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 5797428397884092369),
+        id: const obx_int.IdUid(3, 1456489580704015745),
         name: 'name',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 6042703288794158423),
+        id: const obx_int.IdUid(4, 3970035051386659075),
         name: 'banner',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 5612090595006398194),
+        id: const obx_int.IdUid(5, 3385041030875545752),
         name: 'icon',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 3101281100387813948),
+        id: const obx_int.IdUid(6, 4870341525039261356),
         name: 'numberOfChildren',
         type: 6,
         flags: 0,
@@ -181,13 +181,32 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 5887354731456482183),
-    lastIndexId: const obx_int.IdUid(1, 6208428721871805051),
+    lastEntityId: const obx_int.IdUid(6, 175876842137474263),
+    lastIndexId: const obx_int.IdUid(3, 230733118670125777),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
-    retiredIndexUids: const [6208428721871805051],
-    retiredPropertyUids: const [],
+    retiredEntityUids: const [
+      5887354731456482183,
+      7569691647679264557,
+      175876842137474263,
+    ],
+    retiredIndexUids: const [6208428721871805051, 230733118670125777],
+    retiredPropertyUids: const [
+      8236956757099910838,
+      2827385691006067931,
+      5797428397884092369,
+      6042703288794158423,
+      5612090595006398194,
+      3101281100387813948,
+      4972215633135059441,
+      8734822049960309775,
+      5694491149228210149,
+      8421817159860922835,
+      5872657525415136853,
+      3394061748100042283,
+      5577559056911576079,
+      5352622473907378938,
+    ],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -316,7 +335,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final iconOffset = object.icon == null
             ? null
             : fbb.writeString(object.icon!);
-        fbb.startTable(7);
+        fbb.startTable(8);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.categoryId);
         fbb.addOffset(2, nameOffset);

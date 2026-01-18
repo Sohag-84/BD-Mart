@@ -1,3 +1,4 @@
+import 'package:gym_swat/features/category/domain/entity/category_obx_entity.dart';
 import 'package:gym_swat/features/home/domain/entity/slider_obx_entity.dart';
 import 'package:gym_swat/features/product/data/models/product_obx_entity.dart';
 import 'package:gym_swat/objectbox.g.dart';
@@ -9,10 +10,12 @@ class ObjectBox {
 
   late final Box<ProductObxEntity> productBox;
   late final Box<SliderObxEntity> sliderBox;
+  late final Box<CategoryObxEntity> categoryBox;
 
   ObjectBox._create(this.store) {
     productBox = Box<ProductObxEntity>(store);
     sliderBox = Box<SliderObxEntity>(store);
+    categoryBox = Box<CategoryObxEntity>(store);
   }
 
   static Future<ObjectBox> create() async {
